@@ -14,7 +14,7 @@ Modelo estatístico com dados públicos (TSE, pesquisas, IBGE) que **(1)** proje
 * [docs/article.en.md](docs/article.en.md) — English version
 * **[docs/camadas.pt.md](docs/camadas.pt.md)** — **anatomia da análise, camada por camada**: o que cada etapa faz e como usamos cada pedacinho de dado, com números reais
 * **[docs/pesquisas.pt.md](docs/pesquisas.pt.md)** — quais pesquisas entram, onde, e quanto cada uma pesa
-* [docs/metodologia.md](docs/metodologia.md) · [docs/dados.md](docs/dados.md) · [docs/tabelas.pt.md](docs/tabelas.pt.md)
+* [docs/metodologia.md](docs/metodologia.md) · [docs/dados.md](docs/dados.md) · [docs/dados_visual.md](docs/dados_visual.md) · [docs/tabelas.pt.md](docs/tabelas.pt.md)
 * **Dados brutos:** [release `dados-brutos-2026-10-04`](https://github.com/berndof/eleicao-2026/releases/tag/dados-brutos-2026-10-04) (TSE, 1,1 GB + JSON da apuração) — `make fetch-raw`
 
 ## Principais resultados (dados de 04/10/2026, 23h)

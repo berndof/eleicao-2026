@@ -1,6 +1,6 @@
 PY ?= .venv/bin/python
 
-.PHONY: help setup data fetch-raw collect model influence explain backtest figures all test clean-figures
+.PHONY: help setup data data-historico fetch-raw collect model influence explain backtest figures all test clean-figures
 
 help:
 	@echo "make setup     - cria .venv e instala o pacote"
@@ -21,6 +21,9 @@ setup:
 
 data:
 	$(PY) -m eleicao2026.collect.tse_historico all
+
+data-historico:
+	$(PY) -m eleicao2026.collect.tse_historico anteriores
 
 RAW_URL = https://github.com/berndof/eleicao-2026/releases/download/dados-brutos-2026-10-04
 RAW_FILES = votacao_candidato_munzona_2022.zip perfil_eleitorado_2022.zip perfil_eleitorado_2026.zip tse_apuracao_20261005.tar.gz

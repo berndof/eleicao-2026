@@ -1,0 +1,20 @@
+{
+  "id": "tse_perfil_2010",
+  "nome": "Perfil do eleitorado por município (gênero, idade, escolaridade), 2010",
+  "publicador": "TSE (Dados Abertos)",
+  "url_origem": "https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_2010.zip",
+  "url_landing": "https://dadosabertos.tse.jus.br/dataset/eleitorado-2010",
+  "licenca": "CC-BY (campo license_id do CKAN dos Dados Abertos do TSE, conferido em 05/10/2026)",
+  "granularidade": "município × gênero × faixa etária × escolaridade",
+  "periodo": "eleitorado de 2010",
+  "confianca": "alta",
+  "status": "verificada",
+  "camada": "1 (dados brutos) → 3 (features)",
+  "usado_em": "data/interim/perfil_2010_mun.csv; tabela municipal em preparação, ainda NÃO entra nos modelos publicados",
+  "limitacoes": "Perfil de quem pode votar, não de quem votou.",
+  "arquivo_local": "data/raw/perfil_eleitorado_2010.zip",
+  "url_copia": "",
+  "sha256": "76360758f6285a94004c730d85ccd673c86d0c5a0d85e43f5574cc2e67f691c4",
+  "tamanho_bytes": 35907120,
+  "coletado_em": "2026-10-05T04:08:45Z"
+}

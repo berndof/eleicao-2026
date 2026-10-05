@@ -100,9 +100,19 @@ A fração apurada de um município é `f = est / te` (fração do **eleitorado*
 
 ### 1.4 Pesquisas e histórico
 
-Wikipédia (EN), página *Opinion polling for the 2026 Brazilian presidential election*, em wikitext bruto (`data/external/wikipedia_pesquisas_2026.wikitext`); Quaest/Datafolha por eleitorado, digitados em `transferencia_pesquisas.csv` (com confiança **média-baixa**, ver [pesquisas](pesquisas.pt.md)); 6 eleições presidenciais em `historico_2turnos.csv`.
+Wikipédia (EN), página *Opinion polling for the 2026 Brazilian presidential election*, em wikitext bruto (`data/external/wikipedia_pesquisas_2026.wikitext`), com fixação exata de versão MediaWiki (`oldid=1378579188` em `wikipedia_pesquisas_2026.revisao.json`); Quaest/Datafolha de transferência conferidos nas fontes primárias em `transferencia_pesquisas_primaria.csv`; 6 eleições presidenciais em `historico_2turnos.csv`.
 
-**Onde pode dar errado:** a Wikipédia é uma compilação; erros de transcrição são possíveis. (Já achamos um: a linha "Results", que é a **urna** e não uma pesquisa, estava entrando como se fosse um instituto de erro zero. Corrigido, e documentado em [errata](#errata).)
+### 1.5 Catálogo de Fontes, Auditoria TSE e Dados Contextuais
+
+Para garantir que cada número tenha procedência verificável e primária, o projeto conta com um catálogo formal de 29 fontes documentadas em `data/fontes/entradas/*.json` e compiladas em [docs/fontes/](fontes/):
+- **Auditoria do Registro TSE PesqEle (`auditoria_pesquisas.csv`):** Todas as 112 pesquisas utilizadas (56 do 1T e 56 do 2T) foram cruzadas com a base pública de pesquisas registradas no TSE. **Taxa de correspondência: 112/112 (100%)**, identificando o número de protocolo (ex: BR017082026), contratante, empresa pagante, custo declarado e divergências de amostra planejada vs. realizada (ver [Gráfico 12 em dados_visual.md](dados_visual.md#12-auditoria-tse-custos-e-financiadores-das-pesquisas)).
+- **Censo 2022 do IBGE (`censo2022_mun.csv`):** Tabela 9537 (religião: % evangélica, católica e sem religião), Tabela 10295 (renda domiciliar per capita média e mediana) e Tabela 9605 (raça preta, parda e branca) nos 5.570 municípios via API SIDRA.
+- **Eleições Municipais de 2024 (`prefeitos_2024_mun.csv`):** Alinhamento partidário dos 5.552 prefeitos eleitos em 2024 via dados abertos do TSE.
+- **De-Para Municipal (`municipios_chaves.csv`):** Tabela de junção completa entre códigos TSE (`cd`), IBGE-7, IBGE-6 e SIAFI/RFB (100% de casamento para todos os municípios brasileiros).
+- **Macroeconomia e Mercados Preditivos (`economia_resumo.csv`, `polymarket_mercados_uf.csv`):** 9 séries do SGS/BCB, Focus OData e preços de fechamento diário do Polymarket.
+- **Ledger Sem Vazamento Temporal (`data/ledger/observacoes.csv`):** Registro *append-only* com carimbos explícitos de período de referência e data de divulgação (`divulgado_em`), garantindo que nenhum dado posterior à data da projeção possa ser usado inadvertidamente.
+
+**Onde pode dar errado:** a Wikipédia é uma compilação de terceiros; a auditoria contra o TSE foi implementada exatamente para mitigar erros de transcrição e verificar a regularidade jurídica de cada levantamento.
 
 ---
 
@@ -350,7 +360,7 @@ Média ponderada por votos: **65,3% a Flávio** (contra 48,4% em 2022).
 
 **Inclinação regional na prática:** dentro de cada UF, `s_uf = expit( logit(s) + δ_região )`. Em Minas Gerais (Sudeste, δ = +0,05), os 59,3% de Cury viram 60,4%.
 
-**Onde pode dar errado:** amostras de dezenas de respondentes por candidato; os números vêm de resumos de busca e não das matérias originais; e as pesquisas vêm dos mesmos institutos que erraram o 1º turno a favor de Lula (o M1 pode subestimar Flávio).
+**Onde pode dar errado:** amostras de dezenas de respondentes por candidato; e as pesquisas vêm dos mesmos institutos que erraram o 1º turno a favor de Lula (o M1 pode subestimar Flávio). *Nota de auditoria:* os números originais da Quaest foram conferidos linha a linha diretamente na publicação primária do G1 em `transferencia_pesquisas_primaria.csv` (protocolo TSE BR017082026), confirmando os percentuais exatos.
 
 ---
 

@@ -1,0 +1,20 @@
+{
+  "id": "ibge_malha_ufs",
+  "nome": "Malha das 27 UFs (GeoJSON, qualidade mínima)",
+  "publicador": "IBGE, API de Malhas v3",
+  "url_origem": "https://servicodados.ibge.gov.br/api/docs/malhas",
+  "url_landing": "https://servicodados.ibge.gov.br/api/docs/malhas",
+  "licenca": "nao_verificada (dado público do IBGE)",
+  "granularidade": "UF",
+  "periodo": "2022",
+  "confianca": "alta",
+  "status": "verificada",
+  "camada": "—",
+  "usado_em": "mapas das figuras (nenhum uso no modelo)",
+  "limitacoes": "Qualidade mínima: só para desenhar mapas.",
+  "arquivo_local": "data/external/ufs_ibge.geojson",
+  "url_copia": "",
+  "sha256": "07c671aa87aa1ab296c446de6294df9827112782537b996c0a160284907e7c0f",
+  "tamanho_bytes": 98502,
+  "coletado_em": "2026-10-05T02:29:01Z"
+}

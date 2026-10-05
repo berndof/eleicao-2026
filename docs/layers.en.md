@@ -100,9 +100,19 @@ A municipality's counted fraction is `f = est / te` (fraction of the **electorat
 
 ### 1.4 Polls and history
 
-Wikipedia (EN), page *Opinion polling for the 2026 Brazilian presidential election*, as raw wikitext (`data/external/wikipedia_pesquisas_2026.wikitext`); Quaest/Datafolha by electorate, typed into `transferencia_pesquisas.csv` (with **medium-low** confidence, see [polls](polls.en.md)); 6 presidential elections in `historico_2turnos.csv`.
+Wikipedia (EN), page *Opinion polling for the 2026 Brazilian presidential election*, as raw wikitext (`data/external/wikipedia_pesquisas_2026.wikitext`), pinned to exact MediaWiki revision (`oldid=1378579188` in `wikipedia_pesquisas_2026.revisao.json`); Quaest/Datafolha transfer figures audited against primary reports in `transferencia_pesquisas_primaria.csv`; 6 presidential elections in `historico_2turnos.csv`.
 
-**Where it can go wrong:** Wikipedia is a compilation; transcription errors are possible. (We already found one: the "Results" row, which is the **ballot box** and not a poll, was entering as if it were a zero-error pollster. Fixed and documented in the [erratum](#erratum).)
+### 1.5 Source Catalog, TSE Audit, and Contextual Indicators
+
+To ensure full provenance and reproducibility, the project maintains an open catalog of 29 sources in `data/fontes/entradas/*.json` (compiled in [docs/fontes/](fontes/)):
+- **TSE PesqEle Poll Registry Audit (`auditoria_pesquisas.csv`):** All 112 campaign polls used in the models (56 first round, 56 runoff) were audited against the official TSE registration database. **Match rate: 112/112 (100%)**, identifying exact TSE registration numbers (e.g. BR017082026), contracting media outlets, funding entities, declared research costs, and planned vs. realized sample sizes.
+- **IBGE 2022 Census (`censo2022_mun.csv`):** Decennial municipal indicators from SIDRA (Table 9537 for religion: % evangelical, Catholic, unaffiliated; Table 10295 for mean and median per capita household income; Table 9605 for race).
+- **2024 Mayoral Elections (`prefeitos_2024_mun.csv`):** Municipal party control across 5,552 municipalities from TSE official 2024 results.
+- **Municipal Key Crosswalk (`municipios_chaves.csv`):** Complete crosswalk joining TSE municipality codes (`cd`), IBGE-7, IBGE-6, and SIAFI codes with 100% match.
+- **Macroeconomic & Prediction Markets (`economia_resumo.csv`, `polymarket_mercados_uf.csv`):** 9 BCB SGS series, Focus expectations, and Polymarket daily closing prices.
+- **Append-Only Observation Ledger (`data/ledger/observacoes.csv`):** Strict time-stamped ledger recording reference period and release date (`divulgado_em`) to ensure zero temporal data leakage in backtesting.
+
+**Where it can go wrong:** Wikipedia is a third-party compilation; the TSE PesqEle audit was specifically implemented to eliminate transcription inaccuracies and verify legal compliance.
 
 ---
 
@@ -350,7 +360,7 @@ Vote-weighted mean: **65.3% to Flávio** (vs. 48.4% in 2022).
 
 **Regional tilt in practice:** within each state, `s_state = expit( logit(s) + δ_region )`. In Minas Gerais (Southeast, δ = +0.05), Cury's 59.3% becomes 60.4%.
 
-**Where it can go wrong:** samples of dozens of respondents per candidate; the numbers come from search summaries, not the original articles; and the polls come from the same pollsters that erred in Lula's favor in the first round (M1 may underestimate Flávio).
+**Where it can go wrong:** samples of dozens of respondents per candidate; and the polls come from the same pollsters that erred in Lula's favor in the first round (M1 may underestimate Flávio). *Audit note:* the Quaest primary publication on G1 was audited row by row in `transferencia_pesquisas_primaria.csv` (TSE protocol BR017082026), confirming the exact reported percentages.
 
 ---
 

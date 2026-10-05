@@ -1,0 +1,20 @@
+{
+  "id": "tse_apuracao_2026",
+  "nome": "Apuração do 1º turno de 2026 (respostas JSON originais do portal de resultados)",
+  "publicador": "TSE (portal de resultados)",
+  "url_origem": "https://resultados.tse.jus.br/oficial/ele2026/6257",
+  "url_landing": "https://resultados.tse.jus.br",
+  "licenca": "nao_verificada (portal de resultados; os Dados Abertos do TSE são CC-BY)",
+  "granularidade": "município (5.757 respostas, mais a nacional e a configuração)",
+  "periodo": "coleta de 05/10/2026 00:11, 99,997% das seções",
+  "confianca": "alta",
+  "status": "verificada",
+  "camada": "1 (dados brutos) → 2 (tabelas municipais)",
+  "usado_em": "data/interim/mun_2026.csv (coleta anterior, de 23h25 de 04/10, 99,991%); esta coleta está em data/snapshots/20261005_apuracao_final/. Base do M1 e do backtest",
+  "limitacoes": "Os modelos publicados usam a coleta de 04/10, não esta; a diferença é de ~0,006% do eleitorado.",
+  "arquivo_local": "data/raw/tse_apuracao_20261005.tar.gz",
+  "url_copia": "https://github.com/berndof/eleicao-2026/releases/download/dados-brutos-2026-10-04/tse_apuracao_20261005.tar.gz",
+  "sha256": "221bd59ab75b656ca234712c0d8f616d4a5a5003f38fe10ef837ce56e942ef75",
+  "tamanho_bytes": 2695366,
+  "coletado_em": "2026-10-05T03:25:17Z"
+}

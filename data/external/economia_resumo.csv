@@ -1,0 +1,18 @@
+fonte,serie,periodo_recente,valor_recente,unidade
+BCB SGS,selic_meta,2026-10-05,13.75,% a.a.
+BCB SGS,selic_diaria_anualizada,2026-10-02,13.65,% a.a.
+BCB SGS,usd_ptax_venda,2026-10-02,5.2238,BRL
+BCB SGS,ipca_mensal,2026-08-01,-0.32,%
+BCB SGS,ipca_12m,2026-08-01,4.22,%
+BCB SGS,igpm_mensal,2026-09-01,1.57,%
+BCB SGS,salario_minimo,2026-10-01,1621.00,BRL
+BCB SGS,desemprego_pnad_3m,2026-08-01,5.3,%
+BCB SGS,ibc_br_dessazonalizado,2026-07-01,109.91611,indice
+BCB Focus,focus_pib_total_2026_mediana,2026-09-25,1.8603,%
+BCB Focus,focus_pib_total_2027_mediana,2026-09-25,1.4105,%
+BCB Focus,focus_ipca_2026_mediana,2026-09-25,4.9915,%
+BCB Focus,focus_ipca_2027_mediana,2026-09-25,4.3118,%
+BCB Focus,focus_selic_2026_mediana,2026-09-25,13.5,%
+BCB Focus,focus_selic_2027_mediana,2026-09-25,12.0,%
+BCB Focus,focus_câmbio_2026_mediana,2026-09-25,5.2,BRL
+BCB Focus,focus_câmbio_2027_mediana,2026-09-25,5.2769,BRL

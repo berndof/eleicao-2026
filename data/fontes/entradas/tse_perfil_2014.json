@@ -1,0 +1,20 @@
+{
+  "id": "tse_perfil_2014",
+  "nome": "Perfil do eleitorado por município (gênero, idade, escolaridade), 2014",
+  "publicador": "TSE (Dados Abertos)",
+  "url_origem": "https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_2014.zip",
+  "url_landing": "https://dadosabertos.tse.jus.br/dataset/eleitorado-2014",
+  "licenca": "CC-BY (campo license_id do CKAN dos Dados Abertos do TSE, conferido em 05/10/2026)",
+  "granularidade": "município × gênero × faixa etária × escolaridade",
+  "periodo": "eleitorado de 2014",
+  "confianca": "alta",
+  "status": "verificada",
+  "camada": "1 (dados brutos) → 3 (features)",
+  "usado_em": "data/interim/perfil_2014_mun.csv; tabela municipal em preparação, ainda NÃO entra nos modelos publicados",
+  "limitacoes": "Perfil de quem pode votar, não de quem votou.",
+  "arquivo_local": "data/raw/perfil_eleitorado_2014.zip",
+  "url_copia": "",
+  "sha256": "a4276a1aeaae888a6a1df17ee2cd44f52b82778460cf39f40f9f5c2126e34f11",
+  "tamanho_bytes": 32269026,
+  "coletado_em": "2026-10-05T04:08:40Z"
+}

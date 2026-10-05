@@ -1,0 +1,41 @@
+{
+  "fonte_id": "tse_registro_pesquisas_2026",
+  "dataset": "https://dadosabertos.tse.jus.br/dataset/pesquisas-eleitorais-2026",
+  "licenca_ckan": "Creative Commons Attribution",
+  "arquivos": {
+    "pesquisa_eleitoral_2026.zip": {
+      "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/pesquisa_eleitoral/pesquisa_eleitoral_2026.zip",
+      "sha256": "c6a987776ee23733b14ec4abe55bb8371b3fa22a30b4d472447c0dafce41e4fb",
+      "tamanho_bytes": 5889349,
+      "coletado_em": "2026-10-05T04:41:58Z",
+      "last_modified": "Sun, 04 Oct 2026 08:48:11 GMT"
+    },
+    "pesquisa_contratante_2026.zip": {
+      "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/pesquisa_eleitoral/pesquisa_contratante_2026.zip",
+      "sha256": "25a0a77a8df8245419c911a65fa69c3e020b3add34d70a83a53ad665d405bc40",
+      "tamanho_bytes": 283830,
+      "coletado_em": "2026-10-05T04:41:58Z",
+      "last_modified": "Sun, 04 Oct 2026 08:48:02 GMT"
+    },
+    "pesquisa_pagante_2026.zip": {
+      "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/pesquisa_eleitoral/pesquisa_pagante_2026.zip",
+      "sha256": "ab8f1a4fdbe65eacee5acd7f80981ccd72d8f7f72600b52036422947ec984241",
+      "tamanho_bytes": 266033,
+      "coletado_em": "2026-10-05T04:41:58Z",
+      "last_modified": "Sun, 04 Oct 2026 08:48:02 GMT"
+    },
+    "ckan_package_show.json": {
+      "url": "https://dadosabertos.tse.jus.br/api/3/action/package_show?id=pesquisas-eleitorais-2026",
+      "sha256": "847cc0d3d78c3e0eee38c56e3f9b487f1ce09f5a2aaa12aa5a96949cd6572cbe",
+      "tamanho_bytes": 7888,
+      "coletado_em": "2026-10-05T04:42:00Z",
+      "last_modified": ""
+    }
+  },
+  "n_registros_total": 3456,
+  "n_presidente": 1292,
+  "n_com_margem_texto": 1272,
+  "n_pessoa_fisica_contratante": 10,
+  "tse_dt_geracao": "04/10/2026 05:47:24",
+  "nota": "O TSE regenera os arquivos diariamente; esta é a fotografia de coletado_em."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "tse_perfil_2018",
+  "nome": "Perfil do eleitorado por município (gênero, idade, escolaridade), 2018",
+  "publicador": "TSE (Dados Abertos)",
+  "url_origem": "https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_2018.zip",
+  "url_landing": "https://dadosabertos.tse.jus.br/dataset/eleitorado-2018",
+  "licenca": "CC-BY (campo license_id do CKAN dos Dados Abertos do TSE, conferido em 05/10/2026)",
+  "granularidade": "município × gênero × faixa etária × escolaridade",
+  "periodo": "eleitorado de 2018",
+  "confianca": "alta",
+  "status": "verificada",
+  "camada": "1 (dados brutos) → 3 (features)",
+  "usado_em": "data/interim/perfil_2018_mun.csv; tabela municipal em preparação, ainda NÃO entra nos modelos publicados",
+  "limitacoes": "Perfil de quem pode votar, não de quem votou.",
+  "arquivo_local": "data/raw/perfil_eleitorado_2018.zip",
+  "url_copia": "",
+  "sha256": "d94cc9871ffbdbee3184c98b52c256560dffb5e19f62e27c91648a6fdfe4d803",
+  "tamanho_bytes": 34851376,
+  "coletado_em": "2026-10-05T04:08:17Z"
+}

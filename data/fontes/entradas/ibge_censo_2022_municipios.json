@@ -1,0 +1,17 @@
+{
+  "id": "ibge_censo_2022_municipios",
+  "nome": "Indicadores Municipais do Censo Demográfico 2022 (SIDRA/IBGE)",
+  "publicador": "IBGE",
+  "url_origem": "https://apisidra.ibge.gov.br",
+  "url_landing": "https://sidra.ibge.gov.br",
+  "coletado_em": "2026-10-05T05:11:04Z",
+  "sha256": "",
+  "tamanho_bytes": 623850,
+  "licenca": "IBGE Dados Abertos (CC-BY compatível)",
+  "granularidade": "município (5.570 municípios)",
+  "periodo": "ano censitário 2022 (religião divulgada em 06/06/2025)",
+  "confianca": "alta",
+  "status": "verificada",
+  "usado_em": "data/external/censo2022_mun.csv; análise de perfil sociodemográfico e resíduos do modelo",
+  "limitacoes": "Censo reflete população residente, não eleitorado. Falácia ecológica: correlação municipal não implica causalidade individual."
+}

@@ -37,17 +37,32 @@ Os dados do TSE são públicos (Dados Abertos); mantenha a atribuição ao TSE. 
 | Arquivo | Descrição |
 |---|---|
 | `ufs_ibge.geojson` | Malha das 27 UFs (IBGE, API de Malhas v3, qualidade mínima). Usada só para os mapas. |
-| `wikipedia_pesquisas_2026.wikitext` | Wikitext bruto de *Opinion polling for the 2026 Brazilian presidential election* (Wikipédia EN), baixado em 04/10/2026. CC BY-SA. |
+| `municipios_chaves.csv` | De-para de chaves municipais para 5.571 municípios: TSE (`cd`), IBGE-7, IBGE-6, SIAFI/RFB, nome e UF (100% de junção com dados de apuração). |
+| `censo2022_mun.csv`, `censo2022_dicionario.csv` | Variáveis socioeconômicas e demográficas do **Censo 2022** (IBGE SIDRA): religião (% evangélica, católica, sem religião), renda per capita média/mediana, raça e urbanização. |
+| `prefeitos_2024_mun.csv` | Partido e votação dos prefeitos eleitos em 2024 (TSE Dados Abertos) em 5.552 municípios. |
+| `registro_pesquisas_presidente_2026.csv` | Registro oficial de pesquisas presidenciais no TSE (PesqEle 2026): número de protocolo, empresa, CNPJ, datas, custo declarado, amostra e contratante. |
+| `transferencia_pesquisas_primaria.csv` | Votos de 2º turno dos eliminados conferidos diretamente nos relatórios e publicações primárias (Quaest e Datafolha). |
+| `datafolha_aprovacao_rejeicao.csv` | Séries temporais primárias de avaliação de governo e rejeição de candidatos registradas pelo Datafolha ao longo de 2025–2026. |
+| `economia_resumo.csv` | Resumo dos principais indicadores macroeconômicos (BCB SGS e Focus): IPCA, Selic, Câmbio, PIB, desemprego PNAD e IBC-Br. |
+| `polymarket_mercados_uf.csv` | Cotações e resoluções dos mercados estaduais e nacional no Polymarket. |
+| `wikipedia_pesquisas_2026.wikitext`, `wikipedia_pesquisas_2026.revisao.json` | Wikitext bruto com fixação de procedência (oldid `1378579188` no MediaWiki). |
 | `historico_2turnos.csv` | 1º e 2º turnos presidenciais 2002–2022: líder e segundo colocado do 1T, % de cada um e % do líder no 2T (votos válidos, TSE). |
-| `transferencia_pesquisas.csv` | Pesquisas Quaest e Datafolha de 02–03/10/2026 sobre o voto no 2º turno **por eleitorado de cada candidato eliminado**. Números vindos de resumos de busca (confiança média-baixa; ver coluna `confianca`). |
+| `transferencia_pesquisas.csv` | Pesquisas Quaest e Datafolha de 02–03/10/2026 sobre o voto no 2º turno **por eleitorado de cada candidato eliminado** (versão preliminar). |
+
+## `data/ledger/`
+
+| Arquivo | Descrição |
+|---|---|
+| `observacoes.csv` | Livro-razão (*ledger*) estruturado append-only com mais de 4.000 observações de séries temporais econômicas e mercados preditivos. Registra explicitamente o período de referência, a data de divulgação (`divulgado_em`) e data de coleta (`coletado_em`), impedindo vazamento temporal em backtests. |
 
 ## `data/interim/`
 
 | Arquivo | Chave | Descrição |
 |---|---|---|
 | `mun_2026.csv` | `uf`, `cd` | Apuração do 1º turno 2026 por município (TSE): `ts`/`st` seções totais/apuradas, `te`/`est` eleitorado total/apurado, `vv` votos válidos, `vb` brancos, `vn` nulos, `hg` hora de geração do arquivo do TSE e uma coluna `v_<CANDIDATO>` por candidato. |
-| `pres_2022_mun.csv`, `pres_2022_t2_mun.csv` | `uf`, `cd` | Votos nominais de Presidente 2022 por município (1º e 2º turno). |
-| `perfil_2022_mun.csv`, `perfil_2026_mun.csv` | `uf`, `cd` | Eleitorado por município: `tot` total, `fem` mulheres, `sup` superior completo, `analf` analfabetos/lê-e-escreve, `fund_inc` fundamental incompleto, `jovem` 16–24 anos, `idoso` 60+. |
+| `pres_AAAA_mun.csv`, `pres_AAAA_t2_mun.csv` (AAAA = 2002, 2006, 2010, 2014, 2018, 2022) | `uf`, `cd` | Votos nominais de Presidente por município (1º e 2º turno). 2002–2018 vêm de `make data-historico`. |
+| `perfil_AAAA_mun.csv` (2002–2018, 2022, 2026) | `uf`, `cd` | Eleitorado por município: `tot` total, `fem` mulheres, `sup` superior completo, `analf` analfabetos/lê-e-escreve, `fund_inc` fundamental incompleto, `jovem` 16–24 anos, `idoso` 60+. **Em 2002 e 2006 o TSE não informa a faixa etária (código `-3`): `jovem` e `idoso` são 0 nesses anos e não devem ser usados.** |
+| `pres_candidatos.csv` | `ano`, `turno`, `candidato` | **Todos** os candidatos a Presidente de 2002 a 2022: nome, partido, situação, votos nominais no Brasil e `pct_validos`. Gerado dos dados abertos do TSE; reproduz, ao centésimo, os números de `historico_2turnos.csv` (digitado à mão) nos seis anos. |
 | `projecao_mun.csv` | `uf`, `cd` | Projeção do 1º turno: votos válidos apurados, votos faltantes estimados e share projetado de Lula e Flávio nos votos faltantes. |
 | `pesquisas_1turno.csv`, `pesquisas_2turno.csv` | — | Pesquisas extraídas da Wikipédia (1º turno: 56; 2º turno: 56). `data_fim` em ISO 8601; valores em % como divulgados. A linha "Results" da página (o resultado da urna) **não** é incluída. |
 
@@ -70,6 +85,9 @@ Códigos: `cd` é o código do município **no TSE** (não é o código IBGE). `
 | `influencia_transf.csv`, `influencia_historico.csv` | Idem para as pesquisas de transferência (por candidato eliminado) e para cada eleição histórica. |
 | `influencia.json` | Resumo: forma fechada do M2/M3 × simulado, cenários de hipótese. |
 | `exemplo_municipio.json`, `exemplo_uf.json`, `m1_decomposicao.json` | Números dos exemplos "passo a passo" de [camadas.pt.md](camadas.pt.md) (Caruaru, Minas Gerais, decomposição nacional do M1). |
+| `auditoria_pesquisas.csv` | Auditoria completa das 112 pesquisas eleitorais (1T e 2T): correspondência exata com o registro do TSE PesqEle, protocolo oficial, divergências de tamanho amostral, custos e empresas contratantes/pagantes. |
+
+> Todas as 29 fontes primárias e secundárias do projeto estão catalogadas com fichas individuais de metadados, links diretos, somas SHA-256 e licenças em [docs/fontes/](fontes/).
 
 ## Como as simulações devem ser lidas
 

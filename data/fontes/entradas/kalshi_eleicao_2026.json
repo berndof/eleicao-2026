@@ -1,0 +1,17 @@
+{
+  "id": "kalshi_eleicao_2026",
+  "nome": "Mercados Regulados de Predição (Kalshi / KXBRPRES-26)",
+  "publicador": "Kalshi",
+  "url_origem": "https://api.elections.kalshi.com/trade-api/v2/markets?series_ticker=KXBRPRES-26",
+  "url_landing": "https://kalshi.com",
+  "coletado_em": "2026-10-05T05:16:01Z",
+  "sha256": "",
+  "tamanho_bytes": 0,
+  "licenca": "Kalshi API Terms",
+  "granularidade": "nacional",
+  "periodo": "2026",
+  "confianca": "baixa",
+  "status": "nao_verificada",
+  "usado_em": "catalogado, nao usado no modelo",
+  "limitacoes": "Tentativa de conexão falhou no ambiente de coleta: Falha de conexão / DNS (URLError: <urlopen error [Errno -3] Temporary failure in name resolution>). Nenhuma observação coletada."
+}

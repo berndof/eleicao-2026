@@ -1,0 +1,20 @@
+{
+  "id": "tse_perfil_2022",
+  "nome": "Perfil do eleitorado por município (gênero, idade, escolaridade), 2022",
+  "publicador": "TSE (Dados Abertos)",
+  "url_origem": "https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_2022.zip",
+  "url_landing": "https://dadosabertos.tse.jus.br/dataset/eleitorado-2022",
+  "licenca": "CC-BY (campo license_id do CKAN dos Dados Abertos do TSE, conferido em 05/10/2026)",
+  "granularidade": "município × gênero × faixa etária × escolaridade",
+  "periodo": "eleitorado de 2022",
+  "confianca": "alta",
+  "status": "verificada",
+  "camada": "1 (dados brutos) → 3 (features)",
+  "usado_em": "data/interim/perfil_2022_mun.csv; features de escolaridade, idade e gênero do M1",
+  "limitacoes": "Perfil de quem pode votar, não de quem votou.",
+  "arquivo_local": "data/raw/perfil_eleitorado_2022.zip",
+  "url_copia": "https://github.com/berndof/eleicao-2026/releases/download/dados-brutos-2026-10-04/perfil_eleitorado_2022.zip",
+  "sha256": "4bccad7e39ec13ea22a0ce4612d6147b4f06ee2c672cd5978112943951fb87e8",
+  "tamanho_bytes": 76699889,
+  "coletado_em": "2026-10-05T02:24:29Z"
+}

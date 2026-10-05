@@ -1,0 +1,20 @@
+{
+  "id": "transferencia_pesquisas",
+  "nome": "Pesquisas de transferência de voto Quaest e Datafolha, 02–03/10/2026",
+  "publicador": "números vindos de resumos de busca (não da fonte primária)",
+  "url_origem": "",
+  "url_landing": "",
+  "licenca": "nao_verificada",
+  "granularidade": "por eleitorado de candidato eliminado",
+  "periodo": "02–03/10/2026",
+  "confianca": "baixa",
+  "status": "nao_verificada",
+  "camada": "—",
+  "usado_em": "camada 7 (transferência) → M1",
+  "limitacoes": "Resumos de busca já erraram em outros casos. Em substituição pela fonte primária (transferencia_pesquisas_primaria.csv).",
+  "arquivo_local": "data/external/transferencia_pesquisas.csv",
+  "url_copia": "",
+  "sha256": "56f03c7b7a53e4f1694d2d8a1e8fc36b0d8a66cbba8e0726e10b107837bce8af",
+  "tamanho_bytes": 750,
+  "coletado_em": "2026-10-05T02:27:22Z"
+}

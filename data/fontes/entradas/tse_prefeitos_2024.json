@@ -1,0 +1,17 @@
+{
+  "id": "tse_prefeitos_2024",
+  "nome": "Prefeitos Eleitos nas Eleições Municipais de 2024",
+  "publicador": "TSE (Dados Abertos)",
+  "url_origem": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_2024.zip",
+  "url_landing": "https://dadosabertos.tse.jus.br/dataset/resultados-2024",
+  "coletado_em": "2026-10-05T05:11:04Z",
+  "sha256": "",
+  "tamanho_bytes": 47960179,
+  "licenca": "CC-BY",
+  "granularidade": "município (5.568 municípios com prefeitos eleitos)",
+  "periodo": "eleições municipais de 2024 (1º e 2º turnos)",
+  "confianca": "alta",
+  "status": "verificada",
+  "usado_em": "data/external/prefeitos_2024_mun.csv; indicador de força partidária local e alinhamento político",
+  "limitacoes": "Prefeito eleito não garante transferência automática de votos na eleição presidencial."
+}

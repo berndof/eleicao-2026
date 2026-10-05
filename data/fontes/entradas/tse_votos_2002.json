@@ -1,0 +1,20 @@
+{
+  "id": "tse_votos_2002",
+  "nome": "Votação por candidato × zona × município, todos os cargos, 2002",
+  "publicador": "TSE (Dados Abertos)",
+  "url_origem": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_2002.zip",
+  "url_landing": "https://dadosabertos.tse.jus.br/dataset/resultados-2002",
+  "licenca": "CC-BY (campo license_id do CKAN dos Dados Abertos do TSE, conferido em 05/10/2026)",
+  "granularidade": "zona eleitoral × município × candidato",
+  "periodo": "eleição de 2002",
+  "confianca": "alta",
+  "status": "verificada",
+  "camada": "1 (dados brutos) → 2 (tabelas municipais)",
+  "usado_em": "data/interim/pres_2002_mun.csv e pres_2002_t2_mun.csv (filtro Presidente); tabela municipal em preparação; ainda NÃO entra nos modelos publicados (o M3 usa só o histórico nacional digitado, historico_2turnos)",
+  "limitacoes": "Contém todos os cargos; só Presidente é usado. Votos nominais, sem brancos e nulos. Formato de colunas varia entre anos (2014 tem menos colunas).",
+  "arquivo_local": "data/raw/votacao_candidato_munzona_2002.zip",
+  "url_copia": "",
+  "sha256": "c1b7eabc9415ad853e10b11958c3e22ad6f248afbc6acb6a0cab38f4b25635ee",
+  "tamanho_bytes": 120264128,
+  "coletado_em": "2026-10-05T04:08:54Z"
+}

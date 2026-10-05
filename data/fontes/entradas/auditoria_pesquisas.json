@@ -1,0 +1,18 @@
+{
+  "id": "auditoria_pesquisas",
+  "nome": "Auditoria de pesquisas eleitorais contra o registro oficial do TSE (PesqEle)",
+  "publicador": "TSE (Dados Abertos) / Análise própria",
+  "url_origem": "https://dadosabertos.tse.jus.br/dataset/pesquisas-eleitorais-2026",
+  "url_landing": "https://dadosabertos.tse.jus.br/dataset/pesquisas-eleitorais-2026",
+  "coletado_em": "2026-10-05T05:07:35Z",
+  "sha256": "",
+  "tamanho_bytes": 0,
+  "licenca": "CC-BY",
+  "granularidade": "pesquisa individual (112 pesquisas auditadas: 56 1T + 56 2T)",
+  "periodo": "campanha eleitoral 2026 (agosto a outubro)",
+  "confianca": "alta",
+  "status": "verificada",
+  "camada": "auditoria de insumos",
+  "usado_em": "data/processed/auditoria_pesquisas.csv; verificação de integridade das pesquisas de 1º e 2º turno",
+  "limitacoes": "Amostra planejada no registro do TSE pode diferir em até ~1-3% da amostra final realizada em campo."
+}

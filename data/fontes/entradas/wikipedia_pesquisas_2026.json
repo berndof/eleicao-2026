@@ -1,0 +1,20 @@
+{
+  "id": "wikipedia_pesquisas_2026",
+  "nome": "Opinion polling for the 2026 Brazilian presidential election (wikitext)",
+  "publicador": "Wikipédia (EN), contribuidores",
+  "url_origem": "https://en.wikipedia.org/w/index.php?title=Opinion_polling_for_the_2026_Brazilian_presidential_election&oldid=1378579188",
+  "url_landing": "https://en.wikipedia.org/wiki/Opinion_polling_for_the_2026_Brazilian_presidential_election",
+  "licenca": "CC BY-SA (rodapé da Wikipédia)",
+  "granularidade": "pesquisa (instituto × período de campo)",
+  "periodo": "pesquisas de 2025 e 2026 até 04/10/2026 (revisão 1378579188, None, correspondência: ?)",
+  "confianca": "media",
+  "status": "parcial",
+  "camada": "1 (dados brutos) → 7 (pesquisas)",
+  "usado_em": "data/interim/pesquisas_1turno.csv e pesquisas_2turno.csv: M2 (2º turno), viés do 1º turno (camada 6)",
+  "limitacoes": "Fonte secundária e editável por qualquer pessoa. Cada pesquisa deve ser auditada contra o registro do TSE (data/processed/auditoria_pesquisas.csv). Sem coluna de método ou contratante. Revisão exata não confirmada; ver o .revisao.json.",
+  "arquivo_local": "data/external/wikipedia_pesquisas_2026.wikitext",
+  "url_copia": "",
+  "sha256": "394f76c5aeaddb14bbb816c0a7ff698738972f1a348113546eebe8d7b4806379",
+  "tamanho_bytes": 293134,
+  "coletado_em": "2026-10-05T02:25:51Z"
+}

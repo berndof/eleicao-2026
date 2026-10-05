@@ -1,0 +1,17 @@
+{
+  "id": "bcb_sgs",
+  "nome": "Sistema Gerenciador de Séries Temporais (BCB SGS)",
+  "publicador": "Banco Central do Brasil",
+  "url_origem": "https://api.bcb.gov.br/dados/serie/bcdata.sgs.<code>/dados",
+  "url_landing": "https://www3.bcb.gov.br/sgspub/",
+  "coletado_em": "2026-10-05T05:15:02Z",
+  "sha256": "",
+  "tamanho_bytes": 0,
+  "licenca": "Dados Abertos BCB (livre utilização)",
+  "granularidade": "nacional (diária/mensal)",
+  "periodo": "2018 a outubro de 2026",
+  "confianca": "alta",
+  "status": "verificada",
+  "usado_em": "data/ledger/observacoes.csv; séries macroeconômicas de conjuntura",
+  "limitacoes": "SGS sobrescreve séries com valores revisados; não preserva histórico de revisões point-in-time."
+}

@@ -1,0 +1,17 @@
+{
+  "id": "base_dos_dados_municipios",
+  "nome": "Diretório de Municípios Brasileiros (TSE, IBGE, SIAFI)",
+  "publicador": "Base dos Dados",
+  "url_origem": "https://storage.googleapis.com/basedosdados-public/one-click-download/br_bd_diretorios_brasil/municipio/municipio.csv.gz",
+  "url_landing": "https://basedosdados.org/dataset/br-bd-diretorios-brasil",
+  "coletado_em": "2026-10-05T05:10:56Z",
+  "sha256": "",
+  "tamanho_bytes": 271657,
+  "licenca": "MIT / Open Data",
+  "granularidade": "município (5.571 municípios)",
+  "periodo": "versão atualizada com instalação de Boa Esperança do Norte (2024/2026)",
+  "confianca": "alta",
+  "status": "verificada",
+  "usado_em": "data/external/municipios_chaves.csv; cruzamento entre códigos TSE e IBGE",
+  "limitacoes": "Exterior (ZZ) não possui código IBGE correspondente."
+}

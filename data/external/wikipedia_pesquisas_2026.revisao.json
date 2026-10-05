@@ -1,0 +1,16 @@
+{
+  "titulo": "Opinion polling for the 2026 Brazilian presidential election",
+  "arquivo": "data/external/wikipedia_pesquisas_2026.wikitext",
+  "sha256_arquivo": "394f76c5aeaddb14bbb816c0a7ff698738972f1a348113546eebe8d7b4806379",
+  "sha1_arquivo": "97a4f5cd594a255bb12e795a8db1c175d37ea603",
+  "tamanho_bytes": 293134,
+  "arquivo_mtime": "2026-10-05T02:25:51Z",
+  "oldid": 1378579188,
+  "timestamp_revisao": "2026-10-05T02:25:36Z",
+  "permalink": "https://en.wikipedia.org/w/index.php?title=Opinion_polling_for_the_2026_Brazilian_presidential_election&oldid=1378579188",
+  "status_casamento": "casado_exato",
+  "diferenca_linhas": 0,
+  "conteudo_revisao_confere_sha256": true,
+  "verificado_em": "2026-10-05T05:04:49Z",
+  "nota": "Wikipédia não é fonte primária: o oldid só fixa o ponto de partida; números a validar nos institutos/TSE."
+}

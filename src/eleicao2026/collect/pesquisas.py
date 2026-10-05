@@ -29,6 +29,12 @@ def baixar():
     with urlopen(Request(URL, headers=C.UA), timeout=60) as r:
         WIKITEXT.write_bytes(r.read())
     print(f"wikitext salvo em {WIKITEXT} ({WIKITEXT.stat().st_size/1e3:.0f} kB)", file=sys.stderr)
+    # proveniência: grava o oldid da revisão baixada ao lado do wikitext (não altera o parsing)
+    try:
+        from eleicao2026.collect import wikipedia_revisao
+        wikipedia_revisao.registrar(WIKITEXT)
+    except Exception as e:  # a coleta não depende disso
+        print(f"aviso: oldid da Wikipédia não registrado ({e})", file=sys.stderr)
 
 
 def section(txt, start, end):

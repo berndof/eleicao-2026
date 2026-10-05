@@ -1,0 +1,20 @@
+{
+  "id": "tse_perfil_2006",
+  "nome": "Perfil do eleitorado por município (gênero, idade, escolaridade), 2006",
+  "publicador": "TSE (Dados Abertos)",
+  "url_origem": "https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_2006.zip",
+  "url_landing": "https://dadosabertos.tse.jus.br/dataset/eleitorado-2006",
+  "licenca": "CC-BY (campo license_id do CKAN dos Dados Abertos do TSE, conferido em 05/10/2026)",
+  "granularidade": "município × gênero × faixa etária × escolaridade",
+  "periodo": "eleitorado de 2006",
+  "confianca": "alta",
+  "status": "verificada",
+  "camada": "1 (dados brutos) → 3 (features)",
+  "usado_em": "data/interim/perfil_2006_mun.csv; tabela municipal em preparação, ainda NÃO entra nos modelos publicados",
+  "limitacoes": "Em 2002 e 2006 a faixa etária vem como código -3 (não informada): 'jovem' e 'idoso' não devem ser usados nesses anos.",
+  "arquivo_local": "data/raw/perfil_eleitorado_2006.zip",
+  "url_copia": "",
+  "sha256": "7e08ce10070b073594a14550dfecd79b8108c887234cb17afb52f4193fa58e91",
+  "tamanho_bytes": 2268213,
+  "coletado_em": "2026-10-05T04:08:50Z"
+}

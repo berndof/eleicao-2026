@@ -1,0 +1,10 @@
+coluna,tabela_sidra,variavel,definicao,denominador
+populacao_2022,4714,93,População residente total (Censo 2022),total pessoas
+pct_catolica_10mais,9537,1000140 (c133=95263),Percentual de pessoas com 10 anos ou mais católicas,população com 10 anos ou mais
+pct_evangelica_10mais,9537,1000140 (c133=95277),Percentual de pessoas com 10 anos ou mais evangélicas,população com 10 anos ou mais
+pct_sem_religiao_10mais,9537,1000140 (c133=2836),Percentual de pessoas com 10 anos ou mais sem religião,população com 10 anos ou mais
+pct_urbana_2022,9923,93 (c1=1),Percentual da população residente em área urbana,população residente total
+pct_branca_2022,9605,93 (c86=2776),Percentual de pessoas autodeclaradas brancas,população residente total
+pct_preta_parda_2022,9605,93 (c86=2777+2779),Percentual de pessoas autodeclaradas pretas ou pardas,população residente total
+renda_media_percapita_2022,10295,13431,Rendimento nominal médio mensal domiciliar per capita (R$),moradores em domicílios ocupados
+renda_mediana_percapita_2022,10295,13534,Rendimento nominal mediano mensal domiciliar per capita (R$),moradores em domicílios ocupados

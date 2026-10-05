@@ -1,0 +1,17 @@
+{
+  "id": "polymarket_eleicao_2026",
+  "nome": "Mercados Preditivos da Eleição Presidencial Brasileira (Polymarket)",
+  "publicador": "Polymarket",
+  "url_origem": "https://gamma-api.polymarket.com/events/45915",
+  "url_landing": "https://polymarket.com/event/brazil-presidential-election",
+  "coletado_em": "2026-10-05T05:15:59Z",
+  "sha256": "",
+  "tamanho_bytes": 117170,
+  "licenca": "Polymarket API Terms (dados públicos de trading)",
+  "granularidade": "nacional e por estado (preços diários)",
+  "periodo": "novembro de 2025 a outubro de 2026",
+  "confianca": "media",
+  "status": "verificada",
+  "usado_em": "data/external/polymarket_mercados_uf.csv e data/ledger/observacoes.csv; apenas calibração e contexto externo (NÃO entra no modelo de projeção)",
+  "limitacoes": "Preço de mercado preditivo reflete sentimento e liquidez de traders globais, não uma pesquisa eleitoral probabilística. Não deve ser usado como insumo para evitar circularidade."
+}
