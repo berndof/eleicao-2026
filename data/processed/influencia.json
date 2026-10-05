@@ -1,0 +1,83 @@
+{
+ "m2_fechada": {
+  "media": 0.48841597463776754,
+  "dp": 0.024194224513211692,
+  "p": 0.3160429481418321,
+  "avg_pesquisas": 0.4967164715655975,
+  "vies_1t": 0.03826117805421799
+ },
+ "m2_simulado": {
+  "media": 0.48856017247421624,
+  "p": 0.3167
+ },
+ "m3_fechada": {
+  "media": 0.4933190035050795,
+  "p": 0.41139526630855494
+ },
+ "m3_simulado": {
+  "media": 0.4935476648611311,
+  "p": 0.4106
+ },
+ "m1_det": 0.46986675054882104,
+ "cenarios_m2": [
+  {
+   "rotulo": "M2 base (média das pesquisas corrigida pelo viés do 1º turno × 0,4)",
+   "m2_media": 0.48841597463776754,
+   "m2_p": 0.3160429481418321,
+   "ens_p_delta_pp": 0.0
+  },
+  {
+   "rotulo": "Sem correção do 1º turno (só a média das pesquisas de 2º turno)",
+   "m2_media": 0.4967164715655975,
+   "m2_p": 0.44584473388870416,
+   "ens_p_delta_pp": 3.894053572406162
+  },
+  {
+   "rotulo": "Correção total do viés do 1º turno (fator 1,0)",
+   "m2_media": 0.47596522924602264,
+   "m2_p": 0.16438670136023048,
+   "ens_p_delta_pp": -4.549687403448049
+  },
+  {
+   "rotulo": "Média simples (sem peso por recência)",
+   "m2_media": 0.48941588594940394,
+   "m2_p": 0.33088726221820364,
+   "ens_p_delta_pp": 0.44532942229114636
+  },
+  {
+   "rotulo": "Sem os 3 institutos que mais erraram no 1º turno (Indexa, MDA, Nexus)",
+   "m2_media": 0.48638943244119076,
+   "m2_p": 0.28491679174697393,
+   "ens_p_delta_pp": -0.9337846918457449
+  }
+ ],
+ "cenarios_transf": [
+  {
+   "rotulo": "Só Quaest (sem Datafolha)",
+   "m1_lula": 0.4667302425980414,
+   "delta_pp": -0.31365079507796323,
+   "ens_delta_pp": -0.15682539753898161
+  },
+  {
+   "rotulo": "Só Datafolha (sem Quaest)",
+   "m1_lula": 0.472997775848795,
+   "delta_pp": 0.3131025299973944,
+   "ens_delta_pp": 0.1565512649986972
+  },
+  {
+   "rotulo": "Sem nenhuma pesquisa de transferência (todos por suposição)",
+   "m1_lula": 0.4703368641755972,
+   "delta_pp": 0.047011362677618074,
+   "ens_delta_pp": 0.023505681338809037
+  }
+ ],
+ "n_1t_total": 56,
+ "n_1t_entram": 12,
+ "n_2t_total": 56,
+ "n_2t_entram": 12,
+ "pesos": {
+  "M1": 0.5,
+  "M2": 0.3,
+  "M3": 0.2
+ }
+}

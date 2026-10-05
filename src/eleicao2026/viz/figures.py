@@ -590,8 +590,166 @@ def fig15(d, t, lang):
     save(fig, lang, "15_margem_votos")
 
 
+# ----------------------------------------------------------------------------- figuras de insumos (16-19)
+T["pt"].update(
+    f16_title="Quais pesquisas de 2º turno entram no M2, e com que peso",
+    f16_x="Peso na média (%): cada 7 dias de atraso corta o peso pela metade",
+    f16_lab="Lula {v:.1f}% dos válidos",
+    f16_note="{n} das {tot} pesquisas do arquivo não entram: são anteriores a 20/09 ou foram substituídas\n"
+             "por uma pesquisa mais recente do mesmo instituto.",
+    f17_title="Nenhuma pesquisa sozinha move a probabilidade de Lula em mais de ~1 p.p.",
+    f17_x="Variação na probabilidade de Lula vencer, em pontos percentuais (ensemble)",
+    f17_1t="Pesquisas de 1º turno\n(entram só pelo erro medido na urna)",
+    f17_2t="Pesquisas de 2º turno\n(entram pelo valor e pela data)",
+    f17_foot="Efeito de tirar cada pesquisa e recalcular o M2 (peso do M2 no ensemble: 30%).",
+    f18_title="O que mais pesa nos dados: quanto do viés das pesquisas corrigimos",
+    f18_x="Variação na probabilidade de Lula vencer, em pontos percentuais (ensemble)",
+    f18_m2="M2 (pesquisas)", f18_m1="M1 (transferência)",
+    f19_title="M1: de onde vêm os votos do 2º turno",
+    f19_x="Votos válidos (milhões; eixo começa em 50)",
+    f19_start="1º turno (projetado)", f19_base="Bases: retenção e mobilização\n(calibradas em 2022, peso 0,5)",
+    f19_voters="Eleitores de {n} que votam nele", f19_rest="Demais eliminados", f19_end="2º turno (M1)",
+)
+T["en"].update(
+    f16_title="Which runoff polls enter M2, and with what weight",
+    f16_x="Weight in the average (%): each 7 days of age halves the weight",
+    f16_lab="Lula {v:.1f}% of valid",
+    f16_note="{n} of the {tot} polls in the file do not enter: they predate 20 Sep or were superseded\n"
+             "by a more recent poll from the same pollster.",
+    f17_title="No single poll moves the probability of a Lula win by more than ~1 pp",
+    f17_x="Change in the probability that Lula wins, in percentage points (ensemble)",
+    f17_1t="First-round polls\n(enter only through their error against the ballot box)",
+    f17_2t="Runoff polls\n(enter through their value and date)",
+    f17_foot="Effect of dropping each poll and recomputing M2 (M2 weight in the ensemble: 30%).",
+    f18_title="What weighs most in the data: how much poll bias we correct for",
+    f18_x="Change in the probability that Lula wins, in percentage points (ensemble)",
+    f18_m2="M2 (polls)", f18_m1="M1 (transfer)",
+    f19_title="M1: where the runoff votes come from",
+    f19_x="Valid votes (millions; axis starts at 50)",
+    f19_start="First round (projected)", f19_base="Bases: retention and mobilization\n(calibrated on 2022, weight 0.5)",
+    f19_voters="{n} voters who vote for him", f19_rest="Other eliminated candidates", f19_end="Runoff (M1)",
+)
+SCEN2_EN = {
+    "M2 base (média das pesquisas corrigida pelo viés do 1º turno × 0,4)": "M2 base",
+    "Sem correção do 1º turno (só a média das pesquisas de 2º turno)": "No first-round correction (runoff polls only)",
+    "Correção total do viés do 1º turno (fator 1,0)": "Full first-round bias correction (factor 1.0)",
+    "Média simples (sem peso por recência)": "Plain average (no recency weighting)",
+    "Sem os 3 institutos que mais erraram no 1º turno (Indexa, MDA, Nexus)": "Without the 3 worst first-round pollsters (Indexa, MDA, Nexus)",
+    "Só Quaest (sem Datafolha)": "Quaest only (no Datafolha)",
+    "Só Datafolha (sem Quaest)": "Datafolha only (no Quaest)",
+    "Sem nenhuma pesquisa de transferência (todos por suposição)": "No transfer poll at all (all assumed)",
+}
+
+
+def _inf(name):
+    return csv_rows(C.PROCESSED / name)
+
+
+def fig16(d, t, lang):
+    rows = [r for r in _inf("influencia_2turno.csv") if r["status"] == "entra"]
+    rows.sort(key=lambda r: r["data_fim"])
+    tot = len(_inf("influencia_2turno.csv"))
+    fig, ax = plt.subplots(figsize=(9, 5.4))
+    y = np.arange(len(rows))
+    w = [100 * float(r["peso_normalizado"]) for r in rows]
+    cols = [COR["lula"] if float(r["lula_valido"]) > 0.5 else COR["flavio"] for r in rows]
+    ax.barh(y, w, color=cols, alpha=0.85)
+    for yi, r, wi in zip(y, rows, w):
+        ax.text(wi + 0.15, yi, t["f16_lab"].format(v=100 * float(r["lula_valido"])), va="center", fontsize=8.5)
+    ax.set_yticks(y, [f"{r['pollster']} ({r['data']})" for r in rows], fontsize=9)
+    ax.set_xlim(0, max(w) * 1.45)
+    ax.set_xlabel(t["f16_x"])
+    ax.set_title(t["f16_title"], loc="left", fontsize=12)
+    fig.text(0.01, -0.07, t["f16_note"].format(n=tot - len(rows), tot=tot), fontsize=8.5, color="#555555",
+             ha="left", va="top")
+    footer(fig, t, "fonte_mod")
+    save(fig, lang, "16_peso_pesquisas_2turno")
+
+
+def fig17(d, t, lang):
+    fig, axs = plt.subplots(1, 2, figsize=(11, 5.6), sharex=True)
+    for ax, fn, key, ttl in ((axs[0], "influencia_1turno.csv", "f17_1t", None), (axs[1], "influencia_2turno.csv", "f17_2t", None)):
+        rows = [r for r in _inf(fn) if r["status"] == "entra"]
+        rows.sort(key=lambda r: float(r["d_ens_p_pp"]))
+        y = np.arange(len(rows))
+        v = [float(r["d_ens_p_pp"]) for r in rows]
+        ax.hlines(y, 0, v, color="#999999", lw=1.5)
+        ax.scatter(v, y, color=[COR["lula"] if x > 0 else COR["flavio"] for x in v], zorder=3, s=45)
+        ax.set_yticks(y, [r["pollster"] for r in rows], fontsize=9)
+        ax.axvline(0, color="black", lw=0.8)
+        ax.set_title(t[key], fontsize=10.5, loc="left")
+        for yi, x in zip(y, v):
+            ax.text(x + (0.04 if x >= 0 else -0.04), yi, f"{x:+.2f}", va="center", ha="left" if x >= 0 else "right", fontsize=8)
+    lim = max(abs(float(r["d_ens_p_pp"])) for fn in ("influencia_1turno.csv", "influencia_2turno.csv")
+              for r in _inf(fn) if r["status"] == "entra") * 1.35
+    axs[0].set_xlim(-lim, lim)
+    fig.supxlabel(t["f17_x"], fontsize=10)
+    fig.suptitle(t["f17_title"], x=0.01, ha="left", fontweight="bold", fontsize=13)
+    fig.text(0.01, -0.02, t["f17_foot"], fontsize=8.5, color="#555555")
+    fig.text(0.01, -0.055, t["fonte_mod"], fontsize=8, color="#666666")
+    fig.tight_layout(rect=(0, 0.02, 1, 0.95))
+    save(fig, lang, "17_efeito_remover_pesquisa")
+
+
+def fig18(d, t, lang):
+    inf = jload(C.PROCESSED / "influencia.json")
+    items = [(s["rotulo"], s["ens_p_delta_pp"], "M2") for s in inf["cenarios_m2"][1:]]
+    fig, ax = plt.subplots(figsize=(10, 4.2))
+    y = np.arange(len(items))[::-1]
+    lab = [(SCEN2_EN.get(r, r) if lang == "en" else r) for r, _, _ in items]
+    ax.barh(y, [v for _, v, _ in items], color=[COR["lula"] if v > 0 else COR["flavio"] for _, v, _ in items], alpha=0.85)
+    for yi, (_, v, _) in zip(y, items):
+        ax.text(v + (0.1 if v >= 0 else -0.1), yi, f"{v:+.1f}", va="center", ha="left" if v >= 0 else "right", fontsize=9)
+    ax.set_yticks(y, lab, fontsize=9)
+    ax.axvline(0, color="black", lw=0.8)
+    lim = max(abs(v) for _, v, _ in items) * 1.3
+    ax.set_xlim(-lim, lim)
+    ax.set_xlabel(t["f18_x"])
+    ax.set_title(t["f18_title"], loc="left", fontsize=11.5)
+    footer(fig, t, "fonte_mod")
+    save(fig, lang, "18_cenarios_de_insumo")
+
+
+def fig19(d, t, lang):
+    m = jload(C.PROCESSED / "m1_decomposicao.json")
+    nm = {"RONALDO CAIADO": "Caiado", "RENAN SANTOS": "Renan Santos", "ESCRITOR AUGUSTO CURY": "Cury", "ZEMA": "Zema"}
+    fig, axs = plt.subplots(2, 1, figsize=(9.5, 8.4))
+    for ax, k, col, v1, title in ((axs[0], "lula", COR["lula"], m["lula_1t"], "Lula"),
+                                  (axs[1], "flavio", COR["flavio"], m["flavio_1t"], "Flávio")):
+        e = m[k]["elim"]
+        big = sorted(nm, key=lambda c: -e[c])
+        steps = [(t["f19_start"], v1 / 1e6, None),
+                 (t["f19_base"], (m[k]["propria"] + m[k]["rival"] - v1) / 1e6, "d")]
+        steps += [(t["f19_voters"].format(n=nm[c]), e[c] / 1e6, "d") for c in big]
+        steps += [(t["f19_rest"], sum(v for c, v in e.items() if c not in big) / 1e6, "d")]
+        cum = 0.0
+        ys = np.arange(len(steps) + 1)[::-1]
+        for yi, (lab, v, kind) in zip(ys, steps):
+            if kind is None:
+                ax.barh(yi, v, color=col, alpha=0.4)
+                ax.text(v + 0.1, yi, f"{v:.1f}", va="center", fontsize=9)
+                cum = v
+            else:
+                c_ = col if v >= 0 else "#444444"
+                ax.barh(yi, v, left=cum, color=c_, alpha=0.85)
+                ax.text(max(cum, cum + v) + 0.1, yi, f"{v:+.2f}", va="center", fontsize=9)
+                cum += v
+        ax.barh(ys[-1], cum, color=col)
+        ax.text(cum + 0.1, ys[-1], f"{cum:.1f}", va="center", fontsize=10, fontweight="bold")
+        ax.set_yticks(ys, [s_[0] for s_ in steps] + [t["f19_end"]], fontsize=9)
+        ax.set_xlim(50, 66)
+        ax.set_title(title, loc="left", fontsize=11, color=col)
+        ax.set_xlabel(t["f19_x"] if k == "flavio" else "")
+        ax.grid(axis="y", visible=False)
+    fig.suptitle(t["f19_title"], x=0.01, ha="left", fontweight="bold", fontsize=13)
+    fig.tight_layout(rect=(0, 0.02, 1, 0.96))
+    fig.text(0.01, -0.01, t["fonte_mod"], fontsize=8, color="#666666")
+    save(fig, lang, "19_decomposicao_m1")
+
+
 FIGS = {"01": fig01, "02": fig02, "03": fig03, "04": fig04, "05": fig05, "06": fig06, "07": fig07, "08": fig08,
-        "09": fig09, "10": fig10, "11": fig11, "12": fig12, "13": fig13, "14": fig14, "15": fig15}
+        "09": fig09, "10": fig10, "11": fig11, "12": fig12, "13": fig13, "14": fig14, "15": fig15,
+        "16": fig16, "17": fig17, "18": fig18, "19": fig19}
 
 
 def main():

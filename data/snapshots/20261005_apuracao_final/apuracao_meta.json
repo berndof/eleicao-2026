@@ -1,0 +1,29 @@
+{
+ "coletado_em": "2026-10-05T00:25:04-0300",
+ "tse_dg": "05/10/2026",
+ "tse_hg": "00:11:37",
+ "totalizacao_final": false,
+ "pct_secoes_apuradas": "99,997195782",
+ "pct_eleitorado_apurado": "99,997436148",
+ "comparecimento_pct": "78,916288733",
+ "abstencao_pct": "21,083711267",
+ "votos_validos": 119297583,
+ "votos_brancos": 2300781,
+ "votos_nulos": 3674149,
+ "votos_candidatos": {
+  "FLAVIO BOLSONARO": 56104268,
+  "RONALDO CAIADO": 2605128,
+  "LULA": 53876617,
+  "HERTZ DIAS": 43103,
+  "EDMILSON COSTA": 22693,
+  "CLARIANA BARAO": 40043,
+  "ZEMA": 326486,
+  "ESCRITOR AUGUSTO CURY": 3448551,
+  "VETERINÁRIO WILSON GRASSI": 16881,
+  "SAMARA": 122911,
+  "RENAN SANTOS": 2675878,
+  "RUI COSTA PIMENTA": 15024
+ },
+ "municipios": 5757,
+ "soma_municipios_validos": 119288431
+}

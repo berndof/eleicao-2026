@@ -4,11 +4,33 @@ Estrutura de `data/`:
 
 | Pasta | Conteúdo | Versionada? |
 |---|---|---|
-| `data/raw/` | zips do TSE (votos 2022 e perfil do eleitorado, ~1,1 GB) | não (`make data` baixa de novo) |
+| `data/raw/` | brutos do TSE (votos 2022 e perfil do eleitorado, ~1,1 GB; JSON originais da apuração) | não no git; **publicados na [release de dados brutos](https://github.com/berndof/eleicao-2026/releases/tag/dados-brutos-2026-10-04)** (`make fetch-raw` baixa e confere) |
 | `data/external/` | insumos pequenos de terceiros: malha de UFs do IBGE, wikitext das pesquisas, histórico de 2º turnos, pesquisas de transferência | sim |
 | `data/interim/` | tabelas por município geradas a partir dos insumos (apuração 2026, votos 2022, perfil, pesquisas extraídas) | sim |
 | `data/processed/` | resultados finais do modelo (usados no artigo e nas figuras) | sim |
 | `data/snapshots/` | fotografia dos arquivos gerados em 04/10/2026 ~20h, com ~85% apurado (base do backtest) | sim |
+
+## Dados brutos
+
+Os arquivos brutos (exatamente como o TSE publicou) são pesados demais para o git; estão numa **release do GitHub**, com somas de verificação:
+
+| Arquivo | Tamanho | O que é | Origem |
+|---|---:|---|---|
+| `votacao_candidato_munzona_2022.zip` | 642 MB | votos por candidato × zona × município, todos os cargos de 2022 | [download direto](https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_2022.zip) |
+| `perfil_eleitorado_2022.zip` | 77 MB | eleitorado 2022 por município × gênero × idade × escolaridade | [download direto](https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_2022.zip) |
+| `perfil_eleitorado_2026.zip` | 408 MB | idem, 2026 | [download direto](https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_2026.zip) |
+| `tse_apuracao_20261005.tar.gz` | 2,7 MB | as **5.759 respostas JSON originais** do portal de resultados (5.757 municípios + nacional + configuração), coletadas às 00:11 de 05/10/2026 (99,997% das seções) | `resultados.tse.jus.br` |
+| `SHA256SUMS.txt` | | somas SHA-256 dos arquivos acima | |
+
+```bash
+make fetch-raw     # baixa tudo de data/raw/ da release e confere o SHA-256
+make data          # (alternativa) baixa direto do TSE e gera as tabelas por município
+```
+
+> [!NOTE]
+> O `tse_apuracao_20261005.tar.gz` é de uma coleta **posterior** à que gerou `data/interim/mun_2026.csv` (23h25 de 04/10, 99,991%). A coleta de 05/10 também está convertida em `data/snapshots/20261005_apuracao_final/mun_2026.csv`, e as duas diferem em ~0,006% do eleitorado. Os modelos publicados usam a de 04/10; a diferença é desprezível para os resultados.
+
+Os dados do TSE são públicos (Dados Abertos); mantenha a atribuição ao TSE. Os JSON podem ser relidos com `python -m eleicao2026.collect.tse_apuracao --save-raw ...` (que também grava os brutos).
 
 ## `data/external/`
 
@@ -27,7 +49,7 @@ Estrutura de `data/`:
 | `pres_2022_mun.csv`, `pres_2022_t2_mun.csv` | `uf`, `cd` | Votos nominais de Presidente 2022 por município (1º e 2º turno). |
 | `perfil_2022_mun.csv`, `perfil_2026_mun.csv` | `uf`, `cd` | Eleitorado por município: `tot` total, `fem` mulheres, `sup` superior completo, `analf` analfabetos/lê-e-escreve, `fund_inc` fundamental incompleto, `jovem` 16–24 anos, `idoso` 60+. |
 | `projecao_mun.csv` | `uf`, `cd` | Projeção do 1º turno: votos válidos apurados, votos faltantes estimados e share projetado de Lula e Flávio nos votos faltantes. |
-| `pesquisas_1turno.csv`, `pesquisas_2turno.csv` | — | Pesquisas extraídas da Wikipédia. `data_fim` em ISO 8601; valores em % como divulgados. |
+| `pesquisas_1turno.csv`, `pesquisas_2turno.csv` | — | Pesquisas extraídas da Wikipédia (1º turno: 56; 2º turno: 56). `data_fim` em ISO 8601; valores em % como divulgados. A linha "Results" da página (o resultado da urna) **não** é incluída. |
 
 Códigos: `cd` é o código do município **no TSE** (não é o código IBGE). `zz` = exterior.
 
@@ -44,6 +66,10 @@ Códigos: `cd` é o código do município **no TSE** (não é o código IBGE). `
 | `sims_2turno_uf.csv` | % de Lula em cada UF em cada simulação. |
 | `tabela_uf_2turno.csv` | Resumo por UF (mediana e IC 90% da % de Lula; P(Lula vence na UF)). |
 | `resumo_2turno.json` | Todas as estatísticas usadas no artigo e nas figuras (quantis, limiares, sensibilidade, tornado, cenários, etc.). |
+| `influencia_2turno.csv`, `influencia_1turno.csv` | Cada pesquisa de 2º / 1º turno: se entra no modelo (e se não, por quê), peso e efeito de removê-la (método leave-one-out). Ver [pesquisas.pt.md](pesquisas.pt.md). |
+| `influencia_transf.csv`, `influencia_historico.csv` | Idem para as pesquisas de transferência (por candidato eliminado) e para cada eleição histórica. |
+| `influencia.json` | Resumo: forma fechada do M2/M3 × simulado, cenários de hipótese. |
+| `exemplo_municipio.json`, `exemplo_uf.json`, `m1_decomposicao.json` | Números dos exemplos "passo a passo" de [camadas.pt.md](camadas.pt.md) (Caruaru, Minas Gerais, decomposição nacional do M1). |
 
 ## Como as simulações devem ser lidas
 

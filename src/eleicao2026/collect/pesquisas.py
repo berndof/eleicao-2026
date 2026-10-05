@@ -120,6 +120,10 @@ def extrair():
         if len(vals) < 8:
             continue
         v = [num(x) for x in vals[:9]]
+        # A linha "Results" da Wikipédia é o RESULTADO da urna (não é pesquisa): fica de fora, senão
+        # entraria como um instituto de erro ~0 e diluiria o viés das pesquisas.
+        if cur_p == "Results":
+            continue
         if v[0] is not None and v[1] is not None:
             out1.append(dict(pollster=cur_p, data=cur_d, data_fim=data_fim(cur_d), lula=v[0], flavio=v[1],
                              caiado=v[2], zema=v[3], santos=v[4], cury=v[5], outros=v[6],

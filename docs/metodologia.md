@@ -1,5 +1,7 @@
 # Metodologia
 
+> 📚 **Para a explicação passo a passo, com números reais de cada etapa, veja [camadas.pt.md](camadas.pt.md)** (e [pesquisas.pt.md](pesquisas.pt.md) para o papel de cada pesquisa). Este documento é o resumo técnico.
+
 Este documento descreve o **pipeline** e os **modelos** em detalhe técnico. A narrativa e a discussão dos resultados estão no [artigo](artigo.pt.md).
 
 ## 1. Pipeline

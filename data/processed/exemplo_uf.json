@@ -1,0 +1,122 @@
+{
+ "uf": "mg",
+ "nome": "Minas Gerais",
+ "regiao": "Sudeste",
+ "validos_1t": 11976426.299999999,
+ "lula_1t": 5188806.333733999,
+ "flavio_1t": 5777782.198598,
+ "eliminados_1t": 1009837.7676679995,
+ "coef_lula": [
+  1.0224670358576604,
+  -0.02487459620898202,
+  0.3856809081251462
+ ],
+ "coef_flavio": [
+  0.02161338380413106,
+  1.0543559006982994,
+  0.3805270736737528
+ ],
+ "regioes_proprias": true,
+ "delta_regional": 0.04868720345174855,
+ "peso_assimetria": 0.5,
+ "rho0": 0.9420411880384507,
+ "lula_retem": 5247094.882713228,
+ "lula_da_base_flavio": -71859.99958678482,
+ "flavio_retem": 5934810.476319697,
+ "flavio_da_base_lula": 56073.83138814954,
+ "eliminados": [
+  {
+   "candidato": "ESCRITOR AUGUSTO CURY",
+   "votos": 409799.1087060959,
+   "split_nacional": 0.5927661619802932,
+   "split_uf": 0.6044638386716282,
+   "comparece": 0.9420411880384507,
+   "para_flavio": 233351.83791460586,
+   "para_lula": 152695.80130798294
+  },
+  {
+   "candidato": "RENAN SANTOS",
+   "votos": 247211.00179574528,
+   "split_nacional": 0.7533044420368364,
+   "split_uf": 0.7622403501890085,
+   "comparece": 0.9420411880384507,
+   "para_flavio": 177512.77818086024,
+   "para_lula": 55370.167646979215
+  },
+  {
+   "candidato": "RONALDO CAIADO",
+   "votos": 230444.86000137415,
+   "split_nacional": 0.6412947414935926,
+   "split_uf": 0.6524158395869076,
+   "comparece": 0.9420411880384507,
+   "para_flavio": 141632.00841269465,
+   "para_lula": 75456.5412803543
+  },
+  {
+   "candidato": "ZEMA",
+   "votos": 98411.46183775044,
+   "split_nacional": 0.6575342465753424,
+   "split_uf": 0.668412193719435,
+   "comparece": 0.9420411880384507,
+   "para_flavio": 61966.923995974306,
+   "para_lula": 30740.726430260773
+  },
+  {
+   "candidato": "SAMARA",
+   "votos": 11027.459881734216,
+   "split_nacional": 0.65,
+   "split_uf": 0.6609938779973724,
+   "comparece": 0.9420411880384507,
+   "para_flavio": 6866.616853380347,
+   "para_lula": 3521.704554654907
+  },
+  {
+   "candidato": "HERTZ DIAS",
+   "votos": 4083.047094039661,
+   "split_nacional": 0.3,
+   "split_uf": 0.3103227912398566,
+   "comparece": 0.9420411880384507,
+   "para_flavio": 1193.625129690868,
+   "para_lula": 2652.773405595198
+  },
+  {
+   "candidato": "CLARIANA BARAO",
+   "votos": 3409.0059668553995,
+   "split_nacional": 0.65,
+   "split_uf": 0.6609938779973724,
+   "comparece": 0.9420411880384507,
+   "para_flavio": 2122.7316241754647,
+   "para_lula": 1088.6924068711633
+  },
+  {
+   "candidato": "EDMILSON COSTA",
+   "votos": 2298.6266290849,
+   "split_nacional": 0.3,
+   "split_uf": 0.3103227912398566,
+   "comparece": 0.9420411880384507,
+   "para_flavio": 671.97327022202,
+   "para_lula": 1493.4276902979382
+  },
+  {
+   "candidato": "VETERINÁRIO WILSON GRASSI",
+   "votos": 1732.1275226928924,
+   "split_nacional": 0.65,
+   "split_uf": 0.6609938779973724,
+   "comparece": 0.9420411880384507,
+   "para_flavio": 1078.5671557262103,
+   "para_lula": 553.1683135855006
+  },
+  {
+   "candidato": "RUI COSTA PIMENTA",
+   "votos": 1421.0682326272188,
+   "split_nacional": 0.3,
+   "split_uf": 0.3103227912398566,
+   "comparece": 0.9420411880384507,
+   "para_flavio": 415.430612090011,
+   "para_lula": 923.2741940578358
+  }
+ ],
+ "lula_2t": 5499731.160357083,
+ "flavio_2t": 6617696.800857266,
+ "lula_2t_pct": 0.45386951570586664
+}

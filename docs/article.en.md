@@ -6,10 +6,13 @@
 
 ## Summary
 
+> [!TIP]
+> **Want to understand each step?** [`docs/layers.en.md`](layers.en.md) explains the 12 layers of the analysis (what goes in, what happens, what comes out, what it means) with real numbers, and [`docs/polls.en.md`](polls.en.md) shows which polls enter, where, and how much each weighs. Raw data is in a [release](https://github.com/berndof/eleicao-2026/releases/tag/dados-brutos-2026-10-04).
+
 * **First round (final, 99.99% counted):** Flávio Bolsonaro 47.03% vs. Lula 45.16% of valid votes. Nobody passed 50%; the runoff is on **25 Oct 2026**.
 * **Backtest:** at ~8pm, with 85% counted, the model projected Lula 44.95% vs. Flávio 47.19%. The final result was 45.16% vs. 47.03% — **an error of 0.2 pp per candidate**, versus 1.6 and 1.4 pp for anyone who just read the partial count. It picked the right winner in all 28 units (26 states + DF + abroad). But the model's 90% interval for the national margin **narrowly missed** (by 0.08 pp): it was too narrow.
-* **First-round polls erred in Lula's favor:** on average **+3.5 pp on the margin** (13 pollsters, from −2.2 to +7.7).
-* **Runoff forecast (3 methods + ensemble):** Lula 48.1% of valid votes on average (median 47.7%; 90% interval 45.2% to 52.6%). **Probability that Lula wins: 18%** — but anywhere from **0.3% to 41%** depending on the method. The disagreement between methods is the most important result here.
+* **First-round polls erred in Lula's favor:** on average **+3.8 pp on the margin** (12 pollsters, from −2.2 to +7.7).
+* **Runoff forecast (3 methods + ensemble):** Lula 48.1% of valid votes on average (median 47.7%; 90% interval 45.1% to 52.6%). **Probability that Lula wins: 18%** — but anywhere from **0.3% to 41%** depending on the method. The disagreement between methods is the most important result here.
 * **Who decides:** the 8.7 million voters of Cury, Renan and Caiado. Polls put ~65% of them with Flávio (in 2022 the eliminated candidates' voters went 48% to Bolsonaro). Even if **all** of them voted for Lula, he would only reach 51.7%.
 
 ![First-round result](../figures/en/01_resultado_1turno.png)
@@ -27,14 +30,15 @@ This text answers both, measures the first against the actual result, and shows 
 
 ## 2. Data
 
-| Source | What it provided | Confidence |
-|---|---|---|
-| TSE — results portal (official files for election 6257) | Count by municipality (5,757), polling stations and electorate counted | **High** (official) |
-| TSE — open data | 2022 presidential votes (both rounds) by municipality; electorate profile (age, gender, schooling) 2022 and 2026 | **High** (official) |
-| Wikipedia (EN), *Opinion polling for the 2026 Brazilian presidential election* | 58 first-round and 56 runoff polls, each linking to its source | Medium-high (compilation; I did not re-check every link) |
-| Quaest and Datafolha (Oct 2–3), via search summaries | Runoff voting intention **among each eliminated candidate's voters** | **Medium-low**: I did not read the original articles; the two pollsters diverge a lot |
-| TSE (history) | 2002–2022 presidential rounds | Medium-high (2022 re-checked against open data) |
-| IBGE | State boundaries (maps only) | High |
+| Source | What it provided | Confidence | Original data | Copy in this repository |
+|---|---|---|---|---|
+| TSE — results portal (official files for election 6257) | Count by municipality (5,757), polling stations and electorate counted | **High** (official) | [results portal](https://resultados.tse.jus.br/) · sample JSON: [Caruaru](https://resultados.tse.jus.br/oficial/ele2026/6257/dados/pe/pe23817-c0001-e006257-u.json) | [`mun_2026.csv`](../data/interim/mun_2026.csv) · [original JSON (release)](https://github.com/berndof/eleicao-2026/releases/tag/dados-brutos-2026-10-04) |
+| TSE open data: 2022 votes | 2022 presidential votes (both rounds) by municipality | **High** (official) | [`votacao_candidato_munzona_2022.zip`](https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_2022.zip) (642 MB) | [`pres_2022_mun.csv`](../data/interim/pres_2022_mun.csv) · [`pres_2022_t2_mun.csv`](../data/interim/pres_2022_t2_mun.csv) · [zip (release)](https://github.com/berndof/eleicao-2026/releases/tag/dados-brutos-2026-10-04) |
+| TSE open data: electorate profile | Age, gender and schooling by municipality, 2022 and 2026 | **High** (official) | [`perfil_eleitorado_2022.zip`](https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_2022.zip) · [`perfil_eleitorado_2026.zip`](https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_2026.zip) | [`perfil_2022_mun.csv`](../data/interim/perfil_2022_mun.csv) · [`perfil_2026_mun.csv`](../data/interim/perfil_2026_mun.csv) · [zips (release)](https://github.com/berndof/eleicao-2026/releases/tag/dados-brutos-2026-10-04) |
+| Wikipedia (EN), *Opinion polling for the 2026 Brazilian presidential election* | 56 first-round polls (excluding the page's "Results" row, which is the ballot box) and 56 runoff polls, each linking to its source | Medium-high (compilation; I did not re-check every link) | [page](https://en.wikipedia.org/wiki/Opinion_polling_for_the_2026_Brazilian_presidential_election) | [raw wikitext](../data/external/wikipedia_pesquisas_2026.wikitext) · [`pesquisas_1turno.csv`](../data/interim/pesquisas_1turno.csv) · [`pesquisas_2turno.csv`](../data/interim/pesquisas_2turno.csv) |
+| Quaest and Datafolha (Oct 2–3), via search summaries | Runoff voting intention **among each eliminated candidate's voters** | **Medium-low**: I did not read the original articles; the two pollsters diverge a lot | no verified primary link | [`transferencia_pesquisas.csv`](../data/external/transferencia_pesquisas.csv) |
+| TSE (history) | 2002–2022 presidential rounds | Medium-high (2022 re-checked against open data) | [TSE open data](https://dadosabertos.tse.jus.br/) | [`historico_2turnos.csv`](../data/external/historico_2turnos.csv) |
+| IBGE | State boundaries (maps only) | High | [Malhas API v3](https://servicodados.ibge.gov.br/api/docs/malhas?versao=3) | [`ufs_ibge.geojson`](../data/external/ufs_ibge.geojson) |
 
 What is **not** a numeric input: government approval, rejection ratings, formal endorsements — only qualitative context (the race is polarised and balanced). Details and data dictionary: [`docs/dados.md`](dados.md) (Portuguese).
 
@@ -76,7 +80,7 @@ Comparing each pollster's last poll (from Sep 26) with the ballot box:
 
 ![Poll error](../figures/en/05_erro_pesquisas_1turno.png)
 
-Mean **+3.5 pp on the Lula − Flávio margin** (standard deviation across pollsters: 3.2). Ten of 13 favored Lula; Palver (−2.2) and Futura (−0.2) favored Flávio; Results was essentially spot on. This bias matters most for method M2, below — and raises a question we **cannot** answer here: how much of it repeats in the runoff?
+Mean **+3.8 pp on the Lula − Flávio margin** (standard deviation across pollsters: 3.1). Ten of 12 favored Lula; Palver (−2.2) and Futura (−0.2) favored Flávio. This bias matters most for method M2, below — and raises a question we **cannot** answer here: how much of it repeats in the runoff?
 
 ## 5. Forecasting the runoff: three methods
 
@@ -94,7 +98,7 @@ Instead of betting on one model, I use three **independent** methods and compare
 
 ### M2 — Adjusted polls
 
-Average of runoff polls (last one per pollster, recency-weighted, 7-day half-life): **Lula 49.7%**. I correct for the first-round error, but only **40% ± 20%** of it (my assumption, based on search summaries saying that in 2022 the runoff error was a quarter to a half of the first-round error). Result: **Lula 48.9%**.
+Average of runoff polls (last one per pollster, recency-weighted, 7-day half-life): **Lula 49.7%**. I correct for the first-round error, but only **40% ± 20%** of it (my assumption, based on search summaries saying that in 2022 the runoff error was a quarter to a half of the first-round error). Result: **Lula 48.8%**.
 
 ![Runoff polls](../figures/en/06_pesquisas_2turno.png)
 
@@ -111,9 +115,9 @@ Weighted mixture: **M1 50%, M2 30%, M3 20%**. These weights are **my judgement**
 | Component | Weight | Lula (mean) | 90% CI | P(Lula wins) | Median margin |
 |---|---:|---:|---|---:|---:|
 | M1 structural | 50% | 47.19% | 45.44% – 48.91% | **0.3%** | −6.7 M |
-| M2 adjusted polls | 30% | 48.92% | 44.99% – 52.88% | **32.6%** | −2.6 M |
+| M2 adjusted polls | 30% | 48.86% | 44.91% – 52.83% | **31.7%** | −2.7 M |
 | M3 historical | 20% | 49.35% | 43.41% – 55.29% | **41.1%** | −1.7 M |
-| **Ensemble** | | **48.14%** | **45.15% – 52.61%** | **18.2%** | **−5.4 M** |
+| **Ensemble** | | **48.12%** | **45.12% – 52.58%** | **17.9%** | **−5.4 M** |
 
 ![Distribution](../figures/en/09_distribuicao_ensemble.png)
 
@@ -125,7 +129,7 @@ Weighted mixture: **M1 50%, M2 30%, M3 20%**. These weights are **my judgement**
 
 ![Weight sensitivity](../figures/en/10_sensibilidade_pesos.png)
 
-With equal weights, P(Lula) = 24.7%; with 70% on M1, 10.9%; with 60% on M2, 23.8%. **All of these mixtures put Flávio ahead**, but the probability ranges from ~10% to ~25% (and from 0.3% to 41% if you use a single method). Read the result as "**Flávio favored; a close race in Lula-friendly scenarios**" rather than memorising the 18%.
+With equal weights, P(Lula) = 24.4%; with 70% on M1, 10.7%; with 60% on M2, 23.2%. **All of these mixtures put Flávio ahead**, but the probability ranges from ~10% to ~25% (and from 0.3% to 41% if you use a single method). Read the result as "**Flávio favored; a close race in Lula-friendly scenarios**" rather than memorising the 18%.
 
 ### Inside M1
 
@@ -145,7 +149,7 @@ The biggest factors, by range (lowest to highest third of each parameter): a ±1
 
 ![Forecast by state](../figures/en/13_previsao_por_uf.png)
 
-Six units have an interval crossing 50% and decide the race: **Pará** (P(Lula) 85%), **abroad** (67%), **Amazonas** (62%), **Amapá** (29%), **Minas Gerais** (10%; the most populous battleground) and **Tocantins** (7%). The Southeast and South hold 56% of votes and go against Lula by 16 and 35 pp; the Northeast (28% of votes) goes for him by +31 pp.
+Six units have an interval crossing 50% and decide the race: **Pará** (P(Lula) 85%), **abroad** (67%), **Amazonas** (61%), **Amapá** (29%), **Minas Gerais** (10%; the most populous battleground) and **Tocantins** (7%). The Southeast and South hold 56% of votes and go against Lula by 16 and 35 pp; the Northeast (28% of votes) goes for him by +31 pp.
 
 ## 7. Limitations (read before quoting a number)
 
@@ -162,7 +166,8 @@ Six units have an interval crossing 50% and decide the race: **Pará** (P(Lula) 
 ```bash
 git clone https://github.com/berndof/eleicao-2026 && cd eleicao-2026
 make setup      # Python environment
-make data       # once: downloads ~1.1 GB from TSE (2022 votes and electorate profile)
+make fetch-raw  # downloads the raw data (~1.1 GB) from the GitHub release and checks SHA-256  (or: make data, straight from TSE)
+make data       # once: builds the per-municipality tables from the raw data
 make all        # refreshes count and polls, runs models, backtest, figures and tables
 ```
 
@@ -173,7 +178,7 @@ make all        # refreshes count and polls, runs models, backtest, figures and 
 
 ## 9. Next steps
 
-* **Post-mortem on Oct 25:** this forecast is frozen at tag `previsao-2t-2026-10-04`. After the election I will compare forecast and result (by method, by state) and publish what went wrong.
+* **Post-mortem on Oct 25:** this forecast is frozen at tag `previsao-2t-2026-10-04-v2` (`-v2` fixes an error in the original version; see the [erratum](layers.en.md#erratum)). After the election I will compare forecast and result (by method, by state) and publish what went wrong.
 * Post-first-round runoff polls (starting to come out in the next days) should be incorporated; `make collect` fetches them.
 * Estimate (instead of assume) the bias-persistence factor and the ensemble weights, using 2014 and 2018.
 

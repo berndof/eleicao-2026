@@ -104,7 +104,7 @@ def poll_stats(L1, F1):
     last1 = {}
     for r in p1:
         d = date.fromisoformat(r["data_fim"])
-        if d < CORTE_1T:
+        if d < CORTE_1T or r["pollster"] == "Results":  # "Results" = resultado da urna, não pesquisa
             continue
         tot = sum(float(r[k] or 0) for k in ("lula", "flavio", "caiado", "zema", "santos", "cury", "outros"))
         l, f = float(r["lula"]) / tot, float(r["flavio"]) / tot
@@ -170,11 +170,8 @@ def shift_logit(base, target, vtot):
     return {u: expit(logit(sh[u]) + (lo + hi) / 2) for u in sh}
 
 
-def run(n_per=N_PER, log=print):
-    rnd = random.Random(SEED)
-    C.PROCESSED.mkdir(parents=True, exist_ok=True)
-
-    # ---------- calibração 2022 (retenção das bases e comparecimento dos eliminados)
+def calibrate(log=print):
+    """Calibração em 2022 (retenção das bases, comparecimento dos eliminados, ruído por município e UF)."""
     rows = S.load22()
     rm_g, _ = S.cv_eval(rows, False, random.Random(1))
     rm_r, cvres = S.cv_eval(rows, True, random.Random(1))
@@ -202,6 +199,19 @@ def run(n_per=N_PER, log=print):
     tau_uf = max(math.sqrt(sum((v[0] / v[1]) ** 2 for v in ufb.values()) / len(ufb)), 0.01)
     log(f"calibração 2022: {len(rows)} municípios; RMSE global {100*rm_g:.2f}pp, regional {100*rm_r:.2f}pp, "
         f"ingênuo {100*naive:.2f}pp")
+    return dict(rows=rows, rm_g=rm_g, rm_r=rm_r, naive=naive, regional=regional, alfa=alfa, a0=a0, rho0=rho0,
+                sp22=sp22, delta=delta, aa=aa, bb=bb, tau_uf=tau_uf)
+
+
+def run(n_per=N_PER, log=print):
+    rnd = random.Random(SEED)
+    C.PROCESSED.mkdir(parents=True, exist_ok=True)
+
+    # ---------- calibração 2022 (retenção das bases e comparecimento dos eliminados)
+    cal = calibrate(log)
+    rows, rm_g, rm_r, naive, regional = cal["rows"], cal["rm_g"], cal["rm_r"], cal["naive"], cal["regional"]
+    alfa, a0, rho0, sp22, delta = cal["alfa"], cal["a0"], cal["rho0"], cal["sp22"], cal["delta"]
+    aa, bb, tau_uf = cal["aa"], cal["bb"], cal["tau_uf"]
 
     # ---------- 1º turno projetado (município -> UF)
     cur, pm = S.load26()

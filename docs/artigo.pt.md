@@ -6,10 +6,13 @@
 
 ## Resumo
 
+> [!TIP]
+> **Quer entender cada etapa?** [`docs/camadas.pt.md`](camadas.pt.md) explica as 12 camadas da análise (o que entra, o que acontece, o que sai, o que significa) com números reais, e [`docs/pesquisas.pt.md`](pesquisas.pt.md) mostra quais pesquisas entram, onde, e quanto cada uma pesa. Os dados brutos estão numa [release](https://github.com/berndof/eleicao-2026/releases/tag/dados-brutos-2026-10-04).
+
 * **1º turno (final, 99,99%):** Flávio Bolsonaro 47,03% × Lula 45,16% dos votos válidos. Ninguém passou de 50%; o 2º turno é em **25/10/2026**.
 * **Backtest:** às ~20h, com 85% apurado, o modelo projetou Lula 44,95% × Flávio 47,19%. O resultado final foi 45,16% × 47,03% — **erro de 0,2 p.p. em cada candidato**, contra 1,6 e 1,4 p.p. de quem apenas olhasse o parcial. Acertou o vencedor nas 28 UFs (27 + exterior). Mas o intervalo de 90% que o modelo dava para a margem nacional **errou por pouco** (0,08 p.p.): era estreito demais.
-* **As pesquisas de 1º turno erraram a favor de Lula**: em média **+3,5 p.p. na margem** (13 institutos, de −2,2 a +7,7).
-* **2º turno (previsão, 3 métodos + ensemble):** Lula 48,1% dos válidos em média (mediana 47,7%; intervalo de 90%: 45,2% a 52,6%). **Probabilidade de Lula vencer: 18%** — mas entre **0,3% e 41%** conforme o método. A divergência entre os métodos é o resultado mais importante deste trabalho.
+* **As pesquisas de 1º turno erraram a favor de Lula**: em média **+3,8 p.p. na margem** (12 institutos, de −2,2 a +7,7).
+* **2º turno (previsão, 3 métodos + ensemble):** Lula 48,1% dos válidos em média (mediana 47,7%; intervalo de 90%: 45,1% a 52,6%). **Probabilidade de Lula vencer: 18%** — mas entre **0,3% e 41%** conforme o método. A divergência entre os métodos é o resultado mais importante deste trabalho.
 * **Quem decide:** os 8,7 milhões de eleitores de Cury, Renan e Caiado. A pesquisa os põe ~65% com Flávio (em 2022 os eliminados foram 48% para Bolsonaro). Mesmo que **todos** votassem em Lula, ele só chegaria a 51,7%.
 
 ![Resultado do 1º turno](../figures/pt/01_resultado_1turno.png)
@@ -27,14 +30,15 @@ Este texto responde às duas, mede o erro da primeira contra o resultado real, e
 
 ## 2. Dados
 
-| Fonte | O que forneceu | Confiança |
-|---|---|---|
-| TSE — resultados (arquivos oficiais da eleição 6257) | Apuração por município (5.757), seções e eleitorado apurados | **Alta** (oficial) |
-| TSE — dados abertos | Votos de Presidente em 2022 (1º e 2º turno) por município; perfil do eleitorado (idade, gênero, escolaridade) 2022 e 2026 | **Alta** (oficial) |
-| Wikipédia (EN), *Opinion polling for the 2026 Brazilian presidential election* | 58 pesquisas de 1º turno e 56 de 2º turno, cada uma com o link da fonte original | Média-alta (compilação; não reconferi cada link) |
-| Quaest e Datafolha (02–03/10), via resumos de busca | Intenção de voto no 2º turno **por eleitorado de cada candidato eliminado** | **Média-baixa**: não li as matérias originais; as duas casas divergem bastante |
-| TSE (histórico) | 1º e 2º turnos presidenciais 2002–2022 | Média-alta (2022 reconferido com os dados abertos) |
-| IBGE | Malha das UFs (só para os mapas) | Alta |
+| Fonte | O que forneceu | Confiança | Dado original | Cópia neste repositório |
+|---|---|---|---|---|
+| TSE — resultados (arquivos oficiais da eleição 6257) | Apuração por município (5.757), seções e eleitorado apurados | **Alta** (oficial) | [portal de resultados](https://resultados.tse.jus.br/) · JSON de exemplo: [Caruaru](https://resultados.tse.jus.br/oficial/ele2026/6257/dados/pe/pe23817-c0001-e006257-u.json) | [`mun_2026.csv`](../data/interim/mun_2026.csv) · [JSON originais (release)](https://github.com/berndof/eleicao-2026/releases/tag/dados-brutos-2026-10-04) |
+| TSE — dados abertos: votos de 2022 | Votos de Presidente em 2022 (1º e 2º turno) por município | **Alta** (oficial) | [`votacao_candidato_munzona_2022.zip`](https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_2022.zip) (642 MB) | [`pres_2022_mun.csv`](../data/interim/pres_2022_mun.csv) · [`pres_2022_t2_mun.csv`](../data/interim/pres_2022_t2_mun.csv) · [zip (release)](https://github.com/berndof/eleicao-2026/releases/tag/dados-brutos-2026-10-04) |
+| TSE — dados abertos: perfil do eleitorado | Idade, gênero e escolaridade por município, 2022 e 2026 | **Alta** (oficial) | [`perfil_eleitorado_2022.zip`](https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_2022.zip) · [`perfil_eleitorado_2026.zip`](https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_2026.zip) | [`perfil_2022_mun.csv`](../data/interim/perfil_2022_mun.csv) · [`perfil_2026_mun.csv`](../data/interim/perfil_2026_mun.csv) · [zips (release)](https://github.com/berndof/eleicao-2026/releases/tag/dados-brutos-2026-10-04) |
+| Wikipédia (EN), *Opinion polling for the 2026 Brazilian presidential election* | 56 pesquisas de 1º turno (sem a linha "Results" da página, que é a urna) e 56 de 2º turno, cada uma com o link da fonte original | Média-alta (compilação; não reconferi cada link) | [página](https://en.wikipedia.org/wiki/Opinion_polling_for_the_2026_Brazilian_presidential_election) | [wikitext bruto](../data/external/wikipedia_pesquisas_2026.wikitext) · [`pesquisas_1turno.csv`](../data/interim/pesquisas_1turno.csv) · [`pesquisas_2turno.csv`](../data/interim/pesquisas_2turno.csv) |
+| Quaest e Datafolha (02–03/10), via resumos de busca | Intenção de voto no 2º turno **por eleitorado de cada candidato eliminado** | **Média-baixa**: não li as matérias originais; as duas casas divergem bastante | sem link primário verificado | [`transferencia_pesquisas.csv`](../data/external/transferencia_pesquisas.csv) |
+| TSE (histórico) | 1º e 2º turnos presidenciais 2002–2022 | Média-alta (2022 reconferido com os dados abertos) | [TSE dados abertos](https://dadosabertos.tse.jus.br/) | [`historico_2turnos.csv`](../data/external/historico_2turnos.csv) |
+| IBGE | Malha das UFs (só para os mapas) | Alta | [API de Malhas v3](https://servicodados.ibge.gov.br/api/docs/malhas?versao=3) | [`ufs_ibge.geojson`](../data/external/ufs_ibge.geojson) |
 
 O que **não** entra como número no modelo: aprovação do governo, rejeição, apoios formais — só aparecem como contexto qualitativo (a disputa é polarizada e equilibrada). Detalhes e dicionário em [`docs/dados.md`](dados.md).
 
@@ -76,7 +80,7 @@ Comparando a última pesquisa de cada instituto (a partir de 26/09) com a urna:
 
 ![Erro das pesquisas](../figures/pt/05_erro_pesquisas_1turno.png)
 
-Média **+3,5 p.p. na margem Lula − Flávio** (desvio-padrão entre institutos: 3,2). Dez dos 13 favoreceram Lula; Palver (−2,2) e Futura (−0,2) favoreceram Flávio; Results acertou praticamente em cheio. Esse viés foi o que mais importou para o método M2, abaixo — e levanta uma pergunta que **não** conseguimos responder aqui: quanto dele se repete no 2º turno?
+Média **+3,8 p.p. na margem Lula − Flávio** (desvio-padrão entre institutos: 3,1). Dez dos 12 favoreceram Lula; Palver (−2,2) e Futura (−0,2) favoreceram Flávio. Esse viés foi o que mais importou para o método M2, abaixo — e levanta uma pergunta que **não** conseguimos responder aqui: quanto dele se repete no 2º turno?
 
 ## 5. Prevendo o 2º turno: três métodos
 
@@ -94,7 +98,7 @@ Em vez de apostar num único modelo, uso três métodos **independentes** e comp
 
 ### M2 — Pesquisas corrigidas
 
-Média das pesquisas de 2º turno (última de cada instituto, peso por recência, meia-vida de 7 dias): **Lula 49,7%**. Corrijo pelo erro do 1º turno, mas só **40% ± 20%** dele (suposição minha, apoiada em resumos de busca segundo os quais em 2022 o erro do 2º turno foi de um quarto a metade do erro do 1º). Resultado: **Lula 48,9%**.
+Média das pesquisas de 2º turno (última de cada instituto, peso por recência, meia-vida de 7 dias): **Lula 49,7%**. Corrijo pelo erro do 1º turno, mas só **40% ± 20%** dele (suposição minha, apoiada em resumos de busca segundo os quais em 2022 o erro do 2º turno foi de um quarto a metade do erro do 1º). Resultado: **Lula 48,8%**.
 
 ![Pesquisas de 2º turno](../figures/pt/06_pesquisas_2turno.png)
 
@@ -111,9 +115,9 @@ Mistura ponderada: **M1 50%, M2 30%, M3 20%**. Esses pesos são **julgamento meu
 | Componente | Peso | Lula (média) | IC 90% | P(Lula vence) | Margem mediana |
 |---|---:|---:|---|---:|---:|
 | M1 estrutural | 50% | 47,19% | 45,44% – 48,91% | **0,3%** | −6,7 M |
-| M2 pesquisas corrigidas | 30% | 48,92% | 44,99% – 52,88% | **32,6%** | −2,6 M |
+| M2 pesquisas corrigidas | 30% | 48,86% | 44,91% – 52,83% | **31,7%** | −2,7 M |
 | M3 histórico | 20% | 49,35% | 43,41% – 55,29% | **41,1%** | −1,7 M |
-| **Ensemble** | | **48,14%** | **45,15% – 52,61%** | **18,2%** | **−5,4 M** |
+| **Ensemble** | | **48,12%** | **45,12% – 52,58%** | **17,9%** | **−5,4 M** |
 
 ![Distribuição](../figures/pt/09_distribuicao_ensemble.png)
 
@@ -125,7 +129,7 @@ Mistura ponderada: **M1 50%, M2 30%, M3 20%**. Esses pesos são **julgamento meu
 
 ![Sensibilidade aos pesos](../figures/pt/10_sensibilidade_pesos.png)
 
-Com pesos iguais, P(Lula) = 24,7%; com 70% no M1, 10,9%; com 60% no M2, 23,8%. **Todas essas misturas dão Flávio na frente**, mas a probabilidade vai de ~10% a ~25% (e de 0,3% a 41% se usarmos um método só). Prefira ler o resultado como "**Flávio favorito, disputa apertada nos cenários otimistas para Lula**" a gravar o 18%.
+Com pesos iguais, P(Lula) = 24,4%; com 70% no M1, 10,7%; com 60% no M2, 23,2%. **Todas essas misturas dão Flávio na frente**, mas a probabilidade vai de ~10% a ~25% (e de 0,3% a 41% se usarmos um método só). Prefira ler o resultado como "**Flávio favorito, disputa apertada nos cenários otimistas para Lula**" a gravar o 18%.
 
 ### Dentro do M1
 
@@ -145,7 +149,7 @@ Os fatores que mais pesam, em amplitude (do terço baixo ao terço alto de cada 
 
 ![Previsão por UF](../figures/pt/13_previsao_por_uf.png)
 
-Seis UFs têm intervalo que cruza 50% e decidem: **Pará** (P(Lula) 85%), **Exterior** (67%), **Amazonas** (62%), **Amapá** (29%), **Minas Gerais** (10%; a UF mais populosa disputada) e **Tocantins** (7%). Sudeste e Sul somam 56% dos votos e votam contra Lula por 16 e 35 p.p.; o Nordeste (28% dos votos) vota nele com +31 p.p.
+Seis UFs têm intervalo que cruza 50% e decidem: **Pará** (P(Lula) 85%), **Exterior** (67%), **Amazonas** (61%), **Amapá** (29%), **Minas Gerais** (10%; a UF mais populosa disputada) e **Tocantins** (7%). Sudeste e Sul somam 56% dos votos e votam contra Lula por 16 e 35 p.p.; o Nordeste (28% dos votos) vota nele com +31 p.p.
 
 ## 7. Limitações (leia antes de citar um número)
 
@@ -162,7 +166,8 @@ Seis UFs têm intervalo que cruza 50% e decidem: **Pará** (P(Lula) 85%), **Exte
 ```bash
 git clone https://github.com/berndof/eleicao-2026 && cd eleicao-2026
 make setup      # ambiente Python
-make data       # 1x: baixa ~1,1 GB do TSE (votos 2022 e perfil do eleitorado)
+make fetch-raw  # baixa os brutos (~1,1 GB) da release do GitHub e confere o SHA-256  (ou: make data, direto do TSE)
+make data       # 1x: gera as tabelas por município a partir dos brutos
 make all        # atualiza apuração e pesquisas, roda os modelos, backtest, figuras e tabelas
 ```
 
@@ -173,7 +178,7 @@ make all        # atualiza apuração e pesquisas, roda os modelos, backtest, fi
 
 ## 9. Próximos passos
 
-* **Pós-mortem em 25/10:** esta previsão está congelada na tag `previsao-2t-2026-10-04`. Depois da eleição, comparo previsão e resultado (por método, por UF) e publico o que errou.
+* **Pós-mortem em 25/10:** esta previsão está congelada na tag `previsao-2t-2026-10-04-v2` (a `-v2` corrige um erro da versão original; veja a [errata](camadas.pt.md#errata)). Depois da eleição, comparo previsão e resultado (por método, por UF) e publico o que errou.
 * Pesquisas de 2º turno pós-1º turno (começam a sair nos próximos dias) devem ser incorporadas; o `make collect` as busca.
 * Estimar (em vez de assumir) o fator de persistência do viés e os pesos do ensemble, olhando 2014 e 2018.
 

@@ -12,7 +12,10 @@ A statistical model built on public data (TSE, polls, IBGE) that **(1)** project
 
 * **[docs/article.en.md](docs/article.en.md)** — full text with charts
 * [docs/artigo.pt.md](docs/artigo.pt.md) — Portuguese version
+* **[docs/layers.en.md](docs/layers.en.md)** — **anatomy of the analysis, layer by layer**: what each step does and how every piece of data is used, with real numbers
+* **[docs/polls.en.md](docs/polls.en.md)** — which polls enter, where, and how much each weighs
 * [docs/tables.en.md](docs/tables.en.md) (generated tables) · [docs/metodologia.md](docs/metodologia.md) and [docs/dados.md](docs/dados.md) (Portuguese)
+* **Raw data:** [release `dados-brutos-2026-10-04`](https://github.com/berndof/eleicao-2026/releases/tag/dados-brutos-2026-10-04) (TSE, 1.1 GB + the original count JSON) — `make fetch-raw`
 
 ## Key results (data as of 4 Oct 2026, 11pm)
 
@@ -20,9 +23,9 @@ A statistical model built on public data (TSE, polls, IBGE) that **(1)** project
 |---|---|
 | First round (99.99% counted) | **Flávio 47.03% vs. Lula 45.16%** of valid votes |
 | Backtest of the projection made at 85% counted | **0.2 pp error per candidate** (the partial count was off by 1.4–1.6); correct winner in **28/28** units; but the 90% interval for the national margin missed by 0.08 pp |
-| First-round polls | erred on average **+3.5 pp on the margin in Lula's favor** |
+| First-round polls | erred on average **+3.8 pp on the margin in Lula's favor** (12 pollsters) |
 | Runoff — probability that Lula wins | **18%** for the ensemble, but **0.3% to 41%** depending on the method (M1 structural / M2 adjusted polls / M3 historical) |
-| Lula's share of runoff valid votes | mean **48.1%** (90% CI: 45.2% – 52.6%) |
+| Lula's share of runoff valid votes | mean **48.1%** (90% CI: 45.1% – 52.6%) |
 
 ![Ensemble distribution](figures/en/09_distribuicao_ensemble.png)
 
@@ -33,16 +36,17 @@ A statistical model built on public data (TSE, polls, IBGE) that **(1)** project
 ```
 eleicao-2026/
 ├── docs/                 article (PT/EN), methodology, data dictionary, generated tables
-├── figures/{pt,en}/      15 figures per language (make figures)
+├── figures/{pt,en}/      19 figures per language (make figures)
 ├── data/
-│   ├── raw/              TSE zips (~1.1 GB, not versioned)
+│   ├── raw/              raw TSE data (~1.1 GB; in the GitHub release, not in git)
 │   ├── external/         IBGE map, polls wikitext, history, transfer polls
 │   ├── interim/          per-municipality tables
 │   ├── processed/        final outputs: results, projection, backtest, simulations (versioned)
 │   └── snapshots/        frozen ~8pm data (85% counted), basis of the backtest
 ├── src/eleicao2026/
 │   ├── collect/          tse_apuracao, tse_historico, pesquisas
-│   ├── model/            primeiro_turno, segundo_turno (M1), ensemble (M1+M2+M3), backtest
+│   ├── model/            primeiro_turno, segundo_turno (M1), ensemble (M1+M2+M3), backtest,
+│   │                     influencia (per-poll leave-one-out), explicar (worked examples)
 │   ├── viz/figures.py    charts and maps
 │   └── report.py         Markdown tables
 ├── tests/                unit tests
@@ -59,7 +63,8 @@ Requires Python ≥ 3.11 (and [`uv`](https://docs.astral.sh/uv/) for `make setup
 ```bash
 git clone https://github.com/berndof/eleicao-2026 && cd eleicao-2026
 make setup      # creates .venv and installs the package
-make data       # once: downloads ~1.1 GB from TSE (2022 votes, electorate profile) and builds per-municipality tables
+make fetch-raw  # downloads the raw data (~1.1 GB) from the release and checks SHA-256 (or skip and use make data, straight from TSE)
+make data       # once: builds the per-municipality tables from the raw data
 make all        # fetches count + polls, runs models, backtest, figures and tables
 make test
 ```
@@ -78,7 +83,7 @@ make collect model backtest figures tables
 
 * Ensemble weights (50/30/20) and the poll-bias persistence factor (0.4) are **declared assumptions**; there is a sensitivity analysis.
 * Transfer polls (Quaest/Datafolha by each eliminated candidate's voters) come from search summaries (medium-low confidence).
-* The forecast is frozen at tag `previsao-2t-2026-10-04`; a post-mortem will be published after the runoff.
+* The forecast is frozen at tag `previsao-2t-2026-10-04-v2` (`-v2` fixes an error in the original version, described in the [erratum](docs/layers.en.md#erratum)); a post-mortem will be published after the runoff.
 
 ## License and citation
 
