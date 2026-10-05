@@ -47,6 +47,7 @@ Os dados do TSE são públicos (Dados Abertos); mantenha a atribuição ao TSE. 
 | `polymarket_mercados_uf.csv` | Cotações e resoluções dos mercados estaduais e nacional no Polymarket. |
 | `wikipedia_pesquisas_2026.wikitext`, `wikipedia_pesquisas_2026.revisao.json` | Wikitext bruto com fixação de procedência (oldid `1378579188` no MediaWiki). |
 | `historico_2turnos.csv` | 1º e 2º turnos presidenciais 2002–2022: líder e segundo colocado do 1T, % de cada um e % do líder no 2T (votos válidos, TSE). |
+| `fundamentos_macro_historico.csv` | Série histórica completa de eleições presidenciais com 2º turno (2002–2026): aprovação Datafolha (ótimo/bom e aprova/desaprova), rejeição, inflação IPCA 12m, desemprego PNAD, PIB e resultado de urna da situação. |
 | `transferencia_pesquisas.csv` | Pesquisas Quaest e Datafolha de 02–03/10/2026 sobre o voto no 2º turno **por eleitorado de cada candidato eliminado** (versão preliminar). |
 
 ## `data/ledger/`
@@ -89,6 +90,8 @@ Códigos: `cd` é o código do município **no TSE** (não é o código IBGE). `
 | `calibracao_shrinkage.json` | Calibração empírica ex-post do hiperparâmetro de encolhimento $K_{\text{shrink}}$ e corte de apuração contra a apuração final 100%. |
 | `resumo_v2_m1.json` | Simulações do modelo estrutural V2 incorporando o Censo 2022 (religião e renda) e Prefeitos 2024 (máquina municipal). |
 | `resumo_v2_m2.json` | Síntese de pesquisas V2 com pesos individuais calibrados pelo erro do 1T auditado no TSE e tamanho amostral. |
+| `resumo_v2_m4.json` | Simulações e ajuste econométrico do Modelo M4 (Fundamentos Macroeconômicos, Desemprego, Inflação e Avaliação Datafolha). |
+| `resumo_ensemble_4m.json` | Síntese consolidada do Ensemble V2 de 4 Modelos (M1, M2, M3, M4) com otimização de portfólio de Markowitz e projeções estaduais. |
 | `comparativo_modelos_v1_v2.json` | Tabela lado a lado comparando V1 baseline e V2, com pesos de mínima variância de Markowitz para o ensemble. |
 | `backtest_1turno_v2.json` | Backtest ex-post no snapshot das 20h comparando o parcial puro contra as projeções V1 e V2. |
 

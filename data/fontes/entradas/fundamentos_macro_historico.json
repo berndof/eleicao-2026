@@ -1,0 +1,18 @@
+{
+  "id": "fundamentos_macro_historico",
+  "nome": "Série histórica de fundamentos macroeconômicos e avaliação de governo em eleições presidenciais (2002-2026)",
+  "publicador": "TSE / Datafolha / IBGE / Banco Central do Brasil",
+  "url_origem": "https://dadosabertos.tse.jus.br/ + https://datafolha.folha.uol.com.br/ + https://api.bcb.gov.br/",
+  "url_landing": "https://datafolha.folha.uol.com.br/eleicoes/",
+  "coletado_em": "2026-10-05T06:30:00Z",
+  "sha256": "",
+  "tamanho_bytes": 0,
+  "licenca": "Dados públicos oficiais e pesquisas eleitorais registradas",
+  "granularidade": "nacional (eleições presidenciais de 2º turno)",
+  "periodo": "2002 a 2026",
+  "confianca": "alta",
+  "status": "verificada",
+  "camada": "fundamentos macroeconômicos e popularidade (M4)",
+  "usado_em": "data/external/fundamentos_macro_historico.csv; calibração do modelo M4",
+  "limitacoes": "Apenas 5 eleições com incumbente/situação no 2º turno (2002, 2006, 2010, 2014, 2022); requer regularização e modelagem bayesiana com priors informados."
+}

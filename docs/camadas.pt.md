@@ -15,23 +15,25 @@ flowchart TD
         R1["TSE: apuração 2026<br/>(JSON por município)"]
         R2["TSE: votos 2022<br/>(município × zona × candidato)"]
         R3["TSE: perfil do eleitorado<br/>2022 e 2026"]
-        R4["Pesquisas<br/>(Wikipédia, Quaest, Datafolha)"]
+        R4["Pesquisas<br/>(Wikipédia, Quaest, Datafolha, PesqEle)"]
         R5["Histórico 2002-2022"]
+        R6["Macro e Avaliação<br/>(IBGE, BCB, Datafolha)"]
     end
     subgraph L2["Camada 2 · Tabelas por município"]
         T1["mun_2026.csv"]
         T2["pres_2022_mun.csv<br/>pres_2022_t2_mun.csv"]
         T3["perfil_*_mun.csv"]
     end
-    F["Camada 3 · Variáveis explicativas<br/>(2022 + perfil + UF)"]
+    F["Camada 3 · Variáveis explicativas<br/>(2022 + perfil + Censo + Prefeitos)"]
     P1["Camada 4 · Projeção do 1º turno<br/>(votos que faltam)"]
     BT["Camada 5 · Backtest<br/>(85% × final)"]
     CAL["Camada 6 · Calibração em 2022<br/>(retenção, mobilização, comparecimento)"]
     TR["Camada 7 · Transferência dos eliminados<br/>(pesquisas Quaest/Datafolha)"]
-    M1["Camada 8 · M1 estrutural"]
-    M2["Camada 9 · M2 pesquisas corrigidas"]
-    M3["Camada 10 · M3 histórico"]
-    ENS["Camada 11 · Ensemble + 30.000 simulações"]
+    M1["Camada 8/13 · M1 estrutural (V1 e V2)"]
+    M2["Camada 9/13 · M2 pesquisas auditadas"]
+    M3["Camada 10 · M3 histórico 1T"]
+    M4["Camada 14 · M4 fundamentos macro e aprovação"]
+    ENS["Camada 11/15 · Ensemble (Markowitz / Balanceado)"]
     OUT["Camada 12 · Leitura:<br/>probabilidades, intervalos, UFs"]
     R1 --> T1
     R2 --> T2
@@ -46,7 +48,8 @@ flowchart TD
     P1 -. "L1 e F1 projetados" .-> M2
     R5 --> M3
     P1 -. "L1 e F1 projetados" .-> M3
-    M1 & M2 & M3 --> ENS --> OUT
+    R6 --> M4
+    M1 & M2 & M3 & M4 --> ENS --> OUT
 ```
 
 ### Cada pedacinho de dado: de onde vem, onde entra, o que faz
@@ -56,12 +59,14 @@ flowchart TD
 | 1 | **Apuração 2026** (seções, eleitorado, válidos, votos por candidato, por município) | TSE (`resultados.tse.jus.br`, eleição 6257) | 5.757 municípios | 2 → 4 | Diz **quanto já foi contado** e **como votou** a parte contada |
 | 2 | **Votos de 2022 por município** (1º e 2º turno) | TSE dados abertos (`votacao_candidato_munzona_2022`) | 5.752 municípios, 642 MB bruto | 3, 4, 6 | Prevê o 1º turno de 2026 (quem votou em quem antes) **e** calibra como o 2º turno de 2022 saiu do 1º |
 | 3 | **Perfil do eleitorado** (gênero, escolaridade, idade) | TSE dados abertos (`perfil_eleitorado_2022/2026`) | 5.758 municípios, 485 MB bruto | 3, 4 | Diz como é a população de cada município (aprende "municípios parecidos votam parecido") |
-| 4 | **Pesquisas de 1º turno** | Wikipédia (cita cada instituto) | 56 pesquisas | 9 | Mede o **erro** das pesquisas contra a urna → corrige o M2 |
-| 5 | **Pesquisas de 2º turno** (Lula × Flávio) | Wikipédia | 56 pesquisas (12 entram) | 9 | É a base do M2 (média ponderada por recência) |
-| 6 | **Pesquisas de transferência** (voto no 2º turno por eleitorado de cada eliminado) | Quaest e Datafolha, via resumos de busca | 6 linhas | 7 | Diz **para onde vão** os votos dos eliminados no M1 |
+| 4 | **Pesquisas de 1º turno** | Wikipédia e TSE PesqEle (auditadas) | 56 pesquisas | 9, 13 | Mede o **erro** das pesquisas contra a urna → corrige o M2 |
+| 5 | **Pesquisas de 2º turno** (Lula × Flávio) | Wikipédia e TSE PesqEle | 56 pesquisas (12 entram) | 9, 13 | É a base do M2 (média ponderada por recência e acurácia) |
+| 6 | **Pesquisas de transferência** (voto no 2º turno por eleitorado de cada eliminado) | Quaest e Datafolha conferidos em relatórios primários | 6 linhas | 7, 13 | Diz **para onde vão** os votos dos eliminados no M1 |
 | 7 | **Histórico dos 2º turnos** | TSE | 6 eleições | 10 | Regressão do M3 |
-| 8 | **Malha das UFs** | IBGE | 27 polígonos | só figuras | Desenhar os mapas |
-| 9 | **Suposições do autor** | — | 5 números | 7, 9, 11 | Pesos do ensemble 50/30/20; fator 0,4±0,2 (persistência do viés); 65%/30% para candidatos sem pesquisa; assimetria 0,5; choque nacional ±1,5 p.p. |
+| 8 | **Censo 2022 e Prefeitos 2024** | IBGE SIDRA e TSE | 5.570 municípios | 13 | Calibração micro-espacial de religião, renda e máquina local no M1 V2 |
+| 9 | **Fundamentos Macroeconômicos e Avaliação** | IBGE (IPCA), BCB (Focus/SGS), Datafolha | Séries 2002–2026 | 14 | Calibração do Modelo M4 (miséria econômica e popularidade) |
+| 10 | **Malha das UFs** | IBGE | 27 polígonos | só figuras | Desenhar os mapas |
+| 11 | **Suposições do autor / Otimização** | Teoria de Markowitz e julgamento estatístico | — | 11, 15 | Pesos ótimos de variância mínima e cenários balanceados do ensemble |
 
 As suposições (linha 9) estão sempre marcadas no código como `SUPOSIÇÃO` e discutidas na [seção 11](#camada-11--ensemble-e-simulação).
 
@@ -583,6 +588,76 @@ Após a consolidação dos dados brutos e auditoria, construímos uma **segunda 
 ### 13.3 Ensemble V2 e Otimização de Pesos (`comparar_modelos.py`)
 - **Pesos de Mínima Variância:** Em vez da ponderação subjetiva 50/30/20, calculamos os pesos de mínima variância da carteira de modelos: **M1 (83%) / M2 (12%) / M3 (5%)**.
 - **Resultado comparativo ([Figura 27](dados_visual.md#15-comparativo-dos-modelos-v1-baseline-vs-v2-aprimorado)):** No ensemble otimizado, Lula projeta **47,33%** (IC 90%: 46,63% a 48,04%) e $P(\text{vitória}) < 0,1\%$, confirmando robustamente a liderança de Flávio Bolsonaro sob diferentes abordagens metodológicas.
+
+---
+
+## Camada 14: Modelo M4 — Fundamentos Macroeconômicos e Popularidade (`src/eleicao2026/v2/m4_fundamentos.py`)
+
+O Modelo M4 aborda a eleição pelo prisma consagrado da ciência política e econometria eleitoral (modelos de Hibbs, Fair, Gelman e Abramowitz): no 2º turno, o desempenho eleitoral de um governo decorre da **avaliação política retrospectiva** e do **estado da economia real**.
+
+### 14.1 Variáveis e Especificação Econométrica
+Utilizamos a base histórica das 5 eleições presidenciais sob a Constituição de 1988 com disputa da situação no 2º turno (2002 Serra/FHC, 2006 Lula, 2010 Dilma/Lula, 2014 Dilma, 2022 Bolsonaro e 2026 Lula):
+1. **Saldo de Aprovação Governamental ($A_{\text{net}}$):** Medido pelo Datafolha às vésperas da eleição ($\text{Aprova} - \text{Desaprova}$ e $\text{Ótimo/Bom} - \text{Ruim/Péssimo}$).
+2. **Índice de Miséria Econômica ($M$):** Soma da inflação acumulada em 12 meses ($\text{IPCA}_{12m}$) com a taxa de desemprego recente ($\text{PNAD Contínua 3m}$).
+3. **Diferencial de Rejeição Relativa ($\Delta R$):** Rejeição máxima do candidato de oposição menos rejeição do candidato de situação ($R_{\text{opos}} - R_{\text{sit}}$).
+
+O modelo opera no espaço logit para respeitar os limites de probabilidade $[0, 1]$:
+$$\text{logit}(V_{\text{situação, 2T}}) = \beta_0 + \beta_1 A_{\text{net}}^* + \beta_2 M^* + \beta_3 \Delta R^*$$
+onde as variáveis são padronizadas e estimadas via **regressão Ridge penalizada**:
+$$\hat{\boldsymbol{\beta}} = (\mathbf{X}^T \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^T \mathbf{y}$$
+
+### 14.2 Validação Cruzada Leave-One-Out (LOOCV)
+Com $N=5$ ciclos históricos, o hiperparâmetro $\lambda$ é calibrado exclusivamente por LOOCV: para cada eleição histórica, o modelo é treinado nas outras 4 e prevê a eleição omitida:
+- O valor ótimo converge em $\lambda = 3,0$, alcançando **RMSE de 6,80 p.p.** e **MAE de 5,68 p.p.**
+- Todos os coeficientes preservam coerência teórica estrita:
+  - $\beta_{\text{aprov}} = +0,051$ (mais aprovação gera mais votos);
+  - $\beta_{\text{miséria}} = -0,084$ (menor miséria econômica gera mais votos);
+  - $\beta_{\text{rejeição}} = +0,106$ (menor rejeição relativa gera mais votos).
+
+### 14.3 O Paradoxo de 2026 e a Predição do M4
+Em 2026, as variáveis macroeconômicas atingem marcas históricas excepcionais:
+- **Índice de Miséria de 9,52%** (IPCA de 4,22% + Desemprego de 5,30%, a menor taxa da história da PNAD Contínua). Se a eleição fosse decidida puramente pela economia, um incumbente venceria com facilidade ($>60\%$).
+- Em contrapartida, a **polarização e a aprovação de governo** atuam como forte âncora negativa: aprovação líquida dividida (48% aprova vs 49% desaprova, saldo de $-1$ p.p.) e rejeição simétrica de 45% x 45%.
+- O Modelo M4 balanceia essas forças, produzindo uma predição central de **52,82%** para Lula.
+- Na simulação de Monte Carlo ($N=10.000$), M4 resulta em **média de 52,75%** (DP: $6,75$ p.p.), **$P(\text{Lula vence}) = 65,9\%$** e IC 90% de $[41,52\%, 63,82\%]$. É o único dos quatro modelos que confere vantagem probabilística a Lula.
+
+---
+
+## Camada 15: Ensemble V2 de 4 Modelos e Otimização de Markowitz (`src/eleicao2026/v2/ensemble_v2_4m.py`)
+
+A síntese final de 2º turno une quatro pilares metodológicos independentes:
+1. **M1 Estrutural V2:** Votos apurados no 1º turno, transferências observadas, Censo 2022 e controle de prefeituras (2024).
+2. **M2 Pesquisas V2:** Sondagens eleitorais ponderadas por recência, amostra e variância inversa de erros auditados no TSE.
+3. **M3 Histórico Puro:** Relação empírica de conversão do líder de 1º turno no 2º turno (2002–2022).
+4. **M4 Fundamentos V2:** Modelo macroeconômico de avaliação de governo, desemprego e inflação.
+
+### 15.1 Matriz de Covariância e Teoria de Portfólio
+A matriz de covariância entre os modelos $\boldsymbol{\Sigma} = \mathbf{D} \mathbf{R} \mathbf{D}$ reflete correlações justificadas teoricamente:
+- M1 e M2 compartilham sinal de opinião pública ($r = +0,50$).
+- M1 e M4 apresentam leve correlação negativa ($r = -0,10$), pois o peso das máquinas políticas municipais do PL e Centrão opera em sentido oposto aos fundamentos federais de pleno emprego.
+- M2 e M4 compartilham o pulso da popularidade presidencial ($r = +0,35$).
+
+Pela teoria clássica de portfólios de Markowitz, o vetor de pesos que minimiza a variância total da carteira é:
+$$\mathbf{w}^* = \frac{\boldsymbol{\Sigma}^{-1} \mathbf{1}}{\mathbf{1}^T \boldsymbol{\Sigma}^{-1} \mathbf{1}}$$
+No simplex não-negativo ($\mathbf{w} \ge 0, \sum w_i = 1$), a alocação de mínima variância concentra **98,4% em M1** e **1,6% em M4** (DP mínimo de $0,44$ p.p., Lula **47,20%**, $P(\text{vitória}) = 0,0\%$).
+
+### 15.2 Cenários de Ponderação e Diagnóstico Probabilístico
+Para evitar dependência exclusiva de um único modelo, testamos cenários estratégicos:
+
+1. **Ensemble Informado e Balanceado (40% M1, 25% M2, 15% M3, 20% M4):**
+   - Voto esperado de Lula: **48,82%** (Flávio **51,18%**);
+   - Desvio padrão: **1,67 p.p.** (IC 90%: 46,07% a 51,57%);
+   - Probabilidade de vitória: **$P(\text{Lula}) = 23,9\%$** vs **$P(\text{Flávio}) = 76,0\%$**.
+2. **Ensemble Equiponderado (25% cada):**
+   - Voto esperado de Lula: **49,32%** (Flávio **50,68%**);
+   - Desvio padrão: **2,14 p.p.** (IC 90%: 45,80% a 52,85%);
+   - Probabilidade de vitória: **$P(\text{Lula}) = 37,6\%$** vs **$P(\text{Flávio}) = 62,4\%$**.
+3. **Ensemble Pragmático 1T (60% M1, 20% M2, 10% M3, 10% M4):**
+   - Voto esperado de Lula: **48,09%** (Flávio **51,91%**);
+   - Desvio padrão: **0,99 p.p.**;
+   - Probabilidade de vitória: **$P(\text{Lula}) = 2,7\%$** vs **$P(\text{Flávio}) = 97,3\%$**.
+
+**Conclusão Estratégica:** Mesmo incorporando os excelentes fundamentos macroeconômicos (desemprego em 5,3% e inflação sob controle no M4), a vantagem obtida por Flávio Bolsonaro no 1º turno e a mobilização das prefeituras de centro-direita mantêm Flávio como favorito em todos os cenários de ensemble, com chances de vitória variando entre **62,4%** (se a economia tiver peso equivalente ao da urna) e **100,0%** (se a dinâmica estrita de transferências territoriais se confirmar).
 
 ---
 

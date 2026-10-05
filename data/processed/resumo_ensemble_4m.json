@@ -1,0 +1,557 @@
+{
+  "modelo": "ENSEMBLE_V2_4M",
+  "componentes": {
+    "M1": {
+      "nome": "Estrutural V2 (Censo + Prefeitos + 1T)",
+      "lula_media": 0.4711,
+      "lula_dp": 0.0044,
+      "p_lula": 0.0,
+      "ic90": [
+        0.4643,
+        0.4789
+      ]
+    },
+    "M2": {
+      "nome": "Pesquisas V2 (Auditoria TSE)",
+      "lula_media": 0.4808,
+      "lula_dp": 0.0117,
+      "p_lula": 0.05,
+      "ic90": [
+        0.4612,
+        0.4996
+      ]
+    },
+    "M3": {
+      "nome": "Histórico Líder 1T (2002-2022)",
+      "lula_media": 0.4935,
+      "lula_dp": 0.0361,
+      "p_lula": 0.4106,
+      "ic90": [
+        0.4341,
+        0.5529
+      ]
+    },
+    "M4": {
+      "nome": "Fundamentos V2 (Macro + Avaliação)",
+      "lula_media": 0.5275,
+      "lula_dp": 0.0675,
+      "p_lula": 0.6587,
+      "ic90": [
+        0.4152,
+        0.6382
+      ]
+    }
+  },
+  "matriz_correlacao": [
+    [
+      1.0,
+      0.5,
+      0.2,
+      -0.1
+    ],
+    [
+      0.5,
+      1.0,
+      0.3,
+      0.35
+    ],
+    [
+      0.2,
+      0.3,
+      1.0,
+      0.1
+    ],
+    [
+      -0.1,
+      0.35,
+      0.1,
+      1.0
+    ]
+  ],
+  "pesos_markowitz_irrestritos": [
+    1.0941,
+    -0.1059,
+    -0.0061,
+    0.0179
+  ],
+  "pesos_markowitz_restritos": [
+    0.9839,
+    0.0,
+    0.0,
+    0.0161
+  ],
+  "cenarios": {
+    "markowitz_min_var": {
+      "pesos": [
+        0.9839,
+        0.0,
+        0.0,
+        0.0161
+      ],
+      "lula_media": 0.472,
+      "lula_dp": 0.0044,
+      "flavio_media": 0.528,
+      "p_lula_vence": 0.0,
+      "p_flavio_vence": 1.0,
+      "lula_ic90": [
+        0.4648,
+        0.4792
+      ],
+      "nome": "Mínima Variância de Markowitz",
+      "descricao": "Pesos ótimos que minimizam a variância total da carteira"
+    },
+    "informado_balanceado": {
+      "pesos": [
+        0.4,
+        0.25,
+        0.15,
+        0.2
+      ],
+      "lula_media": 0.4882,
+      "lula_dp": 0.0167,
+      "flavio_media": 0.5118,
+      "p_lula_vence": 0.2395,
+      "p_flavio_vence": 0.7605,
+      "lula_ic90": [
+        0.4607,
+        0.5157
+      ],
+      "nome": "Ensemble Informado e Balanceado",
+      "descricao": "Ponderação diversificada (40% M1, 25% M2, 15% M3, 20% M4)"
+    },
+    "equiponderado": {
+      "pesos": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "lula_media": 0.4932,
+      "lula_dp": 0.0214,
+      "flavio_media": 0.5068,
+      "p_lula_vence": 0.3763,
+      "p_flavio_vence": 0.6237,
+      "lula_ic90": [
+        0.458,
+        0.5285
+      ],
+      "nome": "Equiponderado (25% cada)",
+      "descricao": "Pesos iguais entre os 4 pilares metodológicos"
+    },
+    "pragmatico_1t": {
+      "pesos": [
+        0.6,
+        0.2,
+        0.1,
+        0.1
+      ],
+      "lula_media": 0.4809,
+      "lula_dp": 0.0099,
+      "flavio_media": 0.5191,
+      "p_lula_vence": 0.0273,
+      "p_flavio_vence": 0.9727,
+      "lula_ic90": [
+        0.4646,
+        0.4973
+      ],
+      "nome": "Pragmático Foco em Urna (60/20/10/10)",
+      "descricao": "Foco na apuração do 1T e transferências (60% M1, 20% M2, 10% M3, 10% M4)"
+    }
+  },
+  "ufs_cenario_balanceado": {
+    "ac": {
+      "lula_media": 0.3142,
+      "flavio_media": 0.6858,
+      "p_lula_vence": 0.0065,
+      "p_flavio_vence": 0.9935,
+      "vv": 469172
+    },
+    "al": {
+      "lula_media": 0.5744,
+      "flavio_media": 0.4256,
+      "p_lula_vence": 0.9767,
+      "p_flavio_vence": 0.0233,
+      "vv": 1840516
+    },
+    "am": {
+      "lula_media": 0.5176,
+      "flavio_media": 0.4824,
+      "p_lula_vence": 0.4921,
+      "p_flavio_vence": 0.5079,
+      "vv": 2168291
+    },
+    "ap": {
+      "lula_media": 0.502,
+      "flavio_media": 0.498,
+      "p_lula_vence": 0.243,
+      "p_flavio_vence": 0.757,
+      "vv": 465466
+    },
+    "ba": {
+      "lula_media": 0.6924,
+      "flavio_media": 0.3076,
+      "p_lula_vence": 0.9997,
+      "p_flavio_vence": 0.0003,
+      "vv": 8600622
+    },
+    "ce": {
+      "lula_media": 0.6646,
+      "flavio_media": 0.3354,
+      "p_lula_vence": 0.999,
+      "p_flavio_vence": 0.001,
+      "vv": 5621651
+    },
+    "df": {
+      "lula_media": 0.4324,
+      "flavio_media": 0.5676,
+      "p_lula_vence": 0.1174,
+      "p_flavio_vence": 0.8826,
+      "vv": 1773069
+    },
+    "es": {
+      "lula_media": 0.4143,
+      "flavio_media": 0.5857,
+      "p_lula_vence": 0.0867,
+      "p_flavio_vence": 0.9133,
+      "vv": 2251051
+    },
+    "go": {
+      "lula_media": 0.378,
+      "flavio_media": 0.622,
+      "p_lula_vence": 0.0367,
+      "p_flavio_vence": 0.9633,
+      "vv": 3833997
+    },
+    "ma": {
+      "lula_media": 0.6706,
+      "flavio_media": 0.3294,
+      "p_lula_vence": 0.9991,
+      "p_flavio_vence": 0.0009,
+      "vv": 4020201
+    },
+    "mg": {
+      "lula_media": 0.4756,
+      "flavio_media": 0.5244,
+      "p_lula_vence": 0.1955,
+      "p_flavio_vence": 0.8045,
+      "vv": 11987859
+    },
+    "ms": {
+      "lula_media": 0.3786,
+      "flavio_media": 0.6214,
+      "p_lula_vence": 0.041,
+      "p_flavio_vence": 0.959,
+      "vv": 1491414
+    },
+    "mt": {
+      "lula_media": 0.3174,
+      "flavio_media": 0.6826,
+      "p_lula_vence": 0.0065,
+      "p_flavio_vence": 0.9935,
+      "vv": 1994754
+    },
+    "pa": {
+      "lula_media": 0.5296,
+      "flavio_media": 0.4704,
+      "p_lula_vence": 0.9373,
+      "p_flavio_vence": 0.0627,
+      "vv": 4861523
+    },
+    "pb": {
+      "lula_media": 0.648,
+      "flavio_media": 0.352,
+      "p_lula_vence": 0.9984,
+      "p_flavio_vence": 0.0016,
+      "vv": 2514202
+    },
+    "pe": {
+      "lula_media": 0.6687,
+      "flavio_media": 0.3313,
+      "p_lula_vence": 0.9991,
+      "p_flavio_vence": 0.0009,
+      "vv": 5617616
+    },
+    "pi": {
+      "lula_media": 0.7409,
+      "flavio_media": 0.2591,
+      "p_lula_vence": 1.0,
+      "p_flavio_vence": 0.0,
+      "vv": 2147075
+    },
+    "pr": {
+      "lula_media": 0.3479,
+      "flavio_media": 0.6521,
+      "p_lula_vence": 0.0197,
+      "p_flavio_vence": 0.9803,
+      "vv": 6585437
+    },
+    "rj": {
+      "lula_media": 0.4343,
+      "flavio_media": 0.5657,
+      "p_lula_vence": 0.1292,
+      "p_flavio_vence": 0.8708,
+      "vv": 9362935
+    },
+    "rn": {
+      "lula_media": 0.6303,
+      "flavio_media": 0.3697,
+      "p_lula_vence": 0.9963,
+      "p_flavio_vence": 0.0037,
+      "vv": 2077079
+    },
+    "ro": {
+      "lula_media": 0.2842,
+      "flavio_media": 0.7158,
+      "p_lula_vence": 0.0015,
+      "p_flavio_vence": 0.9985,
+      "vv": 968032
+    },
+    "rr": {
+      "lula_media": 0.2491,
+      "flavio_media": 0.7509,
+      "p_lula_vence": 0.0002,
+      "p_flavio_vence": 0.9998,
+      "vv": 325410
+    },
+    "rs": {
+      "lula_media": 0.3944,
+      "flavio_media": 0.6056,
+      "p_lula_vence": 0.0644,
+      "p_flavio_vence": 0.9356,
+      "vv": 6424761
+    },
+    "sc": {
+      "lula_media": 0.281,
+      "flavio_media": 0.719,
+      "p_lula_vence": 0.0015,
+      "p_flavio_vence": 0.9985,
+      "vv": 4499966
+    },
+    "se": {
+      "lula_media": 0.6673,
+      "flavio_media": 0.3327,
+      "p_lula_vence": 0.9992,
+      "p_flavio_vence": 0.0008,
+      "vv": 1365587
+    },
+    "sp": {
+      "lula_media": 0.4289,
+      "flavio_media": 0.5711,
+      "p_lula_vence": 0.1127,
+      "p_flavio_vence": 0.8873,
+      "vv": 24894525
+    },
+    "to": {
+      "lula_media": 0.4665,
+      "flavio_media": 0.5335,
+      "p_lula_vence": 0.1809,
+      "p_flavio_vence": 0.8191,
+      "vv": 930427
+    },
+    "zz": {
+      "lula_media": 0.524,
+      "flavio_media": 0.476,
+      "p_lula_vence": 0.6732,
+      "p_flavio_vence": 0.3268,
+      "vv": 364564
+    }
+  },
+  "ufs_cenario_markowitz": {
+    "ac": {
+      "lula_media": 0.297,
+      "flavio_media": 0.703,
+      "p_lula_vence": 0.0003,
+      "p_flavio_vence": 0.9997,
+      "vv": 469172
+    },
+    "al": {
+      "lula_media": 0.5579,
+      "flavio_media": 0.4421,
+      "p_lula_vence": 0.9989,
+      "p_flavio_vence": 0.0011,
+      "vv": 1840516
+    },
+    "am": {
+      "lula_media": 0.4994,
+      "flavio_media": 0.5006,
+      "p_lula_vence": 0.3569,
+      "p_flavio_vence": 0.6431,
+      "vv": 2168291
+    },
+    "ap": {
+      "lula_media": 0.4814,
+      "flavio_media": 0.5186,
+      "p_lula_vence": 0.0117,
+      "p_flavio_vence": 0.9883,
+      "vv": 465466
+    },
+    "ba": {
+      "lula_media": 0.6791,
+      "flavio_media": 0.3209,
+      "p_lula_vence": 1.0,
+      "p_flavio_vence": 0.0,
+      "vv": 8600622
+    },
+    "ce": {
+      "lula_media": 0.6499,
+      "flavio_media": 0.3501,
+      "p_lula_vence": 1.0,
+      "p_flavio_vence": 0.0,
+      "vv": 5621651
+    },
+    "df": {
+      "lula_media": 0.4139,
+      "flavio_media": 0.5861,
+      "p_lula_vence": 0.0057,
+      "p_flavio_vence": 0.9943,
+      "vv": 1773069
+    },
+    "es": {
+      "lula_media": 0.3961,
+      "flavio_media": 0.6039,
+      "p_lula_vence": 0.0042,
+      "p_flavio_vence": 0.9958,
+      "vv": 2251051
+    },
+    "go": {
+      "lula_media": 0.3628,
+      "flavio_media": 0.6372,
+      "p_lula_vence": 0.0018,
+      "p_flavio_vence": 0.9982,
+      "vv": 3833997
+    },
+    "ma": {
+      "lula_media": 0.6556,
+      "flavio_media": 0.3444,
+      "p_lula_vence": 1.0,
+      "p_flavio_vence": 0.0,
+      "vv": 4020201
+    },
+    "mg": {
+      "lula_media": 0.4567,
+      "flavio_media": 0.5433,
+      "p_lula_vence": 0.0094,
+      "p_flavio_vence": 0.9906,
+      "vv": 11987859
+    },
+    "ms": {
+      "lula_media": 0.3614,
+      "flavio_media": 0.6386,
+      "p_lula_vence": 0.002,
+      "p_flavio_vence": 0.998,
+      "vv": 1491414
+    },
+    "mt": {
+      "lula_media": 0.3014,
+      "flavio_media": 0.6986,
+      "p_lula_vence": 0.0003,
+      "p_flavio_vence": 0.9997,
+      "vv": 1994754
+    },
+    "pa": {
+      "lula_media": 0.5122,
+      "flavio_media": 0.4878,
+      "p_lula_vence": 0.997,
+      "p_flavio_vence": 0.003,
+      "vv": 4861523
+    },
+    "pb": {
+      "lula_media": 0.6301,
+      "flavio_media": 0.3699,
+      "p_lula_vence": 0.9999,
+      "p_flavio_vence": 0.0001,
+      "vv": 2514202
+    },
+    "pe": {
+      "lula_media": 0.652,
+      "flavio_media": 0.348,
+      "p_lula_vence": 1.0,
+      "p_flavio_vence": 0.0,
+      "vv": 5617616
+    },
+    "pi": {
+      "lula_media": 0.7277,
+      "flavio_media": 0.2723,
+      "p_lula_vence": 1.0,
+      "p_flavio_vence": 0.0,
+      "vv": 2147075
+    },
+    "pr": {
+      "lula_media": 0.3294,
+      "flavio_media": 0.6706,
+      "p_lula_vence": 0.001,
+      "p_flavio_vence": 0.999,
+      "vv": 6585437
+    },
+    "rj": {
+      "lula_media": 0.4135,
+      "flavio_media": 0.5865,
+      "p_lula_vence": 0.0062,
+      "p_flavio_vence": 0.9938,
+      "vv": 9362935
+    },
+    "rn": {
+      "lula_media": 0.6132,
+      "flavio_media": 0.3868,
+      "p_lula_vence": 0.9998,
+      "p_flavio_vence": 0.0002,
+      "vv": 2077079
+    },
+    "ro": {
+      "lula_media": 0.2678,
+      "flavio_media": 0.7322,
+      "p_lula_vence": 0.0001,
+      "p_flavio_vence": 0.9999,
+      "vv": 968032
+    },
+    "rr": {
+      "lula_media": 0.2345,
+      "flavio_media": 0.7655,
+      "p_lula_vence": 0.0,
+      "p_flavio_vence": 1.0,
+      "vv": 325410
+    },
+    "rs": {
+      "lula_media": 0.3744,
+      "flavio_media": 0.6256,
+      "p_lula_vence": 0.0031,
+      "p_flavio_vence": 0.9969,
+      "vv": 6424761
+    },
+    "sc": {
+      "lula_media": 0.2652,
+      "flavio_media": 0.7348,
+      "p_lula_vence": 0.0001,
+      "p_flavio_vence": 0.9999,
+      "vv": 4499966
+    },
+    "se": {
+      "lula_media": 0.6496,
+      "flavio_media": 0.3504,
+      "p_lula_vence": 1.0,
+      "p_flavio_vence": 0.0,
+      "vv": 1365587
+    },
+    "sp": {
+      "lula_media": 0.4098,
+      "flavio_media": 0.5902,
+      "p_lula_vence": 0.0054,
+      "p_flavio_vence": 0.9946,
+      "vv": 24894525
+    },
+    "to": {
+      "lula_media": 0.4471,
+      "flavio_media": 0.5529,
+      "p_lula_vence": 0.0087,
+      "p_flavio_vence": 0.9913,
+      "vv": 930427
+    },
+    "zz": {
+      "lula_media": 0.5029,
+      "flavio_media": 0.4971,
+      "p_lula_vence": 0.6035,
+      "p_flavio_vence": 0.3965,
+      "vv": 364564
+    }
+  }
+}

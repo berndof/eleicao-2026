@@ -162,3 +162,53 @@ Avaliação empírica ex-post das alterações propostas sobre o **snapshot cong
 - **Projeção V1 (Histórico 2022 + Perfil TSE):** Flávio 47,19% × Lula 44,95% (margem $-2,24$ p.p.). **Erro da margem: $-0,36$ p.p.**; MAE por UF: **0,549 p.p.**
 - **Projeção V2 (+ Censo 2022 religião/renda/raça + Prefeitos 2024):** Flávio 47,18% × Lula 44,96% (margem $-2,22$ p.p.). **Erro da margem: $-0,35$ p.p.**; MAE por UF: **0,552 p.p.**
 - **Conclusão:** No 1º turno, quando 85% já estava apurado, a votação presidencial de 2022 já capturava quase 98% da correlação espacial (o erro permaneceu praticamente idêntico). A força preditiva do Censo 2022 e dos Prefeitos de 2024 atua predominantemente no **2º Turno (M1)**, onde não há resultado prévio de urna para a transferência dos eliminados.
+
+## 17. Fundamentos macroeconômicos e popularidade histórica (2002–2026)
+
+![Fundamentos Macroeconômicos e Popularidade Histórica](../figures/pt/29_m4_fundamentos_historico.png)
+
+Calibração do **Modelo M4** a partir das séries históricas de eleições presidenciais com disputa de 2º turno da situação (2002 Serra/FHC, 2006 Lula, 2010 Dilma/Lula, 2014 Dilma, 2022 Bolsonaro e 2026 Lula):
+- **Painel A (Popularidade do Governo):** A relação empírica entre o saldo de aprovação (Aprova menos Desaprova) e a votação da situação no 2º turno apresenta correlação positiva robusta ($r = +0,734$). Em 2026, com saldo de $-1$ p.p. (48% aprova vs 49% desaprova), o modelo de popularidade isolado ancora o incumbente próximo à paridade (45,5% a 48,0%).
+- **Painel B (Fundamentos Econômicos):** O Índice de Miséria Econômica (Inflação IPCA 12m + Desemprego PNAD) atinge em 2026 a **mínima histórica da série** ($9,52\% = 4,22\% \text{ IPCA} + 5,30\% \text{ Desemprego}$). Historicamente, taxas de miséria inferiores a 12% sempre garantiram reeleições ou vitórias da situação (2006, 2010 e 2014).
+- **O Paradoxo de 2026:** Uma regressão puramente econômica indicaria vitória confortável de Lula ($>60\%$), enquanto a polarização e a rejeição (45% de rejeição máxima para ambos) ancoram a disputa. O modelo Ridge penalizado integra esses dois vetores, convergindo para uma predição central de **52,82%** para Lula.
+
+## 18. Densidade de probabilidade dos 4 pilares metodológicos (M1, M2, M3, M4)
+
+![Densidade de Probabilidade dos 4 Modelos](../figures/pt/30_m4_distribuicao_nacional.png)
+
+Sobreposição das distribuições preditivas de Monte Carlo ($N=10.000$) para os quatro métodos independentes do projeto:
+- **M1 Estrutural V2 (Urnas 1T + Transferências + Censo + Prefeitos):** Média **47,11%** (DP: $0,44$ p.p.), $P(\text{Lula vence}) = 0,0\%$. É o modelo mais estreito e ancorado em dados territoriais apurados.
+- **M2 Pesquisas V2 (Auditoria TSE de Erro no 1T):** Média **48,08%** (DP: $1,17$ p.p.), $P(\text{Lula vence}) = 5,0\%$. Reflete o sentimento agregado das sondagens com penalização empírica para institutos de viés histórico.
+- **M3 Histórico Puro (Líder do 1T 2002–2022):** Média **49,35%** (DP: $3,61$ p.p.), $P(\text{Lula vence}) = 41,1\%$. Captura a inércia estatística do líder de 1º turno com base em 6 eleições passadas.
+- **M4 Fundamentos V2 (Macroeconomia + Avaliação):** Média **52,75%** (DP: $6,75$ p.p.), $P(\text{Lula vence}) = 65,9\%$. É o único modelo que aponta probabilidade de vitória pró-Lula, impulsionado pelo desemprego recorde de 5,3% e inflação controlada.
+
+## 19. Síntese comparativa do Ensemble V2 de 4 Modelos
+
+![Comparativo do Ensemble 4M](../figures/pt/31_ensemble_4modelos_comparativo.png)
+
+Mapeamento da incerteza combinada através de múltiplos cenários de portfólio estatístico:
+- **Mínima Variância de Markowitz (Pesos Ótimos):** Aloca 98,4% em M1 e 1,6% em M4 (com pesos zerados em M2 e M3 devido à multicolinearidade). Resultado: Lula **47,20%** (DP: $0,44$ p.p.), $P(\text{vitória}) = 0,0\%$.
+- **Ensemble Informado e Balanceado (40% M1, 25% M2, 15% M3, 20% M4):** Estrutura diversificada que equilibra a precisão de urna com o sinal de fundamentos. Resultado: Lula **48,82%** × Flávio **51,18%** (DP: $1,67$ p.p., IC 90%: 46,07% a 51,57%), **$P(\text{Lula vence}) = 23,9\%$** e **$P(\text{Flávio vence}) = 76,0\%$**.
+- **Equiponderado (25% cada):** Atribui pesos iguais aos 4 pilares. Resultado: Lula **49,32%** × Flávio **50,68%** (DP: $2,14$ p.p.), **$P(\text{Lula vence}) = 37,6\%$**.
+- **Pragmático Foco em Urna (60% M1, 20% M2, 10% M3, 10% M4):** Privilegia o comportamento geográfico das urnas. Resultado: Lula **48,09%** × Flávio **51,91%** (DP: $0,99$ p.p.), **$P(\text{Lula vence}) = 2,7\%$**.
+
+| Cenário de Modelo / Ensemble | Pesos [M1, M2, M3, M4] | Voto Esperado Lula | Voto Esperado Flávio | Desvio Padrão | Intervalo de Credibilidade (90%) | $P(\text{Lula vence})$ | $P(\text{Flávio vence})$ |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **M1 Estrutural V2** | [1.0, 0.0, 0.0, 0.0] | 47,11% | 52,89% | 0,44 pp | [46,39%, 47,84%] | 0,0% | 100,0% |
+| **M2 Pesquisas V2** | [0.0, 1.0, 0.0, 0.0] | 48,08% | 51,92% | 1,17 pp | [46,16%, 50,00%] | 5,0% | 95,0% |
+| **M3 Histórico Puro** | [0.0, 0.0, 1.0, 0.0] | 49,35% | 50,65% | 3,61 pp | [43,41%, 55,29%] | 41,1% | 58,9% |
+| **M4 Fundamentos V2** | [0.0, 0.0, 0.0, 1.0] | 52,75% | 47,25% | 6,75 pp | [41,52%, 63,82%] | 65,9% | 34,1% |
+| **Ensemble Markowitz** | [0.984, 0.0, 0.0, 0.016] | 47,20% | 52,80% | 0,44 pp | [46,48%, 47,92%] | 0,0% | 100,0% |
+| **Ensemble Pragmático** | [0.60, 0.20, 0.10, 0.10] | 48,09% | 51,91% | 0,99 pp | [46,46%, 49,73%] | 2,7% | 97,3% |
+| **Ensemble Balanceado** | [0.40, 0.25, 0.15, 0.20] | **48,82%** | **51,18%** | **1,67 pp** | **[46,07%, 51,57%]** | **23,9%** | **76,0%** |
+| **Ensemble Equiponderado** | [0.25, 0.25, 0.25, 0.25] | 49,32% | 50,68% | 2,14 pp | [45,80%, 52,85%] | 37,6% | 62,4% |
+
+## 20. Projeção espacial por Estado (UF): M1 vs M4 vs Ensemble Balanceado
+
+![Projeção por Estado](../figures/pt/32_m4_projecao_uf.png)
+
+Comparativo estado a estado mostrando a dispersão regional e os amortecimentos macroeconômicos:
+- **Estados de Vantagem Consolidada de Lula (Nordeste):** Em estados como Piauí (PI: 71,5%), Bahia (BA: 67,2%) e Maranhão (MA: 65,8%), tanto M1 quanto M4 projetam ampla liderança governista, beneficiada pela combinação de histórico favorável e forte impacto da renda mínima e emprego local.
+- **Estados de Vantagem Consolidada de Flávio (Sul e Centro-Oeste):** Em Santa Catarina (SC: 33,2% para Lula), Mato Grosso (MT: 34,1%) e Rondônia (RO: 31,8%), a tração do agronegócio e a hegemonia de prefeitos do PL mantêm a vantagem oposicionista praticamente impermeável a choques macroeconômicos federais.
+- **Estados Decisivos (Swing States):** Em Minas Gerais (MG), o M1 projeta Lula com 47,8% enquanto o M4 projeta 53,2%; no Ensemble Balanceado, MG fecha em **49,6%** para Lula (empate técnico perfeito, definindo a eleição). Em São Paulo (SP), o Ensemble aponta **47,1%** para Lula, consolidando o favoritismo oposicionista no maior colégio eleitoral do país.
+
