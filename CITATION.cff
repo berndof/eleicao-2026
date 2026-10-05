@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Eleição presidencial 2026 — projeção do 1º turno e previsão do 2º / Brazil 2026 presidential election: first-round projection and runoff forecast"
+type: software
+authors:
+  - alias: "berndof"
+    name: "Bernardo (berndof)"
+repository-code: "https://github.com/berndof/eleicao-2026"
+license: MIT
+date-released: "2026-10-04"
+keywords:
+  - eleições 2026
+  - forecasting
+  - Brazil
+  - election

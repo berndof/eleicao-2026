@@ -1,0 +1,42 @@
+{
+ "apuracao_snapshot": 0.8444994491875429,
+ "parcial": {
+  "lula": 0.43522829401256197,
+  "flavio": 0.4843982278015767
+ },
+ "projetado": {
+  "lula": 0.4495283014336465,
+  "flavio": 0.4719022093244575,
+  "validos": 119457201.99999999
+ },
+ "final": {
+  "lula": 0.4515791945598486,
+  "flavio": 0.470319281368746,
+  "validos": 119281091.0
+ },
+ "erro_projecao_pp": {
+  "lula": -0.2050893126202047,
+  "flavio": 0.15829279557114662,
+  "validos_pct": 0.1476436864582098
+ },
+ "erro_parcial_pp": {
+  "lula": -1.6350900547286606,
+  "flavio": 1.4078946432830697
+ },
+ "uf": {
+  "mae_margem_proj_pp": 0.6029816220695827,
+  "mae_margem_parcial_pp": 1.134518078539183,
+  "max_abs_erro_margem_proj_pp": 2.2307335985784995,
+  "pior_uf": "ba",
+  "vencedor_correto": 28,
+  "n": 28
+ },
+ "municipio": {
+  "n": 5716,
+  "rmse_lula_pp": 1.0856563677851065,
+  "rmse_flavio_pp": 1.0301578928391122,
+  "mae_lula_pp": 0.4912223215858429,
+  "mae_flavio_pp": 0.4443097260860794,
+  "mae_margem_pp": 0.9312757879953938
+ }
+}

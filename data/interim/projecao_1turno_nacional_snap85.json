@@ -1,0 +1,24 @@
+{
+ "lula": 0.44952823070386877,
+ "flavio": 0.4719021744882295,
+ "outros": 0.07856959480790175,
+ "validos_proj": 119457200.2817895,
+ "lula_atual": 0.43522829401256197,
+ "flavio_atual": 0.4843982278015767,
+ "validos_atual": 100951224,
+ "pct_eleitorado_apurado": 0.8444994491875429,
+ "p_lula_lidera": 0.0,
+ "p_vencedor_1t": 0.0,
+ "margem_ic90": [
+  -0.025311431733040013,
+  -0.01946978754946299
+ ],
+ "cv_rmse_pp": {
+  "lula": 1.9059976856007834,
+  "flavio": 1.8713027605279904
+ },
+ "tau_uf_pp": 1.0,
+ "tau_nacional_pp": 1.0,
+ "n_municipios": 5757,
+ "n_ajuste": 4963
+}

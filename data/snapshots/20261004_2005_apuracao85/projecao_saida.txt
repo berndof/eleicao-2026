@@ -1,0 +1,52 @@
+municípios no ajuste: 4963 / 5757
+CV RMSE ponderado (pp): Lula 1.91  Flávio 1.87
+var resíduo margem: a=0.00160 b=5.300
+choque UF (margem) tau=1.00pp  nacional=1.00pp
+
+ATUAL  : Lula 43.52%  Flávio 48.44%  (válidos 100,951,224)
+PROJETADO: Lula 44.95%  Flávio 47.19%  Outros 7.86%  (válidos 119,457,200)
+P(Lula à frente no 1º turno) = 0.0%
+P(vencedor no 1º turno, >50% válidos) = 0.0%
+margem Lula-Flávio, IC90%: -2.53pp a -1.95pp
+
+UF  apur%  Lula%(proj) Flávio%(proj)  P(Lula lidera)
+ac   97.8    28.70      64.57        0.0
+al   53.9    54.02      41.11      100.0
+am   85.8    47.74      45.42      100.0
+ap   80.5    45.78      45.52       64.9
+ba   66.0    64.97      29.58      100.0
+ce   68.8    62.30      32.06      100.0
+df   99.4    38.12      51.29        0.0
+es   99.2    37.70      54.83        0.0
+go   91.5    30.90      53.79        0.0
+ma   74.0    63.28      31.55      100.0
+mg   81.0    43.08      48.41        0.0
+ms   99.3    34.53      58.74        0.0
+mt   95.6    29.08      65.24        0.0
+pa   83.7    49.33      44.98      100.0
+pb   97.6    61.30      33.08      100.0
+pe   74.7    63.22      31.24      100.0
+pi   84.5    70.29      24.69      100.0
+pr   99.2    31.19      59.92        0.0
+rj   71.6    40.04      52.38        0.0
+rn   82.8    59.37      35.09      100.0
+ro   98.0    25.90      67.44        0.0
+rr   98.2    22.66      71.24        0.0
+rs   97.9    35.75      55.61        0.0
+sc   94.8    25.05      66.61        0.0
+se   92.0    62.53      30.83      100.0
+sp   89.9    38.18      51.94        0.0
+to   98.7    43.42      50.45        0.0
+zz   68.0    47.28      42.71      100.0
+
+Coeficientes (share Lula | share Flávio):
+  const         0.050    0.221
+  lula22        0.715   -0.044
+  flavio22     -0.245    0.916
+  superior     -0.009    0.070
+  analf        -0.022    0.068
+  fund_inc     -0.092    0.135
+  jovem         0.173   -0.061
+  idoso         0.188   -0.098
+  fem           0.196   -0.238
+  log_eleit     0.004   -0.002
