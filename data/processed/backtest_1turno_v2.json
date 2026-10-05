@@ -1,0 +1,45 @@
+{
+  "snapshot": "20261004_2005_apuracao85",
+  "tabela": [
+    {
+      "metodo": "Parcial Puro (85% \u00e0s 20h)",
+      "lula": 43.52,
+      "flavio": 48.44,
+      "margem": -4.92,
+      "erro_lula_pp": -1.64,
+      "erro_flavio_pp": 1.41,
+      "erro_margem_pp": -3.04,
+      "mae_uf_pp": 1.348
+    },
+    {
+      "metodo": "Proje\u00e7\u00e3o V1 (Baseline 2022 + Perfil)",
+      "lula": 44.95,
+      "flavio": 47.19,
+      "margem": -2.24,
+      "erro_lula_pp": -0.21,
+      "erro_flavio_pp": 0.16,
+      "erro_margem_pp": -0.36,
+      "mae_uf_pp": 0.549
+    },
+    {
+      "metodo": "Proje\u00e7\u00e3o V2 (+ Censo 2022, Prefeitos 2024)",
+      "lula": 44.96,
+      "flavio": 47.18,
+      "margem": -2.22,
+      "erro_lula_pp": -0.2,
+      "erro_flavio_pp": 0.15,
+      "erro_margem_pp": -0.35,
+      "mae_uf_pp": 0.552
+    },
+    {
+      "metodo": "Resultado Final da Urna (100%)",
+      "lula": 45.16,
+      "flavio": 47.03,
+      "margem": -1.87,
+      "erro_lula_pp": 0.0,
+      "erro_flavio_pp": 0.0,
+      "erro_margem_pp": 0.0,
+      "mae_uf_pp": 0.0
+    }
+  ]
+}

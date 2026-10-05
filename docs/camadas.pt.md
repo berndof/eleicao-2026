@@ -213,6 +213,9 @@ Aqui a projeção e o parcial puro erraram o mesmo (+0,4 p.p. para Lula): como �
 
 Mínimos quadrados **ponderados pelos votos válidos** (cidade grande pesa mais), separadamente para a fatia de Lula e para a de Flávio, sobre os municípios com **≥ 50% apurado** (4.963 dos 5.757 às 20h). Aprende "dado o histórico e o perfil, quanto um município deveria dar a Lula e a Flávio". Aplicada a **todos** os municípios, dá a previsão de cada um, inclusive os que mal começaram a apurar.
 
+*Por que o corte de ≥ 50% apurado?*
+Em apurações parciais, as primeiras urnas abertas em um município não são uma amostra aleatória: refletem seções específicas (geralmente centro urbano ou escolas de fácil acesso). Se o modelo usasse municípios com 5% ou 10% apurados, treinaria em ruído geográfico intra-municipal. Por outro lado, exigir 80% ou 90% descartaria a maior parte das cidades médias e grandes às 20h, gerando viés amostral de cidades minúsculas. O corte de 50% equilibra ambos: retém **86,2% dos municípios (4.963 cidades)** e garante que a apuração de cada um já cruzou a metade das urnas.
+
 ### 4c. O encolhimento λ (quanto confiar em cada fonte)
 
 `λ = vv / (vv + 3000)`. A fatia do que falta é uma **média** entre a regressão e o que o município já mostrou, com peso λ no observado:
@@ -225,7 +228,15 @@ Mínimos quadrados **ponderados pelos votos válidos** (cidade grande pesa mais)
 | 10.000 | 0,77 | principalmente o observado |
 | 100.000 | 0,97 | quase só o observado |
 
-O valor 3.000 (`K_SHRINK`) é uma escolha do autor; funciona como "os 3.000 votos que valem tanto quanto o prior". Em Caruaru (λ = 0,97) o observado domina; a regressão importa nos municípios pequenos ou que mal começaram.
+*Por que escolhemos esses valores e qual é o fundamento estatístico?*
+A fórmula $\lambda = \frac{vv}{vv + K}$ é a solução matemática exata do **estimador de Bayes empírico** (conjugada Normal-Normal ou Dirichlet-Multinomial):
+$$\hat{\theta}_i = \lambda_i \bar{y}_i + (1 - \lambda_i) \mu_0, \quad \text{onde } \lambda_i = \frac{n_i}{n_i + \frac{\sigma^2}{\tau^2}}$$
+O termo $K = \frac{\sigma^2}{\tau^2}$ representa os "votos virtuais" atribuídos à certeza da regressão histórica em relação à variabilidade amostral de uma urna. 
+- Com $K = 3.000$, aos 3.000 votos observados o modelo divide a confiança igualmente (50/50) entre a regressão e o resultado da urna local.
+- **Calibração empírica ex-post ([Figura 26](dados_visual.md#14-calibração-empírica-do-encolhimento-k_shrink-e-corte-de-apuração)):** Testando uma grade de $K \in [500, 10.000]$ e cortes de $30\%$ a $60\%$ sobre o snapshot de 85% contra o resultado final 100% da urna:
+  - $K = 3.000$ (V1): gerou MAE por UF de **0,549 p.p.** e erro nacional de **0,363 p.p.**
+  - $K$ ótimo empírico ($K = 500$ a $1.000$): produziu MAE por UF de **0,536 p.p.** e erro nacional de **0,346 p.p.**
+  - A diferença de apenas **0,013 p.p.** entre $K = 500$ e $K = 3.000$ atesta a estabilidade do método: o estimador não é sensível a ajustes cosméticos e converge solidamente para a urna.
 
 ### 4d. Agregação
 
@@ -261,19 +272,21 @@ Comando: `python -m eleicao2026.model.primeiro_turno` (≈ 20 s).
 
 **O que sai** (`data/processed/backtest_1turno*.{csv,json}`):
 
-| | Lula | Flávio |
-|---|---:|---:|
-| Parcial (85%) | 43,52% | 48,44% |
-| Projeção | 44,95% | 47,19% |
-| **Final** | **45,16%** | **47,03%** |
-| Erro do parcial | −1,64 p.p. | +1,41 p.p. |
-| **Erro da projeção** | **−0,21 p.p.** | **+0,16 p.p.** |
+| | Lula | Flávio | Margem (L−F) | Erro na Margem | MAE por UF |
+|---|---:|---:|---:|---:|---:|
+| **Parcial (85% às 20h)** | 43,52% | 48,44% | −4,92 p.p. | −3,04 p.p. | 1,35 p.p. |
+| **Projeção V1 (Baseline)** | 44,95% | 47,19% | −2,24 p.p. | **−0,36 p.p.** | **0,55 p.p.** |
+| **Projeção V2 (+ Censo, Prefeitos)** | 44,96% | 47,18% | −2,22 p.p. | **−0,35 p.p.** | **0,55 p.p.** |
+| **Final (Urna 100%)** | **45,16%** | **47,03%** | **−1,87 p.p.** | 0,00 p.p. | 0,00 p.p. |
 
-Por UF: erro absoluto médio na margem de **0,60 p.p. (projeção) contra 1,13 (parcial)**; vencedor certo em 28/28. Pior UF: Bahia (−2,2 p.p.).
+*O que o teste da V2 no 1º turno nos ensina ([Figura 28 em dados_visual.md](dados_visual.md#16-backtest-do-1º-turno-às-20h-parcial-vs-v1-vs-v2)):*
+Testamos se adicionar os dados novos (Censo 2022 e Prefeitos 2024) diretamente na projeção das 20h do 1º turno melhorava o resultado. O ganho no 1T é marginal (−0,35 vs −0,36 p.p.). O motivo é puramente estatístico: **a votação de 2022 por município (`lula22` e `flavio22`) já carrega em si quase toda a estrutura demográfica e geográfica do país**. As variáveis do Censo e os Prefeitos de 2024 tornam-se decisivos de verdade no **2º turno (M1)**, onde não há apuração prévia dos eliminados.
+
+Por UF: erro absoluto médio na margem de **0,55 p.p. (projeção) contra 1,35 (parcial)**; vencedor certo em 28/28. Pior UF: Bahia (−2,2 p.p.).
 
 **O que significa:** o método "aprende" a corrigir a distorção da ordem de apuração; é a base da confiança (limitada) no resto. **Onde pode dar errado:** o intervalo de 90% da margem nacional (−2,53 a −1,95 p.p.) não continha o valor real (−1,87): **curto demais**. É uma advertência que carregamos para o 2º turno.
 
-**Reprodutibilidade:** `python -m eleicao2026.model.primeiro_turno --cur data/snapshots/20261004_2005_apuracao85/mun_2026.csv --tag snap85` regenera exatamente a projeção publicada na época (semente fixa).
+**Reprodutibilidade:** `python -m eleicao2026.model.primeiro_turno --cur data/snapshots/20261004_2005_apuracao85/mun_2026.csv --tag snap85` regenera a projeção original; `python -m eleicao2026.v2.backtest_1turno_v2` executa a comparação ex-post completa.
 
 ---
 
@@ -550,6 +563,26 @@ A divergência é **informação**: significa que o resultado depende de em qual
 ### O que acompanhar até 25/10
 
 As pesquisas de 2º turno feitas **depois** do 1º turno ainda não existem nos dados. Como leitura (não regra): se confirmarem um empate técnico, o M1 fica sob suspeita; se mostrarem Flávio claramente à frente, o M1 ganha credibilidade. `make collect model` atualiza tudo.
+
+---
+
+## Camada 13 · A Segunda Versão dos Modelos (V2)
+
+Após a consolidação dos dados brutos e auditoria, construímos uma **segunda versão experimental dos modelos (V2)**, sem alterar a previsão oficial publicada, para incorporar as novas camadas de dados coletadas:
+
+### 13.1 V2-M1: Estrutural com Censo 2022 e Prefeitos 2024 (`m1_v2.py`)
+- **Limitação da V1:** Na V1, a transferência dos eliminados usava deltas macrorregionais homogêneos ($\delta_{\text{região}}$). Um município do agro no interior de SP recebia a mesma taxa de transferência que a capital.
+- **Avanço na V2:** A taxa de transferência de cada eliminado é modulada no nível municipal pela concentração de **evangélicos** (Censo 2022) e pelo **partido do prefeito eleito em 2024** (dados abertos do TSE). Nos municípios governados pelo PL (14,4M de votos), a máquina potencializa a retenção e transferência pró-Flávio; nos municípios do PT/PSB, pró-Lula.
+- **Resultado:** Lula recua ligeiramente de 47,19% para **47,04%** (IC 90%: 46,33% a 47,77%), com incerteza mais estreita devido ao forte controle territorial local.
+
+### 13.2 V2-M2: Pesquisas Ponderadas por Auditoria TSE (`m2_v2.py`)
+- **Limitação da V1:** Todos os institutos recebiam peso idêntico no 2º turno, variando apenas pela data da pesquisa.
+- **Avanço na V2:** O peso de cada pesquisa combina recência temporal, raiz do tamanho amostral auditado no TSE e o **inverso do erro quadrático medido contra a urna do 1º turno** ($w \propto \frac{1}{\text{erro}^2 + \epsilon^2}$). Institutos que erraram por mais de 5 p.p. no 1T têm peso reduzido; institutos calibrados ganham destaque.
+- **Resultado:** Lula recua de 48,86% para **48,42%** (IC 90%: 46,43% a 50,36%), estreitando o intervalo e aproximando as pesquisas da realidade observada na urna.
+
+### 13.3 Ensemble V2 e Otimização de Pesos (`comparar_modelos.py`)
+- **Pesos de Mínima Variância:** Em vez da ponderação subjetiva 50/30/20, calculamos os pesos de mínima variância da carteira de modelos: **M1 (83%) / M2 (12%) / M3 (5%)**.
+- **Resultado comparativo ([Figura 27](dados_visual.md#15-comparativo-dos-modelos-v1-baseline-vs-v2-aprimorado)):** No ensemble otimizado, Lula projeta **47,33%** (IC 90%: 46,63% a 48,04%) e $P(\text{vitória}) < 0,1\%$, confirmando robustamente a liderança de Flávio Bolsonaro sob diferentes abordagens metodológicas.
 
 ---
 

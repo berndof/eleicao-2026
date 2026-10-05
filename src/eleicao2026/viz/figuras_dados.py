@@ -91,7 +91,7 @@ def d01(d):
     nac = sum(v[0] for v in uf.values()) / sum(v[1] for v in uf.values())
     itens = sorted(((u, v[0] / v[1]) for u, v in uf.items()), key=lambda x: x[1])
 
-    fig, (a, b) = plt.subplots(1, 2, figsize=(13, 6), gridspec_kw=dict(width_ratios=[1, 1.15]))
+    fig, (a, b) = plt.subplots(1, 2, figsize=(15, 7), gridspec_kw=dict(width_ratios=[1, 1.15]))
     a.hist(np.array(frac) * 100, bins=np.arange(0, 105, 5), color="#555555", edgecolor="white")
     a.set_xlabel("% do eleitorado do município já apurado às ~20h")
     a.set_ylabel("número de municípios")
@@ -128,7 +128,7 @@ def d02a(d):
         s[2] += sum(v.values())
     marg = {u: 100 * (s[0] - s[1]) / s[2] for u, s in por_uf.items() if u != "zz"}
 
-    fig, a = plt.subplots(figsize=(8, 7.5))
+    fig, a = plt.subplots(figsize=(10, 9))
     lim = max(abs(v) for v in marg.values())
     norm = TwoSlopeNorm(vmin=-lim, vcenter=0, vmax=lim)
     cmap = matplotlib.colormaps["RdBu"].reversed()
@@ -146,36 +146,31 @@ def d02b(d):
     import matplotlib.patheffects as pe
     r22 = {(r["uf"], r["cd"]): {c: int(v) for c, v in r.items() if c not in ("uf", "cd", "nome")}
            for r in rows(C.INTERIM / "pres_2022_mun.csv")}
-    capitais = ["SÃO PAULO", "RIO DE JANEIRO", "SALVADOR", "FORTALEZA", "BELO HORIZONTE", "MANAUS", "CURITIBA", "PORTO ALEGRE", "FLORIANÓPOLIS", "VITÓRIA"]
-    outliers = ["FARTURA DO PIAUÍ", "NOVA PÁDUA", "SÃO CAETANO DO SUL", "ÁGUAS DE SÃO PEDRO", "BALNEÁRIO CAMBORIÚ", "NITERÓI", "SINGAPURA", "MONTREAL", "VANCOUVER"]
+    capitais = ["SÃO PAULO", "RIO DE JANEIRO", "SALVADOR", "FORTALEZA", "BELO HORIZONTE", "MANAUS", "CURITIBA", "PORTO ALEGRE", "RECIFE", "GOIÂNIA", "BELÉM"]
     caps_x, caps_y, caps_n = [], [], []
     xs, ys, ws, cs = [], [], [], []
     for r in rows(C.INTERIM / "mun_2026.csv"):
-        p = perf.get((r["uf"], r["cd"]))
+        k = (r["uf"], r["cd"])
+        v = r22.get(k)
         vv = int(r["vv"])
-        if not p or vv < 200 or int(p["tot"]) == 0:
+        if not v or sum(v.values()) == 0 or vv < 200:
             continue
-        px = 100 * int(p["sup"]) / int(p["tot"])
+        px = 100 * v.get("LULA", 0) / sum(v.values())
         py = 100 * int(r["v_LULA"]) / vv
         xs.append(px)
         ys.append(py)
         ws.append(vv)
         cs.append(COR_REG.get(UF2REG.get(r["uf"].lower()), "#444444"))
-        
-        nm = r["nome"]
-        if nm in capitais or nm in outliers:
+        if r["nome"] in capitais:
             caps_x.append(px)
             caps_y.append(py)
-            label = nm.title()
-            if r["uf"] == "zz":
-                label = f"{label} (Ext.)"
-            caps_n.append(label)
+            caps_n.append(r["nome"].title())
 
     xs, ys, ws = np.array(xs), np.array(ys), np.array(ws)
     rr = corr_pond(xs, ys, ws)
     bb, aa = reta_pond(xs, ys, ws)
 
-    fig, b = plt.subplots(figsize=(9, 8))
+    fig, b = plt.subplots(figsize=(12, 10))
     b.scatter(xs, ys, s=np.sqrt(ws) / 5, alpha=0.55, color=cs, edgecolor="none")
     
     g = np.array([0, 100])
@@ -183,30 +178,26 @@ def d02b(d):
     b.plot(g, aa + bb * g, color="#c1272d", lw=2.5)
 
     for cx, cy, cn in zip(caps_x, caps_y, caps_n):
-        txt = b.annotate(cn, (cx, cy), xytext=(4, -4), textcoords="offset points", fontsize=9.5, color="#111111", weight="bold")
+        txt = b.annotate(cn, (cx, cy), xytext=(4, -4), textcoords="offset points", fontsize=12.5, color="#111111", weight="bold")
         txt.set_path_effects([pe.withStroke(linewidth=2.5, foreground="white")])
 
     b.set_xlim(0, 100)
     b.set_ylim(0, 100)
-    b.set_xlabel("% de Lula no município em 2022 (1º turno)", fontsize=11)
-    b.set_ylabel("% de Lula no município em 2026 (1º turno)", fontsize=11)
-    b.set_title("Onde o PT foi bem em 2022, continuou bem em 2026", loc="left", fontsize=12)
+    b.set_xlabel("% de Lula no município em 2022 (1º turno)", fontsize=12)
+    b.set_ylabel("% de Lula no município em 2026 (1º turno)", fontsize=12)
+    b.set_title("Onde o PT foi bem em 2022, continuou bem em 2026", loc="left", fontsize=13)
 
     cx_box = dict(facecolor='white', alpha=0.85, edgecolor='none', pad=3)
-    b.text(0.03, 0.96, f"Cada bolinha = 1 município (tamanho = total de votos)\nCorrelação r = {rr:.2f}\n"\
-           f"Reta vermelha: tendência real (cada +10% em 2022 → +{10 * bb:.1f}% em 2026)".replace(".", ","),
-           transform=b.transAxes, va="top", fontsize=10, bbox=cx_box)
+    b.text(0.03, 0.96, f"Cada bolinha = 1 município (tamanho = total de votos)\nCorrelação r = {rr:.2f}\nReta vermelha: tendência real (cada +10% em 2022 → +{10 * bb:.1f}% em 2026)".replace(".", ","), transform=b.transAxes, va="top", fontsize=11, bbox=cx_box)
 
-    b.text(85, 78, "Linha tracejada cinza:\nse a votação de 2026\nfosse idêntica à de 2022", color="#666666", fontsize=9, ha="right", va="bottom", bbox=cx_box)
+    b.text(85, 78, "Linha tracejada cinza:\nse a votação de 2026\nfosse idêntica à de 2022", color="#666666", fontsize=10, ha="right", va="bottom", bbox=cx_box)
+
     handles = [Patch(color=c, label=n) for n, c in COR_REG.items() if n != "Exterior"]
-    b.legend(handles=handles, frameon=True, fontsize=10, loc="lower right", title="Região", facecolor="white", framealpha=0.9, edgecolor="none")
+    b.legend(handles=handles, frameon=True, fontsize=11, loc="lower right", title="Região", facecolor="white", framealpha=0.9, edgecolor="none")
 
-    fig.suptitle("Votos de 2022: o melhor ponto de partida para prever 2026", x=0.01, ha="left", fontweight="bold", fontsize=14)
+    fig.suptitle("Votos de 2022: o melhor ponto de partida para prever 2026", x=0.01, ha="left", fontweight="bold", fontsize=16)
     footer(fig, T)
     save(fig, "pt", "d02b_votos_2022_dispersao")
-
-
-
 
 # ----------------------------------------------------------------------------- d03a
 def d03a(d):
@@ -222,7 +213,7 @@ def d03a(d):
                fund_inc="Fundamental incompleto", jovem="16-24 anos", idoso="60+ anos")
     cor = dict(fem="#8a8a8a", sup="#2a9d8f", analf="#c1272d", fund_inc="#e9a23b", jovem="#1f5fa8", idoso="#7b5ea7")
 
-    fig, a = plt.subplots(figsize=(8, 6))
+    fig, a = plt.subplots(figsize=(10, 7))
     for k in ("fem", "sup", "analf", "fund_inc", "jovem", "idoso"):
         a.plot(anos, serie[k], marker="o", color=cor[k], lw=2, label=rot[k])
         ult = [(x, y) for x, y in zip(anos, serie[k]) if not np.isnan(y)][-1]
@@ -235,7 +226,7 @@ def d03a(d):
     a.set_title("O eleitorado mudou muito em 24 anos", loc="left", fontsize=12)
     a.text(0.99, 0.02, "faixa etária não informada pelo TSE em 2002 e 2006", transform=a.transAxes, ha="right",
            fontsize=8, color="#888888")
-    fig.subplots_adjust(right=0.75)
+    fig.subplots_adjust(right=0.65)
     footer(fig, T)
     save(fig, "pt", "d03a_perfil_tempo")
 
@@ -271,7 +262,7 @@ def d03b(d):
     xs, ys, ws = np.array(xs), np.array(ys), np.array(ws)
     rr = corr_pond(xs, ys, ws)
 
-    fig, b = plt.subplots(figsize=(8, 6))
+    fig, b = plt.subplots(figsize=(12, 10))
     b.scatter(xs, ys, s=np.sqrt(ws) / 6, alpha=0.4, color=cs, edgecolor="none")
     bb, aa = reta_pond(xs, ys, ws)
     g = np.array([0, xs.max()])
@@ -303,40 +294,54 @@ def d04(d):
     vv = d.meta["votos_validos"]
     rl, rf = 100 * d.meta["votos_candidatos"][LULA] / vv, 100 * d.meta["votos_candidatos"][FLAV] / vv
 
-    fig, (a, b) = plt.subplots(1, 2, figsize=(13, 5.6), gridspec_kw=dict(width_ratios=[1.6, 1]))
-    a.scatter(dt, F, color=COR["flavio"], alpha=0.65, s=28, label="Flávio (pesquisas)")
-    a.scatter(dt, L, color=COR["lula"], alpha=0.65, s=28, label="Lula (pesquisas)")
-    
-    # Add institute names as tiny text labels
-    for x, y_l, y_f, n in zip(dt, L, F, nomes):
-        a.annotate(n, (x, y_l), xytext=(4, 0), textcoords="offset points", fontsize=6, color="#555555", va="center")
-        a.annotate(n, (x, y_f), xytext=(4, 0), textcoords="offset points", fontsize=6, color="#555555", va="center")
-    a.axhline(rf, color=COR["flavio"], ls="--", lw=1.4)
-    a.axhline(rl, color=COR["lula"], ls="--", lw=1.4)
-    a.text(min(dt), rf + 0.25, f"urna: Flávio {rf:.1f}%", color=COR["flavio"], fontsize=9, va="bottom")
-    a.text(min(dt), rl - 0.25, f"urna: Lula {rl:.1f}%", color=COR["lula"], fontsize=9, va="top")
-    a.set_ylabel("% dos votos válidos (pesquisa reescalada sem indecisos)")
-    a.legend(frameon=False, loc="lower right", fontsize=9)
-    a.xaxis.set_major_formatter(mdates.DateFormatter("%d/%m"))
-    a.tick_params(axis="x", rotation=30)
-    a.set_title(f"{len(polls)} pesquisas de 1º turno coletadas (set-out/2026)", loc="left", fontsize=11.5)
+    from collections import Counter
+    top_inst = [n for n, c in Counter(nomes).most_common(10)]
+    colors = plt.cm.tab10.colors
+    inst_color = {n: colors[i % 10] for i, n in enumerate(top_inst)}
 
-    cont = defaultdict(int)
-    for n in nomes:
-        cont[n] += 1
-    it = sorted(cont.items(), key=lambda x: x[1])
-    y = np.arange(len(it))
-    b.barh(y, [v for _, v in it], color="#555555")
-    b.set_yticks(y, [n for n, _ in it])
-    for yi, (_, v) in zip(y, it):
-        b.text(v + 0.1, yi, str(v), va="center", fontsize=9)
-    fig.subplots_adjust(wspace=0.3)
-    b.set_xlabel("pesquisas por instituto")
-    b.set_title("Quem publicou", loc="left", fontsize=11.5)
-    fig.suptitle("Pesquisas: o que cada instituto dizia antes da urna", x=0.01, ha="left", fontweight="bold",
-                 fontsize=13.5)
-    footer(fig, T, "fonte_pesq")
+    fig, (a, b) = plt.subplots(1, 2, figsize=(16, 8.5), gridspec_kw=dict(width_ratios=[1.7, 1]))
+    
+    for x, y_l, y_f, n in zip(dt, L, F, nomes):
+        c = inst_color.get(n, "#888888")
+        a.scatter(x, y_l, color=c, marker="o", s=80, alpha=0.9, edgecolor="white", lw=0.6)
+        a.scatter(x, y_f, color=c, marker="s", s=80, alpha=0.9, edgecolor="white", lw=0.6)
+
+    a.axhline(rl, color=COR["lula"], ls="--")
+    a.text(dt[0], rl - 0.2, f"urna: Lula {rl:.1f}%", color=COR["lula"], va="top", fontsize=12)
+    a.axhline(rf, color=COR["flavio"], ls="--")
+    a.text(dt[0], rf + 0.2, f"urna: Flávio {rf:.1f}%", color=COR["flavio"], va="bottom", fontsize=12)
+
+    a.set_ylabel("% dos votos válidos (pesquisa reescalada sem indecisos)", fontsize=13)
+    a.xaxis.set_major_formatter(matplotlib.dates.DateFormatter("%d/%m"))
+    plt.setp(a.get_xticklabels(), rotation=30, ha="right", fontsize=12)
+
+    from matplotlib.lines import Line2D
+    legend_elements = [
+        Line2D([0], [0], marker='o', color='w', label='Lula', markerfacecolor='#666666', markersize=10),
+        Line2D([0], [0], marker='s', color='w', label='Flávio', markerfacecolor='#666666', markersize=10)
+    ]
+    a.legend(handles=legend_elements, frameon=True, fontsize=12, loc="lower right")
+
+    counts = Counter(nomes)
+    y = np.arange(len(counts))
+    itens = counts.most_common()[::-1]
+    
+    bar_colors = [inst_color.get(n, "#888888") for n, _ in itens]
+    b.barh(y, [c for _, c in itens], color=bar_colors, alpha=0.9)
+    
+    b.set_yticks(y, [n for n, _ in itens], fontsize=13)
+    b.set_xlabel("pesquisas por instituto", fontsize=13)
+    for yi, (_, c) in zip(y, itens):
+        b.text(c + 0.1, yi, str(c), va="center", fontsize=12)
+    b.set_xlim(0, max(c for _, c in itens) + 1)
+    b.set_title("Quem publicou (Cores por Instituto)", loc="left", fontsize=15)
+
+    fig.suptitle(f"{len(dt)} pesquisas de 1º turno (set-out/2026)", x=0.01, ha="left", fontweight="bold", fontsize=18)
+    footer(fig, T)
     save(fig, "pt", "d04_pesquisas")
+
+
+
 
 
 # ----------------------------------------------------------------------------- d05

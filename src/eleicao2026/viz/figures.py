@@ -544,7 +544,7 @@ def fig13(d, t, lang):
     ax.set_xlabel(t["f13_x"])
     ax.set_title(t["f13_title"], loc="left")
     ax.plot([], [], color=COR["M2"], lw=3, label=t["f13_swing"])
-    ax.plot([], [], color="#888888", lw=3, label=t["f13_safe"])
+    ax.plot([], [], color=COR["lula"], lw=3, label=t["f13_safe"] + " (Lula/Flávio)")
     ax.legend(frameon=False, loc="lower right")
     footer(fig, t, "fonte_mod")
     save(fig, lang, "13_previsao_por_uf")

@@ -1,0 +1,231 @@
+{
+  "modelo": "V2-M2_pesquisas_auditadas_tse",
+  "n_sim": 20,
+  "lula_media": 0.4808,
+  "lula_mediana": 0.4816,
+  "lula_ic90": [
+    0.4612,
+    0.4996
+  ],
+  "p_lula_vence": 0.05,
+  "flavio_media": 0.5192,
+  "lula_bruto_ponderado": 0.4858,
+  "institutos": [
+    {
+      "pollster": "Futura",
+      "data_fim": "2026-10-03",
+      "lula_valido": 0.4844,
+      "erro_1t_pp": -0.23,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 19.81
+    },
+    {
+      "pollster": "Futura",
+      "data_fim": "2026-09-29",
+      "lula_valido": 0.4703,
+      "erro_1t_pp": -0.23,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 13.33
+    },
+    {
+      "pollster": "Vox Brasil",
+      "data_fim": "2026-10-01",
+      "lula_valido": 0.4839,
+      "erro_1t_pp": 0.98,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 11.64
+    },
+    {
+      "pollster": "Vox Brasil",
+      "data_fim": "2026-09-28",
+      "lula_valido": 0.4972,
+      "erro_1t_pp": 0.98,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 8.65
+    },
+    {
+      "pollster": "Futura",
+      "data_fim": "2026-09-24",
+      "lula_valido": 0.4694,
+      "erro_1t_pp": -0.23,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 8.13
+    },
+    {
+      "pollster": "Palver",
+      "data_fim": "2026-10-03",
+      "lula_valido": 0.4731,
+      "erro_1t_pp": -2.17,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 6.57
+    },
+    {
+      "pollster": "PoderData",
+      "data_fim": "2026-10-02",
+      "lula_valido": 0.5,
+      "erro_1t_pp": 2.95,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 3.77
+    },
+    {
+      "pollster": "Palver",
+      "data_fim": "2026-09-27",
+      "lula_valido": 0.4891,
+      "erro_1t_pp": -2.17,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 3.63
+    },
+    {
+      "pollster": "Ideia",
+      "data_fim": "2026-09-28",
+      "lula_valido": 0.5026,
+      "erro_1t_pp": 2.89,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 2.62
+    },
+    {
+      "pollster": "Datafolha",
+      "data_fim": "2026-10-03",
+      "lula_valido": 0.5054,
+      "erro_1t_pp": 4.05,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 2.45
+    },
+    {
+      "pollster": "Palver",
+      "data_fim": "2026-09-23",
+      "lula_valido": 0.4839,
+      "erro_1t_pp": -2.17,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 2.44
+    },
+    {
+      "pollster": "Quaest",
+      "data_fim": "2026-10-03",
+      "lula_valido": 0.4884,
+      "erro_1t_pp": 4.17,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 2.32
+    },
+    {
+      "pollster": "Datafolha",
+      "data_fim": "2026-09-30",
+      "lula_valido": 0.5161,
+      "erro_1t_pp": 4.05,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 1.82
+    },
+    {
+      "pollster": "Palver",
+      "data_fim": "2026-09-20",
+      "lula_valido": 0.4778,
+      "erro_1t_pp": -2.17,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 1.81
+    },
+    {
+      "pollster": "AtlasIntel",
+      "data_fim": "2026-10-02",
+      "lula_valido": 0.5011,
+      "erro_1t_pp": 4.79,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 1.64
+    },
+    {
+      "pollster": "PoderData",
+      "data_fim": "2026-09-23",
+      "lula_valido": 0.4945,
+      "erro_1t_pp": 2.95,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 1.55
+    },
+    {
+      "pollster": "Quaest",
+      "data_fim": "2026-09-27",
+      "lula_valido": 0.5,
+      "erro_1t_pp": 4.17,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 1.28
+    },
+    {
+      "pollster": "AtlasIntel",
+      "data_fim": "2026-09-28",
+      "lula_valido": 0.4995,
+      "erro_1t_pp": 4.79,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 1.1
+    },
+    {
+      "pollster": "Datafolha",
+      "data_fim": "2026-09-24",
+      "lula_valido": 0.5109,
+      "erro_1t_pp": 4.05,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 1.0
+    },
+    {
+      "pollster": "Real Time",
+      "data_fim": "2026-09-30",
+      "lula_valido": 0.4945,
+      "erro_1t_pp": 6.13,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 0.85
+    },
+    {
+      "pollster": "MDA",
+      "data_fim": "2026-10-02",
+      "lula_valido": 0.5222,
+      "erro_1t_pp": 7.53,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 0.7
+    },
+    {
+      "pollster": "Quaest",
+      "data_fim": "2026-09-20",
+      "lula_valido": 0.494,
+      "erro_1t_pp": 4.17,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 0.64
+    },
+    {
+      "pollster": "AtlasIntel",
+      "data_fim": "2026-09-22",
+      "lula_valido": 0.5016,
+      "erro_1t_pp": 4.79,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 0.61
+    },
+    {
+      "pollster": "Indexa",
+      "data_fim": "2026-09-29",
+      "lula_valido": 0.5059,
+      "erro_1t_pp": 7.76,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 0.49
+    },
+    {
+      "pollster": "Nexus",
+      "data_fim": "2026-09-27",
+      "lula_valido": 0.5111,
+      "erro_1t_pp": 7.14,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 0.47
+    },
+    {
+      "pollster": "Real Time",
+      "data_fim": "2026-09-23",
+      "lula_valido": 0.4944,
+      "erro_1t_pp": 6.13,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 0.43
+    },
+    {
+      "pollster": "Nexus",
+      "data_fim": "2026-09-20",
+      "lula_valido": 0.5055,
+      "erro_1t_pp": 7.14,
+      "amostra_tse": 2000,
+      "peso_v2_pct": 0.24
+    }
+  ]
+}

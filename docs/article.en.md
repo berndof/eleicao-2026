@@ -179,6 +179,7 @@ make all        # refreshes count and polls, runs models, backtest, figures and 
 ## 9. Next steps
 
 * **Post-mortem on Oct 25:** this forecast is frozen at tag `previsao-2t-2026-10-04-v2` (`-v2` fixes an error in the original version; see the [erratum](layers.en.md#erratum)). After the election I will compare forecast and result (by method, by state) and publish what went wrong.
+* **Experimental V2 Models:** in parallel with the official frozen baseline, we implemented the experimental V2 models in `eleicao2026.v2` (incorporating 2022 Census data, 2024 mayoral alignments, and TSE-audited pollster accuracy weights). Detailed comparative analysis is documented in [Figure 15 in dados_visual.md](dados_visual.md#15-comparativo-dos-modelos-v1-baseline-vs-v2-aprimorado) and in [Layer 13 in layers.en.md](layers.en.md#layer-13--the-second-version-of-the-models-v2).
 * Post-first-round runoff polls (starting to come out in the next days) should be incorporated; `make collect` fetches them.
 * Estimate (instead of assume) the bias-persistence factor and the ensemble weights, using 2014 and 2018.
 

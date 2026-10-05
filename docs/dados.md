@@ -86,6 +86,11 @@ Códigos: `cd` é o código do município **no TSE** (não é o código IBGE). `
 | `influencia.json` | Resumo: forma fechada do M2/M3 × simulado, cenários de hipótese. |
 | `exemplo_municipio.json`, `exemplo_uf.json`, `m1_decomposicao.json` | Números dos exemplos "passo a passo" de [camadas.pt.md](camadas.pt.md) (Caruaru, Minas Gerais, decomposição nacional do M1). |
 | `auditoria_pesquisas.csv` | Auditoria completa das 112 pesquisas eleitorais (1T e 2T): correspondência exata com o registro do TSE PesqEle, protocolo oficial, divergências de tamanho amostral, custos e empresas contratantes/pagantes. |
+| `calibracao_shrinkage.json` | Calibração empírica ex-post do hiperparâmetro de encolhimento $K_{\text{shrink}}$ e corte de apuração contra a apuração final 100%. |
+| `resumo_v2_m1.json` | Simulações do modelo estrutural V2 incorporando o Censo 2022 (religião e renda) e Prefeitos 2024 (máquina municipal). |
+| `resumo_v2_m2.json` | Síntese de pesquisas V2 com pesos individuais calibrados pelo erro do 1T auditado no TSE e tamanho amostral. |
+| `comparativo_modelos_v1_v2.json` | Tabela lado a lado comparando V1 baseline e V2, com pesos de mínima variância de Markowitz para o ensemble. |
+| `backtest_1turno_v2.json` | Backtest ex-post no snapshot das 20h comparando o parcial puro contra as projeções V1 e V2. |
 
 > Todas as 29 fontes primárias e secundárias do projeto estão catalogadas com fichas individuais de metadados, links diretos, somas SHA-256 e licenças em [docs/fontes/](fontes/).
 

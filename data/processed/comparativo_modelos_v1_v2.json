@@ -1,0 +1,94 @@
+{
+  "pesos_otimos": {
+    "M1": 0.828,
+    "M2": 0.12,
+    "M3": 0.052
+  },
+  "comparativo": [
+    {
+      "modelo": "M1 (Estrutural)",
+      "v1_media": 0.47186236502363016,
+      "v1_ic90": [
+        0.45435069854377247,
+        0.4890535253907632
+      ],
+      "v1_p_lula": 0.0034,
+      "v2_media": 0.4704,
+      "v2_ic90": [
+        0.4633,
+        0.4777
+      ],
+      "v2_p_lula": 0.0,
+      "diferenca_pp": -0.15,
+      "o_que_mudou": "Adi\u00e7\u00e3o de Censo 2022 (religi\u00e3o/renda) e Prefeitos 2024 (m\u00e1quina local)"
+    },
+    {
+      "modelo": "M2 (Pesquisas)",
+      "v1_media": 0.48856017247421624,
+      "v1_ic90": [
+        0.4490528469073104,
+        0.5282835709807949
+      ],
+      "v1_p_lula": 0.3167,
+      "v2_media": 0.4842,
+      "v2_ic90": [
+        0.4643,
+        0.5036
+      ],
+      "v2_p_lula": 0.0934,
+      "diferenca_pp": -0.44,
+      "o_que_mudou": "Pesos individuais calibrados pelo erro do 1T auditado no TSE e amostra"
+    },
+    {
+      "modelo": "M3 (Hist\u00f3rico 2002-22)",
+      "v1_media": 0.4935476648611311,
+      "v1_ic90": [
+        0.4341480522518957,
+        0.552869195765011
+      ],
+      "v1_p_lula": 0.4106,
+      "v2_media": 0.4935476648611311,
+      "v2_ic90": [
+        0.4341480522518957,
+        0.552869195765011
+      ],
+      "v2_p_lula": 0.4106,
+      "diferenca_pp": 0.0,
+      "o_que_mudou": "Mantido como controle hist\u00f3rico puro"
+    },
+    {
+      "modelo": "Ensemble (50/30/20)",
+      "v1_media": 0.4812087672263062,
+      "v1_ic90": [
+        0.451236877635797,
+        0.5258427149417116
+      ],
+      "v1_p_lula": 0.17883,
+      "v2_media": 0.4794,
+      "v2_ic90": [
+        0.4657,
+        0.4929
+      ],
+      "v2_p_lula": 0.0069,
+      "diferenca_pp": -0.18,
+      "o_que_mudou": "Mistura ponderada tradicional com M1 e M2 aprimorados"
+    },
+    {
+      "modelo": "Ensemble V2 Otimizado",
+      "v1_media": 0.4812087672263062,
+      "v1_ic90": [
+        0.451236877635797,
+        0.5258427149417116
+      ],
+      "v1_p_lula": 0.17883,
+      "v2_media": 0.4733,
+      "v2_ic90": [
+        0.4663,
+        0.4804
+      ],
+      "v2_p_lula": 0.0,
+      "diferenca_pp": -0.79,
+      "o_que_mudou": "Pesos de m\u00ednima vari\u00e2ncia: M1 83% / M2 12% / M3 5%"
+    }
+  ]
+}

@@ -179,6 +179,7 @@ make all        # atualiza apuração e pesquisas, roda os modelos, backtest, fi
 ## 9. Próximos passos
 
 * **Pós-mortem em 25/10:** esta previsão está congelada na tag `previsao-2t-2026-10-04-v2` (a `-v2` corrige um erro da versão original; veja a [errata](camadas.pt.md#errata)). Depois da eleição, comparo previsão e resultado (por método, por UF) e publico o que errou.
+* **Modelos V2 Experimentais:** em paralelo à previsão congelada oficial, implementamos a versão experimental V2 em `eleicao2026.v2` (incorporando Censo 2022, Prefeitos 2024 e pesos de pesquisas auditados no TSE). A análise comparativa detalhada está documentada no [Gráfico 15 de dados_visual.md](dados_visual.md#15-comparativo-dos-modelos-v1-baseline-vs-v2-aprimorado) e na [Camada 13 de camadas.pt.md](camadas.pt.md#camada-13--a-segunda-versão-dos-modelos-v2).
 * Pesquisas de 2º turno pós-1º turno (começam a sair nos próximos dias) devem ser incorporadas; o `make collect` as busca.
 * Estimar (em vez de assumir) o fator de persistência do viés e os pesos do ensemble, olhando 2014 e 2018.
 

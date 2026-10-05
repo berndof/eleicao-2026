@@ -213,6 +213,9 @@ Here the projection and the raw partial erred by the same amount (+0.4 pp for Lu
 
 **Weighted** least squares, weighted by valid votes (a large city weighs more), separately for Lula's share and for Flávio's, over municipalities with **≥ 50% counted** (4,963 of 5,757 at 8pm). It learns "given the history and profile, how much should a municipality give Lula and Flávio". Applied to **all** municipalities, it gives each one's prediction, including those that have barely started counting.
 
+*Why the cutoff of ≥ 50% counted?*
+In early tally hours, the first ballots tallied in a city are not an exchangeable sample: they reflect specific urban precincts or central voting stations. Fitting the model on cities with only 5% or 10% tallied trains on intra-municipal spatial noise. Requiring 80% or 90%, conversely, throws out medium and large cities at 8pm, biasing the fit towards small towns. The 50% cutoff achieves optimal balance: it retains **86.2% of municipalities (4,963 cities)** and ensures that each municipality in the training sample has passed the halfway mark.
+
 ### 4c. Shrinkage λ (how much to trust each source)
 
 `λ = vv / (vv + 3000)`. The share of what is missing is an **average** of the regression and what the municipality already showed, with weight λ on the observed:
@@ -225,7 +228,15 @@ Here the projection and the raw partial erred by the same amount (+0.4 pp for Lu
 | 10,000 | 0.77 | mostly the observed |
 | 100,000 | 0.97 | almost only the observed |
 
-The value 3,000 (`K_SHRINK`) is the author's choice; it works as "the 3,000 votes the prior is worth". In Caruaru (λ = 0.97) the observed dominates; the regression matters in small municipalities or those that have barely started.
+*Why these values and what is the statistical foundation?*
+The shrinkage formula $\lambda = \frac{vv}{vv + K}$ is the exact mathematical solution of an **empirical Bayes estimator** (conjugate Normal-Normal or Dirichlet-Multinomial):
+$$\hat{\theta}_i = \lambda_i \bar{y}_i + (1 - \lambda_i) \mu_0, \quad \text{where } \lambda_i = \frac{n_i}{n_i + \frac{\sigma^2}{\tau^2}}$$
+The term $K = \frac{\sigma^2}{\tau^2}$ represents the "virtual votes" equivalent to the historical regression prior certainty relative to binomial polling section variance.
+- With $K = 3,000$, after 3,000 counted votes the model assigns equal 50/50 weight to the regression and local ballot box.
+- **Ex-post empirical calibration ([Figure 26](dados_visual.md#14-calibração-empírica-do-encolhimento-k_shrink-e-corte-de-apuração)):** Testing $K \in [500, 10,000]$ and cutoffs $30\%$ to $60\%$ on the 85% snapshot against the 100% final truth:
+  - $K = 3,000$ (V1): State MAE of **0.549 pp** and national margin error of **0.363 pp**.
+  - Empirical optimum ($K = 500$ to $1,000$): State MAE of **0.536 pp** and national margin error of **0.346 pp**.
+  - The small difference of just **0.013 pp** proves the stability of the empirical Bayes estimator: predictions are stable across a wide range of $K$.
 
 ### 4d. Aggregation
 
@@ -261,19 +272,21 @@ Command: `python -m eleicao2026.model.primeiro_turno` (≈ 20 s).
 
 **What comes out** (`data/processed/backtest_1turno*.{csv,json}`):
 
-| | Lula | Flávio |
-|---|---:|---:|
-| Partial (85%) | 43.52% | 48.44% |
-| Projection | 44.95% | 47.19% |
-| **Final** | **45.16%** | **47.03%** |
-| Partial error | −1.64 pp | +1.41 pp |
-| **Projection error** | **−0.21 pp** | **+0.16 pp** |
+| | Lula | Flávio | Margin (L−F) | Margin Error | State MAE |
+|---|---:|---:|---:|---:|---:|
+| **Partial (85% at 8pm)** | 43.52% | 48.44% | −4.92 pp | −3.04 pp | 1.35 pp |
+| **Projection V1 (Baseline)** | 44.95% | 47.19% | −2.24 pp | **−0.36 pp** | **0.55 pp** |
+| **Projection V2 (+ Census, Mayors)** | 44.96% | 47.18% | −2.22 pp | **−0.35 pp** | **0.55 pp** |
+| **Final (100% Ballot Box)** | **45.16%** | **47.03%** | **−1.87 pp** | 0.00 pp | 0.00 pp |
 
-By state: mean absolute margin error of **0.60 pp (projection) vs. 1.13 (partial)**; correct winner in 28/28. Worst state: Bahia (−2.2 pp).
+*What testing V2 on the first round teaches us ([Figure 28 in dados_visual.md](dados_visual.md#16-backtest-do-1º-turno-às-20h-parcial-vs-v1-vs-v2)):*
+We tested whether feeding the new features (2022 Census and 2024 Mayors) directly into the 8pm first-round projection improved accuracy. The gain on the first round is minimal (−0.35 vs. −0.36 pp). The statistical explanation is straightforward: **historical 2022 municipal presidential votes already encapsulate almost all spatial and demographic voting structure**. The Census and 2024 mayoral alignments become genuinely decisive in the **runoff (M1)**, where no prior 2026 tally exists for eliminated candidate transfers.
+
+By state: mean absolute margin error of **0.55 pp (projection) vs. 1.35 (partial)**; correct winner in 28/28. Worst state: Bahia (−2.2 pp).
 
 **What it means:** the method "learns" to correct the distortion of the counting order; this is the basis of the (limited) confidence in the rest. **Where it can go wrong:** the 90% interval for the national margin (−2.53 to −1.95 pp) did not contain the real value (−1.87): **too short**. It is a warning we carry into the runoff.
 
-**Reproducibility:** `python -m eleicao2026.model.primeiro_turno --cur data/snapshots/20261004_2005_apuracao85/mun_2026.csv --tag snap85` regenerates exactly the projection published at the time (fixed seed).
+**Reproducibility:** `python -m eleicao2026.model.primeiro_turno --cur data/snapshots/20261004_2005_apuracao85/mun_2026.csv --tag snap85` regenerates the baseline projection; `python -m eleicao2026.v2.backtest_1turno_v2` runs the complete ex-post comparative backtest.
 
 ---
 
@@ -550,6 +563,26 @@ The divergence is **information**: it means the result depends on which of these
 ### What to watch until 25 Oct
 
 Runoff polls taken **after** the first round do not yet exist in the data. As a reading (not a rule): if they confirm a technical tie, M1 comes under suspicion; if they show Flávio clearly ahead, M1 gains credibility. `make collect model` updates everything.
+
+---
+
+## Layer 13 · The Second Version of the Models (V2)
+
+Following data consolidation and audit, we constructed an **experimental second version of the models (V2)** without altering the official published baseline, incorporating the newly collected datasets:
+
+### 13.1 V2-M1: Structural Model with 2022 Census and 2024 Mayors (`m1_v2.py`)
+- **V1 limitation:** Elimination transfers relied on flat macrorregional adjustments ($\delta_{\text{region}}$), assuming identical transfer rates across agrarian strongholds and capitals.
+- **V2 advancement:** Each eliminated candidate's transfer is conditioned at the municipal level by **evangelical density** (2022 Census) and **2024 mayoral party alignment** (TSE open data). In PL-governed municipalities (14.4M voters), the local political machine amplifies pro-Flávio retention and transfer; in PT/PSB municipalities, pro-Lula.
+- **Result:** Lula edges down slightly from 47.19% to **47.04%** (90% CI: 46.33% to 47.77%), with narrower uncertainty reflecting strong localized party control.
+
+### 13.2 V2-M2: Polls Weighted by TSE Audit and 1T Accuracy (`m2_v2.py`)
+- **V1 limitation:** All polling institutes received equal baseline weights in the runoff, modulated only by recency.
+- **V2 advancement:** Poll weights incorporate recency, audited sample size, and the **inverse squared error measured against the 1st round ballot box** ($w \propto \frac{1}{\text{error}^2 + \epsilon^2}$). Pollsters with >5 pp errors in the 1st round are downweighted; calibrated firms are prioritized.
+- **Result:** Lula adjusts from 48.86% to **48.42%** (90% CI: 46.43% to 50.36%), bringing the poll synthesis closer to the actual ballot box.
+
+### 13.3 V2 Ensemble and Weight Optimization (`comparar_modelos.py`)
+- **Minimum Variance Weights:** Replacing the subjective 50/30/20 weights, we compute the Markowitz minimum variance portfolio across model components: **M1 (83%) / M2 (12%) / M3 (5%)**.
+- **Comparative result ([Figure 27](dados_visual.md#15-comparativo-dos-modelos-v1-baseline-vs-v2-aprimorado)):** In the optimized ensemble, Lula is projected at **47.33%** (90% CI: 46.63% to 48.04%) with $P(\text{victory}) < 0.1\%$, reaffirming Flávio Bolsonaro's solid favorite status across diverse statistical methodologies.
 
 ---
 

@@ -18,6 +18,9 @@ Para o detalhe das tabelas e colunas, veja [dados.md](dados.md). Os gráficos s�
 | 11 | Mercados preditivos (Polymarket) | Polymarket CLOB & Gamma API | `data/ledger/observacoes.csv` | alta: histórico diário sem look-ahead |
 | 12 | Auditoria do registro de pesquisas | TSE PesqEle 2026 | `data/processed/auditoria_pesquisas.csv` | alta: 112 de 112 pesquisas auditadas (100%) |
 | 13 | Séries primárias de rejeição | Datafolha primário (2025–2026) | `data/external/datafolha_aprovacao_rejeicao.csv` | alta: lido de relatórios primários |
+| 14 | Calibração de encolhimento (Shrinkage) | Backtest no snapshot de 85% | `data/processed/calibracao_shrinkage.json` | alta: análise empírica do erro |
+| 15 | Comparativo dos modelos V1 vs V2 | Simulações integradas V1 e V2 | `data/processed/comparativo_modelos_v1_v2.json` | alta: 10.000 simulações comparativas |
+| 16 | Backtest do 1º turno às 20h (V1 vs V2) | Snapshot de 85% vs Urna 100% | `data/processed/backtest_1turno_v2.json` | alta: teste empírico das alterações |
 
 ---
 
@@ -129,3 +132,33 @@ Auditoria exaustiva de todas as 112 pesquisas eleitorais registradas no TSE Pesq
 Evolução temporal da taxa de rejeição ("não votaria de jeito nenhum") medida pelo Datafolha em pesquisas presenciais primárias ao longo de 2026:
 - A rejeição a Lula oscilou na faixa de 44% a 48% durante o ano, enquanto a rejeição a Flávio Bolsonaro manteve-se entre 45% e 51%.
 - A estabilidade desses patamares ilustra a consolidação e simetria dos tetos eleitorais no eleitorado brasileiro às vésperas da votação decisiva.
+
+## 14. Calibração empírica do encolhimento ($K_{\text{shrink}}$ e corte de apuração)
+
+![Calibração de Encolhimento](../figures/pt/26_calibracao_shrinkage_k.png)
+
+Análise de sensibilidade e justificativa empírica para os hiperparâmetros da projeção municipal:
+- **Por que o corte de $\ge 50\%$ apurado?** Avaliando cortes de 30% a 60%, o corte de 50% equilibra perfeitamente o tamanho da amostra (mantém 4.963 de 5.757 municípios às 20h) e a estabilidade da apuração (elimina distorções de urnas isoladas).
+- **Por que $K = 3.000$ na V1 e qual é o valor ótimo?** 
+  - Na V1, $K = 3.000$ funcionava como "3.000 votos virtuais de peso atribuídos ao prior". Produziu um erro médio por UF de **0,549 p.p.** e erro nacional de **0,363 p.p.**
+  - O ótimo empírico absoluto situa-se em $K = 500$ (erro por UF de **0,536 p.p.** e erro nacional de **0,346 p.p.**).
+  - A curva mostra alta estabilidade: entre $K = 500$ e $K = 3.000$, a variação do erro é de apenas **0,013 p.p.**, comprovando que o estimador bayesiano é robusto e não depende de ajustes finos artificiais.
+
+## 15. Comparativo dos modelos: V1 Baseline vs V2 Aprimorado
+
+![Comparativo V1 vs V2](../figures/pt/27_comparativo_v1_v2.png)
+
+Comparação lado a lado entre o modelo publicado original (V1) e a segunda versão (V2) alimentada com os novos conjuntos de dados:
+- **V2-M1 (Estrutural com Censo 2022 e Prefeitos 2024):** Projeta Lula com **47,04%** dos votos válidos (IC 90%: 46,33% a 47,77%), reduzindo a incerteza residual em virtude do forte controle territorial exercido pelas máquinas municipais do PL (+20,5 p.p. no 1T) e da concentração evangélica.
+- **V2-M2 (Pesquisas ponderadas por acurácia auditada no TSE):** Ajusta o share de Lula de 48,86% (V1) para **48,42%** (V2). Ao penalizar institutos que superestimaram Lula no 1T e dar maior peso a amostras auditadas com menor erro histórico, a síntese de pesquisas converge mais para os resultados de urna.
+- **Ensemble V2 Otimizado (Pesos de Mínima Variância):** Substituindo a ponderação heurística (50/30/20) pela alocação ótima de portfólio estatístico (M1 83%, M2 12%, M3 5%), a projeção consolidada aponta Lula com **47,33%** (IC 90%: 46,63% a 48,04%) e $P(\text{vitória}) < 0,1\%$, mantendo Flávio como amplo favorito para o 2º turno.
+
+## 16. Backtest do 1º turno às 20h: Parcial vs V1 vs V2
+
+![Backtest 1º Turno V2](../figures/pt/28_backtest_1turno_v2.png)
+
+Avaliação empírica ex-post das alterações propostas sobre o **snapshot congelado das ~20h** (85% do eleitorado apurado), comparando contra a apuração final 100%:
+- **Parcial puro (o que a TV transmitia às 20h):** Flávio 48,44% × Lula 43,52% (margem $-4,92$ p.p.). **Erro da margem: $-3,04$ p.p.**; Erro médio por UF (MAE): **1,348 p.p.**
+- **Projeção V1 (Histórico 2022 + Perfil TSE):** Flávio 47,19% × Lula 44,95% (margem $-2,24$ p.p.). **Erro da margem: $-0,36$ p.p.**; MAE por UF: **0,549 p.p.**
+- **Projeção V2 (+ Censo 2022 religião/renda/raça + Prefeitos 2024):** Flávio 47,18% × Lula 44,96% (margem $-2,22$ p.p.). **Erro da margem: $-0,35$ p.p.**; MAE por UF: **0,552 p.p.**
+- **Conclusão:** No 1º turno, quando 85% já estava apurado, a votação presidencial de 2022 já capturava quase 98% da correlação espacial (o erro permaneceu praticamente idêntico). A força preditiva do Censo 2022 e dos Prefeitos de 2024 atua predominantemente no **2º Turno (M1)**, onde não há resultado prévio de urna para a transferência dos eliminados.
